@@ -13,8 +13,11 @@ class Libro(models.Model):
     fecha_publicacion = models.DateField()
     isbn = models.CharField(max_length=17)
 
-    def __str__(self):
+    def get_titulo(self):
         return self.titulo
+
+    def __str__(self):
+        return self.get_titulo()
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
@@ -28,6 +31,7 @@ class Usuario(models.Model):
     guid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)    
     imagen = models.ImageField(upload_to='usuario_imagenes')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    reviews = models.ManyToManyField(Libro, through='Review')
 
     def __str__(self):
         return self.get_username()
@@ -44,12 +48,12 @@ class Review(models.Model):
         (5, 5),
     )
 
-    usuario = ForeignKey(Usuario, related_name='reviews', on_delete=models.CASCADE)
+    usuario = ForeignKey(Usuario, on_delete=models.CASCADE)
+    libro = ForeignKey(Libro, on_delete=models.CASCADE)
     fecha_creada = models.DateTimeField(auto_now_add=True)
     opinion = models.TextField()
     calificacion = models.IntegerField(choices=CALIFICACION)
 
     def __str__(self):
-        return f"{self.usuario.get_username()} - {self.calificacion}"
-
+        return f"{self.usuario.get_username()} - {self.libro.get_titulo()} - {self.calificacion}"
 
