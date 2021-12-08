@@ -5,6 +5,7 @@ app_name = 'libreria'
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
+    # path('', views.HomeView.as_view(), name='home'),
     #path('shop/', views.ProductListView.as_view(), name='product-list'),
     # path('shop/<slug>/', views.ProductDetailView.as_view(), name='product-detail'),
     # path('increase-quantity/<pk>/', views.IncreaseQuantityView.as_view(), name='increase-quantity'),

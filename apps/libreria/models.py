@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.fields.related import ForeignKey
+from django.db.models import Avg
 
 User = get_user_model()
 
@@ -12,12 +13,23 @@ class Libro(models.Model):
     cantidad_paginas = models.IntegerField()
     fecha_publicacion = models.DateField()
     isbn = models.CharField(max_length=17)
+    #todo agregar url de descarga
 
     def get_titulo(self):
         return self.titulo
 
     def __str__(self):
         return self.get_titulo()
+
+    # El siguiente metodo retorna todos los libros ordenados por su calificacion promedio, el orden depende del 
+    # argumento booleano: ordenar_calificacion_ascendente
+
+    @classmethod
+    def get_libros_ordenados(self, ordenar_calificacion_ascendente):
+        if ordenar_calificacion_ascendente:
+            return self.objects.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('calificacion_promedio')
+        else:
+            return self.objects.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('-calificacion_promedio')
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)

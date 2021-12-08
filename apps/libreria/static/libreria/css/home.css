@@ -14,3 +14,11 @@
 a {
     text-decoration: none !important ;
 }
+
+.contenedorFormulario{
+    display: grid;
+    grid-gap: 10px;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr 0.5fr;
+}
