@@ -18,13 +18,9 @@ class Libro_Filter(django_filters.FilterSet):
 	)
 
 	nombre_editorial = django_filters.CharFilter(label='Editorial', widget=DateInput(attrs={'class':'form-control'}))
-	#autores = Autor.objects.all()
-	#autor = django_filters.ModelChoiceFilter(queryset = autores, label='autor', widget=DateInput(attrs={'class':'form-control'}))
 	autor = django_filters.CharFilter(label='Autor', field_name='autor__nombre', lookup_expr='iexact', widget=DateInput(attrs={'class':'form-control'}))
 
 	class Meta:
 		model = Libro
-		# fields = '__all__'
-		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']
-		#exclude = ['titulo', 'autor','date_created', 'cantidad_paginas', 'fecha_publicacion','isbn']	
+		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']			
 

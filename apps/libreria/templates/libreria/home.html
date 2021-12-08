@@ -8,30 +8,23 @@
   
 {% block content %}
 
-<!-- <form method="get">
-  <div class="contenedorInline">
-    {{libro_filter.form}}
-    ordear por calificacion: <input type="radio" name="ordenado" value="si">
-    <button class="btn btn-primary" type="submit">Search</button>
-  </div>
-</form> -->
-<form method="get">
-  <div class="contenedorFormulario">    
-    {% for field in libro_filter.form %}
-        
-          <div>
-            {{ field.errors }}
-            {{ field.label_tag }} {{ field }}
-            {% if field.help_text %}
-            <p class="help">{{ field.help_text|safe }}</p>
-            {% endif %}
-          </div>
-        
-    {% endfor %}
-    <div>ordenar Descendente: <input type="radio" name="ordenado" value="si"></div>    
-    <button class="btn btn-primary" type="submit">Buscar</button>
-  </div>
-</form>
+  <form method="get">
+    <div class="contenedorFormulario">    
+      {% for field in libro_filter.form %}
+          
+            <div>
+              {{ field.errors }}
+              {{ field.label_tag }} {{ field }}
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
+            </div>
+          
+      {% endfor %}
+      <div>ordenar Descendente: <input type="radio" name="ordenado" value="si"></div>    
+      <button class="btn btn-primary" type="submit">Buscar</button>
+    </div>
+  </form>
   
   
   <div class="contenedorLibros">
