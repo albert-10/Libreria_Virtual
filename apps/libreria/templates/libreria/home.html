@@ -6,19 +6,22 @@
 {% endblock extra_head %}
   
 {% block content %}
+
+<div class="input-group mb-3">
+  
+  <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon1"><i class="fas fa-search"></i></button>
+  <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1"> -->
+</div>
   
   <div class="contenedorLibros">
     {% for libro in object_list %}
-     <!--  <div style="background-color: blue;">
-        hola
-      </div> -->
                      
             <div class="card text-dark bg-light">
-              <div class="card-body" style="text-align: center;">
+              <div class="card-body" style="text-align: center;">                
                 <h4 class="card-title">{{libro.titulo}}</h4>
                 <h5 class="card-subtitle mb-2 text-muted">Autor: {{libro.autor.nombre}}</h5>
                 <p class="card-text">Editorial: {{libro.nombre_editorial}}</p>
-                <a href="#" class="card-link">Detalles</a>
+                <p class="card-text">ISBN: {{libro.isbn}}</p> 
               </div> 
             </div>
           

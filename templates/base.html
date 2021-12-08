@@ -9,16 +9,18 @@
     {% block extra_head %}
     {% endblock extra_head %}
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'images/fontawesome/css/all.min.css' %}"> 
     <link rel="stylesheet" href="{% static 'css/base.css' %}">   
 </head>
 <body>   
     <div class="contenedor">
         <div class="header">
                       
-        </div>
-        {% include 'navbar.html' %}           
+        </div>                 
     </div>
+    
+    {% include 'navbar.html' %}  
   
         {% block content %}
         {% endblock content %}     

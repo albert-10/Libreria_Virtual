@@ -8,23 +8,18 @@ body { background-color: #e3e7ee;}
 html { height: 100%;}
 
 .contenedor{
-    min-height: 60vh;
+    min-height: 40vh;
     display: grid;
-    grid-gap: 2px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    grid-template-areas: 'header        header     header'
-                         'header        header     header'                   
-                         'header        header     header'                        
-                         'navbar        navbar     navbar'                                              
-                         
-                         
+    grid-template-columns: 1fr;
+    /* grid-template-rows: repeat(3, 1fr); */
+   /*  grid-template-areas: 'header        header     header'
+                         'header        header     header' */             
 }
 
 .contenedor .header{
-    background: url("../images/libreria.png") no-repeat;
+    background: url("../images/chica.jpg") no-repeat;
     background-size: cover;
-    grid-area: header;  
+    /* grid-area: header;   */
 }
 
 .contenedor .navbar{
