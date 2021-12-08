@@ -1,0 +1,16 @@
+.contenedorLibros{
+    margin: 10px;
+    display: grid;
+    grid-gap: 10px;
+    justify-items: stretch;
+    align-items: center;
+    grid-template-columns: repeat(4,1fr);                       
+}
+
+.libro{
+    width: 100%;
+}
+
+a {
+    text-decoration: none !important ;
+}
