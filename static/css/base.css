@@ -3,27 +3,56 @@
     padding: 0;
 }
 
-body { background-color: #e3e7ee;}
+body {
+    background-color: #e3e7ee;
+    min-height: 100vh !important;
+    margin: 0; 
+  
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
 
-html { height: 100%;}
+/* html { height: 100%;} */
 
 .contenedor{
     min-height: 40vh;
     display: grid;
-    grid-template-columns: 1fr;
+    /* grid-template-columns: 1fr; */
+    /* grid-template-columns: 1fr; */
+    /* grid-template-rows: 3fr 1fr; */
     /* grid-template-rows: repeat(3, 1fr); */
-   /*  grid-template-areas: 'header        header     header'
-                         'header        header     header' */             
+    /* grid-template-areas: 'header        header     header'
+                         'header        header     header'
+                         'header        header     header'
+                         'header        header     header'
+                         'header        header     header'
+                         'header        header     header'
+                         'navbar        navbar     navbar'  */    
+                         grid-template-rows: repeat(7, 1fr);
+                         grid-template-columns: repeat(3, 1fr);                     
+    
 }
 
 .contenedor .header{
     background: url("../images/chica.jpg") no-repeat;
     background-size: cover;
-    /* grid-area: header;   */
+    /* grid-area: header; */
+    grid-row-start: 1;
+    grid-row-end: 6;
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+   
+
+
 }
 
 .contenedor .navbar{
-   grid-area: navbar
+   /* grid-area: navbar */
+   grid-column-start: 1;
+   grid-column-end: 4;
+   grid-row-start: 6;
+   grid-row-end: 7;
 }
 
 

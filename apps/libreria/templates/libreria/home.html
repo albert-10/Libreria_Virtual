@@ -16,7 +16,7 @@
   </div>
 </form> -->
 <form method="get">
-  <div class="contenedorFormulario">
+  <div class="contenedorFormulario">    
     {% for field in libro_filter.form %}
         
           <div>
@@ -28,17 +28,11 @@
           </div>
         
     {% endfor %}
-    <div>ordenar descendente: <input type="radio" name="ordenado" value="si"></div>    
-    <button class="btn btn-primary" type="submit">Search</button>
+    <div>ordenar Descendente: <input type="radio" name="ordenado" value="si"></div>    
+    <button class="btn btn-primary" type="submit">Buscar</button>
   </div>
 </form>
-
-  <!-- <div class="input-group mb-3">
-    
-    <button class="btn btn-outline-secondary" type="button" id="button-addon1"><i class="fas fa-search"></i></button>
-    <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1"> 
-  </div> -->
-
+  
   
   <div class="contenedorLibros">
     {% for libro in libros %}

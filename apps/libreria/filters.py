@@ -5,22 +5,26 @@ from django_filters import DateFilter
 
 class Libro_Filter(django_filters.FilterSet):
 	despues_fecha = DateFilter(
-		widget=DateInput(attrs={'type': 'date', 'class':'form-horizontal'}),
+		widget=DateInput(attrs={'type': 'date', 'class':'form-control'}),
 		field_name="fecha_publicacion",
 		lookup_expr='gt',
 		label='Publicado despues de:'
 	)
 	antes_fecha = DateFilter(
-		widget=DateInput(attrs={'type': 'date'}),
+		widget=DateInput(attrs={'type': 'date', 'class':'form-control'}),
 		field_name="fecha_publicacion",
 		lookup_expr='lt',
 		label='Publicado despues de:'
 	)
 
-	nombre_editorial = django_filters.CharFilter(label='Editorial')
+	nombre_editorial = django_filters.CharFilter(label='Editorial', widget=DateInput(attrs={'class':'form-control'}))
+	#autores = Autor.objects.all()
+	#autor = django_filters.ModelChoiceFilter(queryset = autores, label='autor', widget=DateInput(attrs={'class':'form-control'}))
+	autor = django_filters.CharFilter(label='Autor', field_name='autor__nombre', lookup_expr='iexact', widget=DateInput(attrs={'class':'form-control'}))
 
 	class Meta:
 		model = Libro
-		fields = '__all__'
-		exclude = ['titulo', 'date_created', 'cantidad_paginas', 'fecha_publicacion','isbn']	
+		# fields = '__all__'
+		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']
+		#exclude = ['titulo', 'autor','date_created', 'cantidad_paginas', 'fecha_publicacion','isbn']	
 
