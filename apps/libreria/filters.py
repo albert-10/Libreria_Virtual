@@ -1,26 +1,58 @@
-from django.forms.widgets import DateInput
+from django.db.models.expressions import OrderBy
+from django.forms.widgets import DateInput, Select, TextInput
 import django_filters
 from .models import *
 from django_filters import DateFilter
 
+# La siguiente clase permite filtrar los libros por los campos: 'autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha'
+# Tambien permite ordenar el resultado de acuerdo a la calificacion promedio de los libros: ascendente o descendente
+
 class Libro_Filter(django_filters.FilterSet):
+	CHOICES = (
+		('ascendente', 'ascendente'),
+		('descendente', 'descendente'),
+	)
+
+	orden_por_calificacion = django_filters.ChoiceFilter(
+		label='Ordenar por calificacion:',
+		choices=CHOICES,
+		method='filter_by_order',
+		widget=Select(attrs={'class':'form-control', 'placeholder':'Sin orden'}),
+
+	)
+
 	despues_fecha = DateFilter(
 		widget=DateInput(attrs={'type': 'date', 'class':'form-control'}),
 		field_name="fecha_publicacion",
 		lookup_expr='gt',
-		label='Publicado despues de:'
+		label='Publicado despues de'
 	)
 	antes_fecha = DateFilter(
-		widget=DateInput(attrs={'type': 'date', 'class':'form-control'}),
+		widget=DateInput(attrs={'type': 'date', 'class':'form-control', 'placeholder':'Publicado despues de'}),
 		field_name="fecha_publicacion",
 		lookup_expr='lt',
-		label='Publicado despues de:'
+		label='Publicado despues de'
 	)
 
-	nombre_editorial = django_filters.CharFilter(label='Editorial', widget=DateInput(attrs={'class':'form-control'}))
-	autor = django_filters.CharFilter(label='Autor', field_name='autor__nombre', lookup_expr='iexact', widget=DateInput(attrs={'class':'form-control'}))
+	nombre_editorial = django_filters.CharFilter(label='',
+		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Editorial'}))
+
+	autor = django_filters.CharFilter(label='',
+		field_name='autor__nombre',
+		lookup_expr='iexact',
+		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Autor'}))
+	
 
 	class Meta:
 		model = Libro
-		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']			
+		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']		
 
+	# Permite ordenar los libros de acuerdo a su calificacion promedio: ascendente o descendente
+
+	def filter_by_order(self, queryset, name, value):
+		if value == 'ascendente':
+			queryset = queryset.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('calificacion_promedio')
+		else:
+			queryset = queryset.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('-calificacion_promedio')
+		
+		return queryset

@@ -8,39 +8,45 @@
   
 {% block content %}
 
-  <form method="get">
-    <div class="contenedorFormulario">    
-      {% for field in libro_filter.form %}
-          
-            <div>
-              {{ field.errors }}
-              {{ field.label_tag }} {{ field }}
-              {% if field.help_text %}
-              <p class="help">{{ field.help_text|safe }}</p>
-              {% endif %}
-            </div>
-          
-      {% endfor %}
-      <div>ordenar Descendente: <input type="radio" name="ordenado" value="si"></div>    
-      <button class="btn btn-primary" type="submit">Buscar</button>
-    </div>
-  </form>
+<div class="contenedorHome">
+
   
-  
-  <div class="contenedorLibros">
-    {% for libro in libros %}
-                     
-            <div class="card text-dark bg-light">
-              <div class="card-body" style="text-align: center;">                
-                <h4 class="card-title">{{libro.titulo}}</h4>
-                <h5 class="card-subtitle mb-2 text-muted">Autor: {{libro.autor.nombre}}</h5>
-                <p class="card-text">Editorial: {{libro.nombre_editorial}}</p>
-                <p class="card-text">ISBN: {{libro.isbn}}</p> 
-              </div> 
-            </div>
-          
-    {% endfor %}
+  <div class="formulario">
+    <form method="get">
+      <div class="contenedorFormulario">    
+        {% for field in libro_filter.form %}
+            
+              <div>
+                {{ field.errors }}
+                <h6 class="card-subtitle mb-2 text-muted">{{ field.label_tag }} </h6>{{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+              </div>
+            
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Filtrar</button>
+      </div>
+    </form>
   </div>
+  
+  <div class="libros">
+    <div class="contenedorLibros">
+      {% for libro in libro_filter.qs %}
+                      
+              <div class="card text-dark bg-light">
+                <div class="card-body" style="text-align: center;">                
+                  <h4 class="card-title">{{libro.titulo}}</h4>
+                  <h5 class="card-subtitle mb-2 text-muted">Autor: {{libro.autor.nombre}}</h5>
+                  <p class="card-text">Editorial: {{libro.nombre_editorial}}</p>
+                  <p class="card-text">ISBN: {{libro.isbn}}</p> 
+                </div> 
+              </div>
+            
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
 
 {% endblock content %}

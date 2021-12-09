@@ -24,12 +24,12 @@ class Libro(models.Model):
     # El siguiente metodo retorna todos los libros ordenados por su calificacion promedio, el orden depende del 
     # argumento booleano: ordenar_calificacion_ascendente
 
-    @classmethod
-    def get_libros_ordenados(self, ordenar_calificacion_ascendente):
-        if ordenar_calificacion_ascendente:
-            return self.objects.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('calificacion_promedio')
-        else:
-            return self.objects.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('-calificacion_promedio')
+    #@classmethod
+    # def get_libros_ordenados(self, ordenar_calificacion_ascendente):
+    #     if ordenar_calificacion_ascendente:
+    #         return self.objects.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('calificacion_promedio')
+    #     else:
+    #         return self.objects.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('-calificacion_promedio')
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
