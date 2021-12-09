@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import reverse, render
 from django.views import generic
-from django.db.models import Avg
-from .models import Libro
 from .filters import Libro_Filter
+from .models import Libro
+from .forms import LibroForm
+
 
 # La siguiente vista retorna libros segun el filtro que realice el usuario
 
@@ -15,13 +16,15 @@ class LibrosView(generic.ListView):
         context['libro_filter'] = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         return context
 
+# La siguiente vista pemite insertar usuarios
 
-# class HomeView(generic.View):
-#     def get(self, request):
-#         # ordenar_calificacion_ascendente = 'ordenado' in list(request.GET.keys()) 
-#         # libros = Libro.get_libros_ordenados(ordenar_calificacion_ascendente)
-#         libros = Libro.objects.all()
-#         libro_filter = Libro_Filter(request.GET, queryset=libros)
-#         libros = libro_filter.qs
-#         context = {'libros':libros, 'libro_filter': libro_filter}
-#         return render(request, 'libreria/home.html',context)
+class InsertarLibroView(generic.FormView):
+    template_name = 'libreria/insertarLibro.html'
+    form_class = LibroForm
+
+    def get_success_url(self):
+        return reverse("libreria:insertarLibro")
+
+    def form_valid(self, form):        
+        form.save()
+        return super(InsertarLibroView, self).form_valid(form)

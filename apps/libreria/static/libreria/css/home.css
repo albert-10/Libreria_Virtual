@@ -35,3 +35,10 @@ button{
 a {
     text-decoration: none !important ;
 }
+
+.alert-warning{
+    height: 100px;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    text-align: center;
+}

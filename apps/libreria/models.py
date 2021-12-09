@@ -13,7 +13,7 @@ class Libro(models.Model):
     cantidad_paginas = models.IntegerField()
     fecha_publicacion = models.DateField()
     isbn = models.CharField(max_length=17)
-    #todo agregar url de descarga
+    enlace_descarga = models.URLField()
 
     def get_titulo(self):
         return self.titulo
