@@ -25,6 +25,7 @@ class InsertarLibroView(generic.FormView):
     def get_success_url(self):
         return reverse("libreria:insertarLibro")
 
-    def form_valid(self, form):        
-        form.save()
+    def form_valid(self, form):
+        
+        form.save(commit=True)
         return super(InsertarLibroView, self).form_valid(form)

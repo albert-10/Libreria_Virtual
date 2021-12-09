@@ -10,10 +10,10 @@ class Libro(models.Model):
     titulo = models.CharField(max_length=50)
     autor = models.ForeignKey('Autor', on_delete=models.CASCADE)
     nombre_editorial = models.CharField(max_length=50)
-    cantidad_paginas = models.IntegerField()
+    cantidad_paginas = models.PositiveIntegerField()
     fecha_publicacion = models.DateField()
     isbn = models.CharField(max_length=17)
-    enlace_descarga = models.URLField()
+    archivo_libro = models.FileField(upload_to='libros')
 
     def get_titulo(self):
         return self.titulo
