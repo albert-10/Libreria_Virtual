@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
+{% load libreria_extras %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'libreria/css/librosAdmin.css' %}"> 
 {% endblock extra_head %}
-  
+
+<!-- A continuacion se muestran los libros, los cuales pueden se filtrados y paginados -->
+
 {% block content %}
+
+<!-- Formulario para filtrar libros -->
+
 <div class="contenedorLibros">
   <div class="formulario">
     <form method="get">
-      <div class="contenedorFormulario">    
+      <div class="contenedorCamposFormulario">    
         {% for field in libro_filter.form %}
             
               <div>
@@ -25,40 +31,104 @@
     </form>
   </div>
 
+<!-- Tabla donde se muestran los libros libros -->
+
+  {% if libro_page %}
   <div class="contenedorTabla">
-    <div id='cardTabla' class="card text-dark bg-light mb-3">
-      <div class="card-header">Libros</div>
-      <div class="card-body">
-          <table class="table table-sm">
-            <tr>
-              <th>Título</th>
-              <th>Autor</th>
-              <th>Editorial</th>
-              <th>Cantidad de páginas</th>
-              <th>Fecha de publicación</th>
-              <th>ISBN</th>  
-              <th id="operaciones">Operaciones</th>            
-            </tr>
+    
+      <div id='cardTabla' class="card text-dark bg-light mb-3">
+        <div class="card-header">Libros</div>
+        <div class="card-body">
+            <table class="table table-sm">
+              <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Editorial</th>
+                <th>Cantidad de páginas</th>
+                <th>Fecha de publicación</th>
+                <th>ISBN</th>  
+                <th id="operaciones" colspan="2">Operaciones</th>            
+              </tr>
+              
+              {% for libro in libro_page %}
+
+                <tr>
+                  <td>{{libro.titulo}}</td>
+                  <td>{{libro.autor}}</td>
+                  <td>{{libro.nombre_editorial}}</td>
+                  <td>{{libro.cantidad_paginas}}</td>
+                  <td>{{libro.fecha_publicacion}}</td>
+                  <td>{{libro.isbn}}</td>              
+                  <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+
+                  <td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
+                </tr>				    
+              {% endfor %}           
+
+            </table>       
             
-				    {% for libro in libro_filter.qs %}
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {% if libro_page.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primera</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{libro_page.previous_page_number}}">Anterior</a></li>
+                {% endif %}
 
-            <tr>
-              <td>{{libro.titulo}}</td>
-              <td>{{libro.autor}}</td>
-              <td>{{libro.nombre_editorial}}</td>
-              <td>{{libro.cantidad_paginas}}</td>
-              <td>{{libro.fecha_publicacion}}</td>
-              <td>{{libro.isbn}}</td>              
-              <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
 
-              <td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
-            </tr>
-				    {% endfor %}
+                <li class="page-item disabled"><a class="page-link">Página {{libro_page.number}} de {{libro_page.paginator.num_pages}}</a></li>
 
-			    </table>
-      </div>
-  </div> 
+                {% if libro_page.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{libro_page.next_page_number}}">Siguiente</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{libro_page.paginator.num_pages}}">Última &raquo;</a></li>
+                {% endif %}
+                </ul>
+            </nav>
+
+            <!--  <div>
+              <span class="step-links">
+                {% if libro_page.has_previous %}
+                  <a href="{% my_url 1 'page' request.GET.urlencode  %}">&laquo; First</a>
+                  <a href="{% my_url libro_page.previous_page_number 'page' request.GET.urlencode  %}">First</a>
+                {% endif %}
+          
+                <span class="current">
+                  Page {{libro_page.number}} of {{libro_page.paginator.num_pages}}
+                </span>
+          
+                {% if libro_page.has_next %}
+                  <a href="{% my_url libro_page.next_page_number 'page' request.GET.urlencode  %}"> Next</a>
+                  <a href="{% my_url libro_page.next_page_number.paginator.num_pages 'page' request.GET.urlencode  %}">&raquo; Last</a>
+                {% endif %}
+              </span>
+            </div> -->
+            
+          <!--   <div id='paginador'>
+              <span class="step-links">
+                {% if libro_page.has_previous %}
+                  <a href="?page=1">&laquo; First</a>
+                  <a href="?page={{libro_page.previous_page_number}}">Previous</a>
+                {% endif %}
+          
+                <span class="current">
+                  Page {{libro_page.number}} of {{libro_page.paginator.num_pages}}
+                </span>
+          
+                {% if libro_page.has_next %}
+                  <a href="?page={{libro_page.next_page_number}}"> Next</a>
+                  <a href="?page={{libro_page.paginator.num_pages}}">&raquo; Last</a>
+                {% endif %}
+              </span>
+            </div>  --> 
+          </div>
+      </div> 
   </div>
+  {% else %}
+  <div id='noHayLibros' class="alert alert-warning" role="alert">
+    <h3>No hay libros que mostrar</h3>
+  </div>  
+  {% endif %}
+
+
 </div>
 
 {% endblock content %}

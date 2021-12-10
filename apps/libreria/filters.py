@@ -28,10 +28,10 @@ class Libro_Filter(django_filters.FilterSet):
 		label='Publicado despues de'
 	)
 	antes_fecha = DateFilter(
-		widget=DateInput(attrs={'type': 'date', 'class':'form-control', 'placeholder':'Publicado despues de'}),
+		widget=DateInput(attrs={'type': 'date', 'class':'form-control', 'placeholder':'Publicado antes de'}),
 		field_name="fecha_publicacion",
 		lookup_expr='lt',
-		label='Publicado despues de'
+		label='Publicado antes de'
 	)
 
 	nombre_editorial = django_filters.CharFilter(label='',

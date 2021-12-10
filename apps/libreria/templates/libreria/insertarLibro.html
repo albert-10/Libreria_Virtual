@@ -8,6 +8,7 @@
 
 {% block content %}
 
+<!-- A continuacion se muestra un formulario para insertar libros -->
 
     <div class="contenedorInsertarLibro">
         <div id='cardFormulario' class="card text-dark bg-light mb-3">
@@ -18,12 +19,11 @@
                     {{ form|crispy }}
                     <div id="botones">
                         <button id='submit' type='submit' class="btn btn-primary">Insertar</button>
-                        <button id='cancel' type='cancel' class="btn btn-secondary">Cancelar</button>    
+                        <button id='reset' type='reset' class="btn btn-secondary">Cancelar</button>    
                     </div>                    
                 </form> 
             </div>
         </div>       
-    </div>   
-    
+    </div>    
    
 {% endblock content %}

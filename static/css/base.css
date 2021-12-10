@@ -9,8 +9,9 @@ body {
     margin: 0; 
   
     display: grid;
-    grid-template-rows: auto 1fr auto;
-}
+    /* grid-template-rows: auto 1fr auto;*/
+    grid-template-rows: 0.5fr  auto 0.5fr; 
+} 
 
 .contenedor{
     min-height: 40vh;
