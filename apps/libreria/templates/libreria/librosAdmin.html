@@ -59,9 +59,15 @@
                   <td>{{libro.cantidad_paginas}}</td>
                   <td>{{libro.fecha_publicacion}}</td>
                   <td>{{libro.isbn}}</td>              
-                  <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+                  <td><a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}">Editar</a></td>
 
-                  <td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
+                  <td>
+                    <form method="post" action="{% url 'libreria:eliminarLibro' libro.id %}">
+                      {% csrf_token %}               
+                          <input type="submit" class="btn btn-danger" value="Eliminar">
+                    </form>
+                   <!--  <a class="btn btn-sm btn-danger" href="{% url 'libreria:eliminarLibro' libro.id %}">Eliminar</a> -->
+                  </td>
                 </tr>				    
               {% endfor %}           
 

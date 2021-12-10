@@ -1,6 +1,10 @@
-from django.shortcuts import reverse
+from django.views.generic import View
+from django.http.response import HttpResponse
+from django.shortcuts import reverse, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy
+from django.views.generic.edit import  UpdateView, DeleteView
 from .filters import Libro_Filter
 from .models import Libro
 from .forms import LibroForm
@@ -49,3 +53,23 @@ class InsertarLibroView(generic.FormView):
         
         form.save(commit=True)
         return super(InsertarLibroView, self).form_valid(form)
+
+# La siguiente clase permite editar Libros
+
+class EditarLibroView(UpdateView):
+    template_name = 'libreria/editarLibro.html'
+    model = Libro
+    fields = '__all__'
+
+    def get_object(self):
+        return get_object_or_404(Libro, pk=self.kwargs["pk"])
+
+    def form_valid(self, form):        
+        form.save(commit=True)
+        return super().form_valid(form)
+
+# La siguiente clase permite eliminar Libros
+
+class EliminarLibroView(DeleteView):    
+    model = Libro
+    success_url = reverse_lazy('libreria:librosAdmin')

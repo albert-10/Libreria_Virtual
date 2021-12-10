@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models.fields.related import ForeignKey
-from django.db.models import Avg
+from django.shortcuts import reverse
 
 User = get_user_model()
 
@@ -16,10 +16,13 @@ class Libro(models.Model):
     archivo_libro = models.FileField(upload_to='libros')
 
     def get_titulo(self):
-        return self.titulo
+        return self.titulo    
 
     def __str__(self):
-        return self.get_titulo()    
+        return self.get_titulo()   
+
+    def get_absolute_url(self):
+        return reverse("libreria:editarLibro", kwargs={'pk': self.id})
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
