@@ -1,0 +1,49 @@
+.contenedorLibros{
+    height: 60vh;
+    margin: 0.5%;
+    display: grid;
+    row-gap: 5px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(7, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.contenedorFormulario{
+   /*  grid-row-start: 1;
+    grid-row-end: 2; */
+    display: grid;
+    grid-gap: 10px;
+    justify-items: stretch;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+}
+
+#filtrar{
+    align-self: end;
+}
+
+.contenedorTabla{
+    grid-row-start: 2;
+    grid-row-end: 8; 
+
+    display: grid;
+    align-self: start;
+    /* grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center; */
+}
+
+
+#cardTabla{
+    grid-column-start: 2;
+    grid-column-end: 8;    
+}
+
+.card-header{
+    text-align: center;
+}
+
+#operaciones{
+    
+}

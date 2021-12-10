@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'libreria/css/librosAdmin.css' %}"> 
+{% endblock extra_head %}
+  
+{% block content %}
+<div class="contenedorLibros">
+  <div class="formulario">
+    <form method="get">
+      <div class="contenedorFormulario">    
+        {% for field in libro_filter.form %}
+            
+              <div>
+                {{ field.errors }}
+                <h6 class="card-subtitle mb-2 text-muted">{{ field.label_tag }} </h6>{{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+              </div>           
+        {% endfor %}
+        <button id='filtrar' class="btn btn-primary" type="submit">Filtrar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="contenedorTabla">
+    <div id='cardTabla' class="card text-dark bg-light mb-3">
+      <div class="card-header">Libros</div>
+      <div class="card-body">
+          <table class="table table-sm">
+            <tr>
+              <th>Título</th>
+              <th>Autor</th>
+              <th>Editorial</th>
+              <th>Cantidad de páginas</th>
+              <th>Fecha de publicación</th>
+              <th>ISBN</th>  
+              <th id="operaciones">Operaciones</th>            
+            </tr>
+            
+				    {% for libro in libro_filter.qs %}
+
+            <tr>
+              <td>{{libro.titulo}}</td>
+              <td>{{libro.autor}}</td>
+              <td>{{libro.nombre_editorial}}</td>
+              <td>{{libro.cantidad_paginas}}</td>
+              <td>{{libro.fecha_publicacion}}</td>
+              <td>{{libro.isbn}}</td>              
+              <td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+
+              <td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
+            </tr>
+				    {% endfor %}
+
+			    </table>
+      </div>
+  </div> 
+  </div>
+</div>
+
+{% endblock content %}

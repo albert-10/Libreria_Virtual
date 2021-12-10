@@ -16,6 +16,18 @@ class LibrosView(generic.ListView):
         context['libro_filter'] = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         return context
 
+# La siguiente vista retorna libros segun el filtro que realice el admin
+
+class LibrosAdminView(generic.ListView):
+    model = Libro
+    template_name = 'libreria/librosAdmin.html'
+
+    def get_context_data(self, **kwargs):
+        print('ldfsjlsf')
+        context = super().get_context_data(**kwargs)
+        context['libro_filter'] = Libro_Filter(self.request.GET, queryset=self.get_queryset())
+        return context
+
 # La siguiente vista pemite insertar usuarios
 
 class InsertarLibroView(generic.FormView):
