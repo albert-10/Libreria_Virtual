@@ -1,5 +1,5 @@
 .contenedorAutores{
-    height: 50vh;
+    /* height: 50vh; */
     margin: 0.5%;
     display: grid;
     row-gap: 5px;
@@ -42,7 +42,10 @@ form{
 
 .contenedorTabla{
     grid-column-start: 2;
-    grid-column-end: 8; 
+    grid-column-end: 8;
+
+    grid-row-start:2;
+    grid-row-end:-1;
 
     display: grid;
     align-self: start;
@@ -51,7 +54,10 @@ form{
 
 #cardTabla{
     grid-column-start: 2;
-    grid-column-end: 8;    
+    grid-column-end: 8; 
+    
+    grid-row-start: 2;
+    grid-row-end: -1; 
 }
 
 .card-header{

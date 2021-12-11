@@ -33,7 +33,7 @@ class LibrosAdminView(generic.ListView):
         context = super().get_context_data(**kwargs)
         libro_filter = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         context['libro_filter'] = libro_filter
-        libros_filtrados_paginados = Paginator(libro_filter.qs, 2)
+        libros_filtrados_paginados = Paginator(libro_filter.qs, 5)
         page_number = self.request.GET.get('page')
         libro_page = libros_filtrados_paginados.get_page(page_number)
         context['libro_page'] = libro_page
@@ -110,7 +110,7 @@ class ListarAutoresView(generic.ListView):
         #     autores_por_pagina = 2
         autor_filter = Autor_Filter(self.request.GET, queryset=self.get_queryset())
         context['autor_filter'] = autor_filter
-        autores_filtrados_paginados = Paginator(autor_filter.qs, 2)
+        autores_filtrados_paginados = Paginator(autor_filter.qs, 5)
         
         
         # if 'numeroDePagina' in lista_Inputs:

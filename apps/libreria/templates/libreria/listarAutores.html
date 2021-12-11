@@ -9,6 +9,7 @@
 <!-- A continuacion se muestran los autores, los cuales pueden se filtrados y paginados -->
 
 {% block content %}
+
 <!-- Formulario para filtrar autores -->
 
 <div class="contenedorAutores">
@@ -32,6 +33,8 @@
         </div>
       </form>
     </div>
+
+<!-- Mostrar tabla de autores -->
   
   {% if autor_page %}
   <div class="contenedorTabla">
@@ -67,7 +70,9 @@
                     </tr>				    
                 {% endfor %}           
 
-                </table>       
+                </table>
+                
+                <!-- Paginador -->
                 
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
