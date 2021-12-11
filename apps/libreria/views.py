@@ -1,13 +1,14 @@
+import os
 from django.views.generic import View
 from django.http.response import HttpResponse
 from django.shortcuts import reverse, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
-from django.views.generic.edit import  UpdateView, DeleteView
+from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from .filters import Libro_Filter
-from .models import Libro
-from .forms import LibroForm
+from .models import Libro, Autor
+from .forms import LibroForm, AutorForm
 
 
 # La siguiente vista retorna libros segun el filtro que realice el usuario
@@ -64,7 +65,14 @@ class EditarLibroView(UpdateView):
     def get_object(self):
         return get_object_or_404(Libro, pk=self.kwargs["pk"])
 
-    def form_valid(self, form):        
+# Antes de editar el libro se comprueba que en el formulario haya un nuevo archivo. Si es asi se elimina
+# el antiguo archivo antes de guardar la edicion del libro
+
+    def form_valid(self, form):
+        if len(self.request.FILES) > 0:
+            libro = self.get_object()
+            os.remove(libro.archivo_libro.path)
+        
         form.save(commit=True)
         return super().form_valid(form)
 
@@ -73,3 +81,16 @@ class EditarLibroView(UpdateView):
 class EliminarLibroView(DeleteView):    
     model = Libro
     success_url = reverse_lazy('libreria:librosAdmin')
+
+# La siguiente vista pemite insertar autores
+
+class InsertarAutorView(CreateView):
+    template_name = 'libreria/insertarAutor.html'
+    form_class = AutorForm
+    queryset = Autor.objects.all()
+
+    def get_success_url(self):
+        return reverse("libreria:insertarAutor")
+
+    def form_valid(self, form):       
+        return super().form_valid(form)

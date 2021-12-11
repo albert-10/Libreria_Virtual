@@ -24,6 +24,12 @@ class Libro(models.Model):
     def get_absolute_url(self):
         return reverse("libreria:editarLibro", kwargs={'pk': self.id})
 
+# Antes de eliminar el libro, se elimina el archivo del libro relacionado
+
+    def delete(self, *args, **kwargs):
+        self.archivo_libro.delete()
+        super().delete(*args, **kwargs)
+
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
     nacionalidad = models.CharField(max_length=20)
