@@ -17,7 +17,7 @@ class AutorForm(forms.ModelForm):
             model = Autor
             fields = '__all__'
             widgets = {
-                'fucha_nacimiento': forms.DateInput(attrs={'type':'date'})
+                'fecha_nacimiento': forms.DateInput(attrs={'type':'date'})
             }
 
 # class LibroEditarForm(forms.ModelForm):

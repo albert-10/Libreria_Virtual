@@ -10,5 +10,6 @@ urlpatterns = [
     path('eliminarLibro/<pk>/', views.EliminarLibroView.as_view(), name='eliminarLibro'),
     path('librosAdmin/', views.LibrosAdminView.as_view(), name='librosAdmin'),   
 
-    path('insertarAutor/', views.InsertarAutorView.as_view(), name='insertarAutor'), 
+    path('insertarAutor/', views.InsertarAutorView.as_view(), name='insertarAutor'),
+    path('listarAutores/', views.ListarAutoresView.as_view(), name='listarAutores'),
 ]

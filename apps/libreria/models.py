@@ -15,6 +15,9 @@ class Libro(models.Model):
     isbn = models.CharField(max_length=17)
     archivo_libro = models.FileField(upload_to='libros')
 
+    class Meta:
+        ordering = ["titulo"]
+
     def get_titulo(self):
         return self.titulo    
 
@@ -33,7 +36,10 @@ class Libro(models.Model):
 class Autor(models.Model):
     nombre = models.CharField(max_length=50)
     nacionalidad = models.CharField(max_length=20)
-    fucha_nacimiento = models.DateField()
+    fecha_nacimiento = models.DateField()
+
+    class Meta:
+        ordering = ["nombre"]
 
     def __str__(self):
         return self.nombre

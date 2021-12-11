@@ -1,12 +1,10 @@
 import os
-from django.views.generic import View
-from django.http.response import HttpResponse
 from django.shortcuts import reverse, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
-from .filters import Libro_Filter
+from .filters import Libro_Filter, Autor_Filter
 from .models import Libro, Autor
 from .forms import LibroForm, AutorForm
 
@@ -94,3 +92,35 @@ class InsertarAutorView(CreateView):
 
     def form_valid(self, form):       
         return super().form_valid(form)
+
+class ListarAutoresView(generic.ListView):
+    model = Autor
+    template_name = 'libreria/listarAutores.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # lista_Inputs = list(self.request.GET.keys())
+               
+        # if 'numeroAutores' in lista_Inputs:
+        #     if self.request.GET['numeroAutores'] != '':                
+        #         autores_por_pagina = int(self.request.GET['numeroAutores'])
+        #     else:
+        #         autores_por_pagina = 2
+        # else:
+        #     autores_por_pagina = 2
+        autor_filter = Autor_Filter(self.request.GET, queryset=self.get_queryset())
+        context['autor_filter'] = autor_filter
+        autores_filtrados_paginados = Paginator(autor_filter.qs, 2)
+        
+        
+        # if 'numeroDePagina' in lista_Inputs:
+        #     if self.request.GET['numeroDePagina'] != '':
+        #         numero_de_pagina = int(self.request.GET['numeroDePagina'])
+        #     else:
+        #         numero_de_pagina = None
+        # else:
+        numero_de_pagina = self.request.GET.get('page')
+
+        autor_page = autores_filtrados_paginados.get_page(numero_de_pagina)
+        context['autor_page'] = autor_page
+        return context

@@ -1,5 +1,6 @@
 from django.db.models.expressions import OrderBy
-from django.forms.widgets import DateInput, Select, TextInput
+from django.forms.widgets import DateInput, Select, TextInput, NumberInput
+from django.db.models import Avg
 import django_filters
 from .models import *
 from django_filters import DateFilter
@@ -56,3 +57,40 @@ class Libro_Filter(django_filters.FilterSet):
 			queryset = queryset.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('-calificacion_promedio')
 		
 		return queryset
+
+class Autor_Filter(django_filters.FilterSet):
+
+	despues_fecha = DateFilter(
+		widget=DateInput(attrs={'type': 'date', 'class':'form-control'}),
+		field_name="fecha_nacimiento",
+		lookup_expr='gt',
+		label='Nacido después de'
+	)
+	antes_fecha = DateFilter(
+		widget=DateInput(attrs={'type': 'date', 'class':'form-control'}),
+		field_name="fecha_nacimiento",
+		lookup_expr='lt',
+		label='Nacido antes de'
+	)
+
+	nombre = django_filters.CharFilter(label='',
+		field_name='nombre',
+		lookup_expr='iexact',
+		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Nombre'}))
+
+	nacionalidad = django_filters.CharFilter(label='',
+		field_name='nacionalidad',
+		lookup_expr='iexact',
+		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Nacionalidad'}))
+
+	# autores_por_pagina = django_filters.NumberFilter(
+	# 	label='',
+	# 	# """ {'start':0 },
+	# 	widget=NumberInput(attrs={'class':'form-control', 'placeholder':'Autores por pagina'})
+	# )
+		
+
+
+	class Meta:
+		model = Autor
+		fields = ['nombre', 'nacionalidad', 'despues_fecha', 'antes_fecha']	
