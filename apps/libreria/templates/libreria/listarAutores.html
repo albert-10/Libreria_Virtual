@@ -61,8 +61,8 @@
                         <td>{{autor.fecha_nacimiento}}</td>
                         <td class='botonesOperaciones'>
                             <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}">Detalles</a>
-                            <a class="btn btn-primary" href="#">Editar</a>                        
-                            <form method="post" action="#">
+                            <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}">Editar</a>                        
+                            <form method="post" action="{% url 'libreria:eliminarAutor' autor.id %}">
                             {% csrf_token %}               
                                 <input type="submit" class="btn btn-danger" value="Eliminar">
                             </form>

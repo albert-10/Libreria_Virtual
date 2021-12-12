@@ -4,8 +4,8 @@ from django.views import generic
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
-from .filters import Libro_Filter, Autor_Filter
-from .models import Libro, Autor
+from .filters import Libro_Filter, Autor_Filter, Usuario_Filter
+from .models import Libro, Autor, Usuario
 from .forms import LibroForm, AutorForm
 
 
@@ -129,3 +129,31 @@ class DetallesAutorView(generic.DetailView):
     template_name = 'libreria/detallesAutor.html'
     queryset = Autor.objects.all()
     context_object_name = 'autor'
+
+class EliminarAutorView(DeleteView):    
+    model = Autor
+    success_url = reverse_lazy('libreria:listarAutores')
+
+class EditarAutorView(UpdateView):
+    template_name = 'libreria/editarAutor.html'
+    form_class = AutorForm
+    model = Autor    
+
+    def get_object(self):
+        return get_object_or_404(Autor, pk=self.kwargs["pk"])
+
+class ListarUsuariosView(generic.ListView):
+    model = Usuario
+    template_name = 'libreria/listarUsuarios.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+       
+        usuario_filter = Usuario_Filter(self.request.GET, queryset=self.get_queryset())
+        context['usuario_filter'] = usuario_filter
+        usuarios_filtrados_paginados = Paginator(usuario_filter.qs, 5)
+       
+        numero_de_pagina = self.request.GET.get('page')
+        usuario_page = usuarios_filtrados_paginados.get_page(numero_de_pagina)
+        context['usuario_page'] = usuario_page
+        return context

@@ -1,5 +1,4 @@
-.contenedorAutores{
-    /* height: 50vh; */
+.contenedorUsuarios{
     margin: 0.5%;
     display: grid;
     row-gap: 5px;
@@ -9,16 +8,17 @@
 }
 
 .formulario{
-    grid-column-start: 1;
-    grid-column-end: -1;
+    grid-column-start: 3;
+    grid-column-end: 7;
     grid-row-start: 1;    
     grid-row-end: 2;
 
+    width: 100%;
     display: grid;
     grid-gap: 10px;
     justify-items: stretch;
     align-items: center;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 
 form{
@@ -33,7 +33,7 @@ form{
     grid-gap: 10px;
     justify-items: stretch;
     align-items: center;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .camposFormularioExtras{
@@ -53,18 +53,19 @@ form{
 }
 
 #cardTabla{
-    grid-column-start: 2;
-    grid-column-end: 8; 
+    grid-column-start: 1;
+    grid-column-end: -1; 
     
     grid-row-start: 2;
-    grid-row-end: -1; 
+    grid-row-end: -1;
 }
+
 
 .card-header{
     text-align: center;
 }
 
-#noHayAutores{
+#noHayUsuarios{
     grid-column-start: 2;
     grid-column-end: 8;
 
@@ -74,9 +75,14 @@ form{
     text-align: center;
 }
 
-#paginador{
-    display: flex;
-    justify-content: center;    
+.contenedorImagen{
+    height: 100px;
+    width: 100px;
+}
+
+img{
+    width: 100%;
+    height: 100%
 }
 
 ul.pagination{
@@ -85,5 +91,7 @@ ul.pagination{
 
 .botonesOperaciones{
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
 }

@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 app_name = 'libreria'
@@ -13,5 +16,12 @@ urlpatterns = [
 
     path('insertarAutor/', views.InsertarAutorView.as_view(), name='insertarAutor'),
     path('listarAutores/', views.ListarAutoresView.as_view(), name='listarAutores'),
-    path('detallesAutor/<pk>/', views.DetallesAutorView.as_view(), name='detallesAutor')
+    path('detallesAutor/<pk>/', views.DetallesAutorView.as_view(), name='detallesAutor'),
+    path('editarAutor/<pk>/', views.EditarAutorView.as_view(), name='editarAutor'),
+    path('eliminarAutor/<pk>/', views.EliminarAutorView.as_view(), name='eliminarAutor'),
+
+    path('listarUsuarios/', views.ListarUsuariosView.as_view(), name='listarUsuarios'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

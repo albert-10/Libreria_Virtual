@@ -28,8 +28,14 @@
           </ul>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuarios
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
+            <li><a class="dropdown-item" href="{% url 'libreria:listarUsuarios' %}">Mostrar usuarios</a></li>
+            <li><a class="dropdown-item"  href="#">Insertar usuario</a></li>
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>

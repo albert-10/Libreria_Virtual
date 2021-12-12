@@ -24,6 +24,8 @@ class Libro(models.Model):
     def __str__(self):
         return self.get_titulo()   
 
+    # Permite redirigira a la view editarLibro
+
     def get_absolute_url(self):
         return reverse("libreria:editarLibro", kwargs={'pk': self.id})
 
@@ -58,6 +60,11 @@ class Autor(models.Model):
 
     def libros_publicados(self):        
         return self.libros.all()
+
+    # Permite redirigira a la view editarAutor 
+
+    def get_absolute_url(self):
+        return reverse("libreria:editarAutor", kwargs={'pk': self.id})
         
 
 class Usuario(models.Model):
@@ -65,12 +72,18 @@ class Usuario(models.Model):
     imagen = models.ImageField(upload_to='usuario_imagenes')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reviews = models.ManyToManyField(Libro, through='Review')
+    fecha_registro = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.get_username()
 
     def get_username(self):
         return self.user.get_username()
+
+    # Retorna la cantidad de autores a los que esta suscrito un usuario
+
+    def cantidad_autores_suscritos(self):        
+        return self.autores_suscritos.count()
 
 class Review(models.Model):
     CALIFICACION = (

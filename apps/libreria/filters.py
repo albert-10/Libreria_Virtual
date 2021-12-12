@@ -1,5 +1,4 @@
-from django.db.models.expressions import OrderBy
-from django.forms.widgets import DateInput, Select, TextInput, NumberInput
+from django.forms.widgets import DateInput, Select, TextInput
 from django.db.models import Avg
 import django_filters
 from .models import *
@@ -58,6 +57,8 @@ class Libro_Filter(django_filters.FilterSet):
 		
 		return queryset
 
+# La siguiente clase permite filtrar los autores por los campos: 'nombre', 'nacionalidad', 'despues_fecha', 'antes_fecha'
+
 class Autor_Filter(django_filters.FilterSet):
 
 	despues_fecha = DateFilter(
@@ -83,14 +84,24 @@ class Autor_Filter(django_filters.FilterSet):
 		lookup_expr='iexact',
 		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Nacionalidad'}))
 
-	# autores_por_pagina = django_filters.NumberFilter(
-	# 	label='',
-	# 	# """ {'start':0 },
-	# 	widget=NumberInput(attrs={'class':'form-control', 'placeholder':'Autores por pagina'})
-	# )
-		
-
-
 	class Meta:
 		model = Autor
-		fields = ['nombre', 'nacionalidad', 'despues_fecha', 'antes_fecha']	
+		fields = ['nombre', 'nacionalidad', 'despues_fecha', 'antes_fecha']
+
+# La siguiente clase permite filtrar usuarios por nombre y username
+
+class Usuario_Filter(django_filters.FilterSet):
+
+	user__first_name = django_filters.CharFilter(label='',
+		field_name='user__first_name',
+		lookup_expr='iexact',
+		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Nombre'}))
+
+	user__username = django_filters.CharFilter(label='',
+		field_name='user__username',
+		lookup_expr='exact',
+		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
+
+	class Meta:
+		model = Usuario
+		fields = ['user__first_name', 'user__username']	
