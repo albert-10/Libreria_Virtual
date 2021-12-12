@@ -8,7 +8,7 @@ User = get_user_model()
 
 class Libro(models.Model):
     titulo = models.CharField(max_length=50)
-    autor = models.ForeignKey('Autor', on_delete=models.CASCADE)
+    autor = models.ForeignKey('Autor', related_name='libros', on_delete=models.CASCADE)
     nombre_editorial = models.CharField(max_length=50)
     cantidad_paginas = models.PositiveIntegerField()
     fecha_publicacion = models.DateField()
@@ -37,12 +37,28 @@ class Autor(models.Model):
     nombre = models.CharField(max_length=50)
     nacionalidad = models.CharField(max_length=20)
     fecha_nacimiento = models.DateField()
+    usuarios_suscritos = models.ManyToManyField(
+        'Usuario',
+        related_name='autores_suscritos',
+        blank=True,
+    )
 
     class Meta:
         ordering = ["nombre"]
 
     def __str__(self):
         return self.nombre
+
+    # Retorna la cantidad de usuarios suscritos
+
+    def cantidad_usuarios_suscritos(self):        
+        return self.usuarios_suscritos.count()
+
+    # Retorna los libros publicados
+
+    def libros_publicados(self):        
+        return self.libros.all()
+        
 
 class Usuario(models.Model):
     guid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)    

@@ -60,7 +60,7 @@
                         <td>{{autor.nacionalidad}}</td>
                         <td>{{autor.fecha_nacimiento}}</td>
                         <td class='botonesOperaciones'>
-                            <a class="btn btn-info" href="#">Detalles</a>
+                            <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}">Detalles</a>
                             <a class="btn btn-primary" href="#">Editar</a>                        
                             <form method="post" action="#">
                             {% csrf_token %}               

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'libreria/css/detallesAutor.css' %}"> 
+{% endblock extra_head %}
+
+<!-- A continuacion se muestran los detalles de una autor -->
+
+{% block content %}
+    
+    <div class="contenedorAutorYLibros">
+
+        <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarAutores' %}">&laquo; Volver</a>        
+    <div id='contenedorAutores'class="card text-dark bg-light mb-3">
+            <div class="card-header"><h4 class="encabezados">Autor: {{autor.nombre}}</h4></div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h6 class="card-subtitle mb-2">Nacionalidad: {{autor.nacionalidad}}</h6>
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="card-subtitle mb-2">Fecha de nacimiento: {{autor.fecha_nacimiento}}</h6>
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="card-subtitle mb-2 ">Usuarios suscritos: {{autor.cantidad_usuarios_suscritos}}</h6>
+                    </li>
+                  </ul>        
+                <p class="card-text"></p>
+            </div>
+        </div>
+
+        {% if autor.libros_publicados|length > 0 %}
+            <div id='contenedorLibros' class="card text-dark bg-light mb-3">
+                    <div class="card-header"><h4 class="encabezados">Libros escritos</h4></div>
+                        <div class="card-body">
+                            <table class="table">
+                            <tr>
+                                <th>Título</th>
+                                <th>ISBN</th>
+                                <th>Fecha de publicación</th>                          
+                            </tr>
+                            
+                            {% for libro in autor.libros_publicados %}
+                
+                                <tr>
+                                    <td>{{libro.titulo}}</td>
+                                    <td>{{libro.isbn}}</td> 
+                                    <td>{{libro.fecha_publicacion}}</td>               
+                                </tr>				    
+                            {% endfor %}           
+                
+                            </table>
+                        </div>
+            </div>           
+        {% else %}
+            <div id='contenedorLibros' class="alert alert-warning encabezados" role="alert">
+                <h3>Sin libros publicados</h3>
+            </div> 
+        {% endif %}
+    </div>
+        
+   
+      
+{% endblock content %}

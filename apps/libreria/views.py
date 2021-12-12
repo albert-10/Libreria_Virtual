@@ -124,3 +124,8 @@ class ListarAutoresView(generic.ListView):
         autor_page = autores_filtrados_paginados.get_page(numero_de_pagina)
         context['autor_page'] = autor_page
         return context
+
+class DetallesAutorView(generic.DetailView):
+    template_name = 'libreria/detallesAutor.html'
+    queryset = Autor.objects.all()
+    context_object_name = 'autor'
