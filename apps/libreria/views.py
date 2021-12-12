@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter
 from .models import Libro, Autor, Usuario
-from .forms import LibroForm, AutorForm
-
+from .forms import LibroForm, AutorForm, UsuarioForm
+from django.contrib.auth import get_user_model
 
 # La siguiente vista retorna libros segun el filtro que realice el usuario
 
@@ -142,6 +142,8 @@ class EditarAutorView(UpdateView):
     def get_object(self):
         return get_object_or_404(Autor, pk=self.kwargs["pk"])
 
+# La siguiente clase permite listar usuarios, tambien filtrarlos y paginarlos
+
 class ListarUsuariosView(generic.ListView):
     model = Usuario
     template_name = 'libreria/listarUsuarios.html'
@@ -157,3 +159,27 @@ class ListarUsuariosView(generic.ListView):
         usuario_page = usuarios_filtrados_paginados.get_page(numero_de_pagina)
         context['usuario_page'] = usuario_page
         return context
+
+class InsertarUsuarioView(generic.FormView):
+    template_name = 'libreria/insertarUsuario.html'
+    form_class = UsuarioForm
+    queryset = Usuario.objects.all()    
+
+    def get_success_url(self):
+        return reverse("libreria:insertarUsuario")
+
+    def form_valid(self, form):
+        User = get_user_model()
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        nombre = form.cleaned_data['nombre']
+
+        user = User.objects.create(username=username, first_name=nombre)
+        user.set_password(password)
+        user.save()
+        
+        imagen = form.cleaned_data['imagen']
+        Usuario.objects.create(imagen=imagen, user=user)
+
+        print(form.cleaned_data)   
+        return super().form_valid(form)

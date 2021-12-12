@@ -21,6 +21,7 @@ urlpatterns = [
     path('eliminarAutor/<pk>/', views.EliminarAutorView.as_view(), name='eliminarAutor'),
 
     path('listarUsuarios/', views.ListarUsuariosView.as_view(), name='listarUsuarios'),
+    path('insertarUsuario/', views.InsertarUsuarioView.as_view(), name='insertarUsuario'),
 ]
 
 if settings.DEBUG:
