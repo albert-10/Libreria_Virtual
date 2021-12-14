@@ -33,16 +33,10 @@
               Usuarios
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
-              <!-- <li><a class="dropdown-item" href="#">Mostrar usuarios</a></li> -->
-              <!-- <li><a class="dropdown-item"  href="#">Insertar usuario</a></li> -->
+              <li><a class="dropdown-item" href="{% url 'libreria:listarUsuarios' %}">Mostrar usuarios</a></li>
+              <li><a class="dropdown-item"  href="{% url 'libreria:insertarUsuario' %}">Insertar usuario</a></li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>      
+          </li>            
         </ul>
         <ul id='usuario' class="nav navbar-nav">
           {% if request.user.is_authenticated %}           
@@ -50,7 +44,7 @@
               <a class="nav-link">{{user.username}}</a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link">Salir de sesión</a>
+              <a class="nav-link" href="{% url 'libreria:salirSesion'%}">Salir de sesión</a>
             </li>
           {% else %}
             <li class="nav-item ">

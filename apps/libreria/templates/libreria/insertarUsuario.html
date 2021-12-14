@@ -8,13 +8,19 @@
 {% endblock extra_head %}
 
 {% block content %}
-    Insertar Usuarios
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div id="botones">
-            <button id='submit' type='submit' class="btn btn-primary">Insertar</button>
-            <button id='reset' type='reset' class="btn btn-secondary">Cancelar</button>    
-        </div>                    
-    </form> 
+<div class="contenedorInsertarEditarUsuario">
+    <div id='cardFormulario' class="card text-dark bg-light mb-3">
+        <div class="card-header"><h6 id="titulo">Insertar Usuario</h6></div>
+        <div class="card-body">
+            <form method="POST" action="{% url 'libreria:insertarUsuario'%}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div id="botones">
+                    <button id='submit' type='submit' class="btn btn-primary">Insertar</button>
+                    <button id='reset' type='reset' class="btn btn-secondary">Cancelar</button>    
+                </div>                    
+            </form>
+        </div>
+    </div> 
+</div>
 {% endblock content %}

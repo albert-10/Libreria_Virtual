@@ -22,23 +22,27 @@ class AutorForm(forms.ModelForm):
                 'fecha_nacimiento': forms.DateInput(attrs={'type':'date'})
             }
 
-# class UsuarioForm(forms.ModelForm):
-#     password_confirm = forms.CharField(widget=forms.PasswordInput)
-#     password = forms.CharField(widget=forms.PasswordInput)
+class UsuarioForm(forms.ModelForm):
+    first_name = forms.CharField()
+    username = forms.CharField()
+    email = forms.EmailField()
+    password_confirm = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput)
+    is_admin = forms.BooleanField(required=False, label='¿Es administrador?')
    
-#     class Meta:
-#             model = Usuario
-#             fields = ['first_name', 'email', 'user_username', 'user_password', 'password_confirm','imagen','user_is_admin']
+    class Meta:
+            model = Usuario
+            fields = ['first_name', 'username', 'email', 'password', 'password_confirm','imagen','is_admin']
                 
-# #La siguiente funcionalidad agrega un error al formulario si los passwords no coinciden
+#La siguiente funcionalidad agrega un error al formulario si los passwords no coinciden
 
-#     def clean(self):
-#         cleaned_data = super(UsuarioForm, self).clean()
-#         password = cleaned_data.get("password")
-#         password_confirm = cleaned_data.get("password_confirm")       
-#         if password != password_confirm:          
-#             self.add_error('password', "Password does not match")
-#             self.add_error('password_confirm', "Password does not match")
+    def clean(self):
+        cleaned_data = super(UsuarioForm, self).clean()
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get("password_confirm")       
+        if password != password_confirm:                     
+            self.add_error('password', "Passwords no coinciden")
+            self.add_error('password_confirm', "Passwords no coinciden")
 
 class AutenticarForm(forms.Form):
 

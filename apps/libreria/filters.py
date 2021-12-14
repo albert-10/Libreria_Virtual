@@ -93,12 +93,12 @@ class Autor_Filter(django_filters.FilterSet):
 class Usuario_Filter(django_filters.FilterSet):
 
 	first_name = django_filters.CharFilter(label='',
-		field_name='first_name',
+		field_name='user__first_name',
 		lookup_expr='iexact',
 		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Nombre'}))
 
 	username = django_filters.CharFilter(label='',
-		field_name='username',
+		field_name='user__username',
 		lookup_expr='exact',
 		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
 
