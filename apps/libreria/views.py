@@ -3,6 +3,7 @@ from django.shortcuts import redirect, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Permission
 from django.views import generic
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.views.generic.detail import DetailView
@@ -165,77 +166,6 @@ class ListarUsuariosView(generic.ListView):
         context['usuario_page'] = usuario_page
         return context
 
-# class AutenticarView(generic.FormView):
-#     template_name = 'libreria/autenticar.html'
-#     form_class = AutenticarForm
-
-#     def get_success_url(self):
-#         return reverse("libreria:librosAdmin")
-
-#     def form_valid(self, form):
-#         username = form.cleaned_data.get('username')
-#         password = form.cleaned_data.get('password')
-#         usuario = authenticate(self.request, username = username, password = password)
-#         print(usuario)
-#         if usuario is not None:
-#             login(usuario)
-#             print('login')      
-#         return super(AutenticarView, self).form_valid(form)
-
-# class UserView(DetailView):
-#     template_name = 'libreria/profile.html'
-
-#     def get_object(self):
-#         return self.request.user
-
-
-# def signup(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(request, email=user.email, password=raw_password)
-#             if user is not None:
-#                 login(request, user)
-#             else:
-#                 print("user is not authenticated")
-#             return redirect('libreria:profile')
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'users/registrarUsuario.html', {'form': form})
-
-# class LoginView(generic.FormView):
-#     template_name = 'libreria/login.html'
-#     form_class = AutenticarForm
-
-#     def get_success_url(self):
-#         return reverse("libreria:librosAdmin")
-
-#     def form_valid(self, form):
-#         username = form.cleaned_data.get('username')
-#         password = form.cleaned_data.get('password')
-#         usuario = authenticate(self.request, username = username, password = password)
-#         if usuario is not None:
-#             login(self.request, usuario)
-#         else:
-#             return reverse("libreria:login")
-#         return super(LoginView, self).form_valid(form)
-
-# Metodo par autenticar, en caso de error se mostraran un mensaje de error en la pagina de autenticacio,
-# si las credenciales estan correctas se mostrara la pagina de listar libros
-
-# class InsertarUsuarioView(CreateView):
-#     template_name = 'libreria/insertarUsuario.html'
-#     form_class = UsuarioForm
-#     queryset = Usuario.objects.all()
-
-#     def get_success_url(self):
-#         return reverse("libreria:insertarUsuario")
-
-#     def form_valid(self, form):       
-#         return super().form_valid(form)
-
 # El siguiente metodo permite insertar un usuario y asignarle permiso de administrador, en caso de que tenga
 
 def insertar_usuario(request):
@@ -270,6 +200,58 @@ def insertar_usuario(request):
        
     form = UsuarioForm()
     return render(request = request, template_name = "libreria/insertarUsuario.html", context={"form":form})
+
+# El siguiente metodo permite editar un usuario y asignarle permiso de administrador, en caso de que tenga
+
+def editar_usuario(request, guid):
+    usuario = get_object_or_404(Usuario, guid=guid)
+    guid_usuario = usuario.guid
+    user = usuario.user
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST, request.FILES)
+        if form.is_valid():            
+            username = form.cleaned_data.get('username')
+            User = get_user_model()
+            username_usado = User.objects.filter(~Q(id=user.pk) & Q(username=username)).exists()
+            if not username_usado:
+                username = form.cleaned_data.get('username')            
+                email = form.cleaned_data.get('email')
+                first_name = form.cleaned_data.get('first_name')
+                password = form.cleaned_data.get('password')
+
+                # Eliminando antigua imagen
+                
+                if len(request.FILES) > 0:
+                    os.remove(usuario.imagen.path)                    
+                imagen = form.cleaned_data.get('imagen')
+                es_Administrador = form.cleaned_data.get('is_admin')
+                
+                usuario.imagen = imagen
+                usuario.save()
+                user.username = username
+                user.email = email
+                user.first_name = first_name
+                user.set_password(password)
+                  
+                if es_Administrador:
+                    permission = Permission.objects.get(codename='administrador')
+                    user.user_permissions.add(permission)
+                user.save()
+                messages.success(request, "Usuario Editado correctamente")
+                return HttpResponseRedirect(reverse('libreria:editarUsuario', args=(guid_usuario,)) )
+            else:
+                messages.error(request, "El username ya existe")
+                form.add_error('username', 'El username ya existe')
+                return render(request, 'libreria/editarUsuario.html', {'form':form, 'guid_usuario': guid_usuario})
+        else:
+            messages.error(request, "Los campos no son válidos")
+            return render(request = request, template_name = "libreria/editarUsuario.html", context={"form":form, 'guid_usuario': guid_usuario})     
+    usuario_es_administrador = len(user.get_user_permissions()) > 0
+    
+    datos = {'first_name': user.first_name, 'username': user.username, 'email': user.email, 'is_admin': usuario_es_administrador}
+    form = UsuarioForm(datos)    
+    return render(request = request, template_name = "libreria/editarUsuario.html", context={"form":form, 'guid_usuario': guid_usuario})
+
 
 # El siguiente metodo permite autenticar un usuario
 

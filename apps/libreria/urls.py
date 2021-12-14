@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('listarUsuarios/', views.ListarUsuariosView.as_view(), name='listarUsuarios'),
     path('insertarUsuario/', views.insertar_usuario, name='insertarUsuario'),
+    path('editarUsuario/<uuid:guid>/', views.editar_usuario, name='editarUsuario'),
 ]
 
 if settings.DEBUG:

@@ -58,7 +58,7 @@
                                     <td>{{usuario.cantidad_autores_suscritos}}</td>
                                     <td class='botonesOperaciones'>
                                         <a class="btn btn-info" href="#">Detalles</a>
-                                        <a class="btn btn-primary" href="#">Editar</a>                        
+                                        <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}">Editar</a>                        
                                         <form method="post" action="#">
                                         {% csrf_token %}               
                                             <input type="submit" class="btn btn-danger" value="Eliminar">
