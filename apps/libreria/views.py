@@ -190,12 +190,15 @@ def insertar_usuario(request):
                 user.set_password(password)
                 user.save() 
                 Usuario.objects.create(imagen=imagen, user=user)
+                messages.success(request, "Usuario Editado correctamente")
                 return HttpResponseRedirect(reverse('libreria:insertarUsuario',))          
             
             else:
+                messages.error(request, "Los campos no son válidos")
                 form.add_error('username', 'El username ya existe')
                 return render(request, 'libreria/insertarUsuario.html', {'form':form})
         else:
+            messages.error(request, "Los campos no son válidos")
             return render(request = request, template_name = "libreria/insertarUsuario.html", context={"form":form})    
        
     form = UsuarioForm()

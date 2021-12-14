@@ -81,6 +81,8 @@ DATABASES = {
     }
 }
 
+# Configurando los mensajes con las clases de bootstrap
+
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
         messages.INFO: 'alert-info',
