@@ -64,6 +64,7 @@ TEMPLATES = [
         },
     },
 ]
+#AUTH_USER_MODEL = 'libreria.Usuario'
 
 WSGI_APPLICATION = 'Libreria_Virtual.wsgi.application'
 

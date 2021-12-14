@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'libreria/css/autenticar.css' %}"> 
+{% endblock extra_head %}
+
+<!-- Formulario para autenticar usuarios -->
+
+{% block content %}
+
+<!-- Mensaje de error cuando las credenciales son incorrectas -->
+
+  {% if messages %}
+        {% for message in messages %}
+        <div id='contenedorAlertaErrorFormulario'>
+          <div id='alertaErrorFormulario' class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Credenciales incorrectas</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>     
+        {% endfor %}
+  {% endif %}
+
+  <div id='contenedorAutenticar'>
+    <div id='cardFormulario' class="card text-dark bg-light mb-3">
+      <div class="card-header"><h6 id="titulo">Autenticar</h6></div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+            {{ form|crispy }} 
+          <div id="botones">
+              <button id='submit' type='submit' class="btn btn-primary">Autenticar</button>
+              <button id='reset' type='reset' class="btn btn-secondary">Cancelar</button>    
+          </div>                    
+        </form>
+      </div>     
+    </div>
+</div>
+{% endblock content %}

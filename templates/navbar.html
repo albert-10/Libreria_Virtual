@@ -2,48 +2,66 @@
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">  
 <nav id='navbar' class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'libreria:librosAdmin' %}">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Libros
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'libreria:librosAdmin' %}">Mostrar libros</a></li>
-            <li><a class="dropdown-item"  href="{% url 'libreria:insertarLibro' %}">Insertar libro</a></li>
-          </ul>
-        </li>
+      <a class="navbar-brand" href="{% url 'libreria:librosAdmin' %}">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul id = 'elementos'class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Libros
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'libreria:librosAdmin' %}">Mostrar libros</a></li>
+              <li><a class="dropdown-item"  href="{% url 'libreria:insertarLibro' %}">Insertar libro</a></li>
+            </ul>
+          </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Autores
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'libreria:listarAutores' %}">Mostrar autores</a></li>
-            <li><a class="dropdown-item"  href="{% url 'libreria:insertarAutor' %}">Insertar autor</a></li>
-          </ul>
-        </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Autores
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'libreria:listarAutores' %}">Mostrar autores</a></li>
+              <li><a class="dropdown-item"  href="{% url 'libreria:insertarAutor' %}">Insertar autor</a></li>
+            </ul>
+          </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuarios
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
-            <li><a class="dropdown-item" href="{% url 'libreria:listarUsuarios' %}">Mostrar usuarios</a></li>
-            <li><a class="dropdown-item"  href="{% url 'libreria:insertarUsuario' %}">Insertar usuario</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-      </ul>
-    </div>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Usuarios
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
+              <!-- <li><a class="dropdown-item" href="#">Mostrar usuarios</a></li> -->
+              <!-- <li><a class="dropdown-item"  href="#">Insertar usuario</a></li> -->
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>      
+        </ul>
+        <ul id='usuario' class="nav navbar-nav">
+          {% if request.user.is_authenticated %}           
+            <li class="nav-item">
+              <a class="nav-link">{{user.username}}</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">Salir de sesión</a>
+            </li>
+          {% else %}
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'libreria:autenticar' %}">autenticarse</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link">registrarse</a>
+            </li>
+          {% endif %}
+         
+        </ul>              
+      </div>     
   </div>
 </nav>

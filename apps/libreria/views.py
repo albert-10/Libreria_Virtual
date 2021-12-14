@@ -1,13 +1,17 @@
 import os
-from django.shortcuts import reverse, get_object_or_404
+from django.shortcuts import redirect, reverse, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.views import generic
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+from django.views.generic.detail import DetailView
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter
 from .models import Libro, Autor, Usuario
-from .forms import LibroForm, AutorForm, UsuarioForm
-from django.contrib.auth import get_user_model
+from .forms import LibroForm, AutorForm, AutenticarForm
+from django.contrib.auth import authenticate, login
 
 # La siguiente vista retorna libros segun el filtro que realice el usuario
 
@@ -160,26 +164,92 @@ class ListarUsuariosView(generic.ListView):
         context['usuario_page'] = usuario_page
         return context
 
-class InsertarUsuarioView(generic.FormView):
-    template_name = 'libreria/insertarUsuario.html'
-    form_class = UsuarioForm
-    queryset = Usuario.objects.all()    
+# class InsertarUsuarioView(CreateView):
+#     template_name = 'libreria/insertarUsuario.html'
+#     form_class = UsuarioForm
+#     queryset = Usuario.objects.all()    
+
+#     def get_success_url(self):
+#         return reverse("libreria:insertarUsuario")
+
+#     def form_valid(self, form):          
+#         return super().form_valid(form)
+
+class AutenticarView(generic.FormView):
+    template_name = 'libreria/autenticar.html'
+    form_class = AutenticarForm
 
     def get_success_url(self):
-        return reverse("libreria:insertarUsuario")
+        return reverse("libreria:librosAdmin")
 
     def form_valid(self, form):
-        User = get_user_model()
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        nombre = form.cleaned_data['nombre']
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        usuario = authenticate(self.request, username = username, password = password)
+        print(usuario)
+        if usuario is not None:
+            login(usuario)
+            print('login')      
+        return super(AutenticarView, self).form_valid(form)
 
-        user = User.objects.create(username=username, first_name=nombre)
-        user.set_password(password)
-        user.save()
-        
-        imagen = form.cleaned_data['imagen']
-        Usuario.objects.create(imagen=imagen, user=user)
+class UserView(DetailView):
+    template_name = 'libreria/profile.html'
 
-        print(form.cleaned_data)   
-        return super().form_valid(form)
+    def get_object(self):
+        return self.request.user
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(request, email=user.email, password=raw_password)
+            if user is not None:
+                login(request, user)
+            else:
+                print("user is not authenticated")
+            return redirect('libreria:profile')
+    else:
+        form = SignUpForm()
+    return render(request, 'users/registrarUsuario.html', {'form': form})
+
+class LoginView(generic.FormView):
+    template_name = 'libreria/login.html'
+    form_class = AutenticarForm
+
+    def get_success_url(self):
+        return reverse("libreria:librosAdmin")
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        usuario = authenticate(self.request, username = username, password = password)
+        if usuario is not None:
+            login(self.request, usuario)
+        else:
+            return reverse("libreria:login")
+        return super(LoginView, self).form_valid(form)
+
+# Metodo par autenticar, en caso de error se mostraran un mensaje de error en la pagina de autenticacio,
+# si las credenciales estan correctas se mostrara la pagina de listar libros
+
+def autenticar(request):
+    if request.method == 'POST':
+        form = AutenticarForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('libreria:librosAdmin',))                
+            else:
+                form.add_error('username', 'incorrecto')
+                form.add_error('password', 'incorrecto')
+                messages.error(request, "Invalid username or password.")
+                return render(request, 'libreria/autenticar.html', {'form':form})
+       
+    form = AutenticarForm()
+    return render(request = request, template_name = "libreria/autenticar.html", context={"form":form})

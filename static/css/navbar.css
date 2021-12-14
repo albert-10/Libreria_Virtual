@@ -1,3 +1,12 @@
 #navbar {
     background-color: #5d4386;
 }
+
+#elementos{    
+    flex:70
+}
+
+#usuario{   
+    flex:30;
+    justify-content: flex-end;
+} 

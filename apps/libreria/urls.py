@@ -7,6 +7,10 @@ from . import views
 app_name = 'libreria'
 
 urlpatterns = [
+
+    path('autenticar/', views.autenticar, name='autenticar'),
+    #path('autenticar/', views.AutenticarView.as_view(), name='autenticar'),
+
     # path('', views.LibrosView.as_view(), name='libros'),  
     path('', views.LibrosAdminView.as_view(), name='librosAdmin'), 
     path('insertarLibro/', views.InsertarLibroView.as_view(), name='insertarLibro'),
@@ -21,7 +25,7 @@ urlpatterns = [
     path('eliminarAutor/<pk>/', views.EliminarAutorView.as_view(), name='eliminarAutor'),
 
     path('listarUsuarios/', views.ListarUsuariosView.as_view(), name='listarUsuarios'),
-    path('insertarUsuario/', views.InsertarUsuarioView.as_view(), name='insertarUsuario'),
+    #path('insertarUsuario/', views.InsertarUsuarioView.as_view(), name='insertarUsuario'),
 ]
 
 if settings.DEBUG:
