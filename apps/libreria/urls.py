@@ -27,6 +27,10 @@ urlpatterns = [
     path('listarUsuarios/', views.ListarUsuariosView.as_view(), name='listarUsuarios'),
     path('insertarUsuario/', views.insertar_usuario, name='insertarUsuario'),
     path('editarUsuario/<uuid:guid>/', views.editar_usuario, name='editarUsuario'),
+    path('eliminarUsuario/<pk>/', views.EliminarUsuarioView.as_view(), name='eliminarUsuario'),
+
+    path('suscribirseAAutor/<pk>/', views.suscribirse_a_autor, name='suscribirseAAutor'),
+    path('eliminarSuscripcionAutor/<pk>/', views.eliminar_suscripcion_autor, name='eliminarSuscripcionAutor'),
 ]
 
 if settings.DEBUG:

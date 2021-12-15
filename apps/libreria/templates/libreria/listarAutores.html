@@ -49,8 +49,10 @@
                         <th>Fecha de nacimiento</th>
                         <!-- <th>Cantidad de usuarios suscritos</th>
                         <th>Fecha de publicación</th>
-                        <th>ISBN</th> -->  
-                        <th id="operaciones">Operaciones</th>            
+                        <th>ISBN</th> --> 
+                          
+                          <th id="operaciones">Operaciones</th>
+                       
                     </tr>
                 
                 {% for autor in autor_page %}
@@ -61,11 +63,21 @@
                         <td>{{autor.fecha_nacimiento}}</td>
                         <td class='botonesOperaciones'>
                             <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}">Detalles</a>
-                            <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}">Editar</a>                        
-                            <form method="post" action="{% url 'libreria:eliminarAutor' autor.id %}">
-                            {% csrf_token %}               
-                                <input type="submit" class="btn btn-danger" value="Eliminar">
-                            </form>
+                            {% if request.user.is_authenticated %}
+                              {% if user.usuario in autor.get_usuarios_suscritos %}
+                                <a class="btn btn-dark" href="{% url 'libreria:eliminarSuscripcionAutor' autor.id %}">Anular suscripcion</a>
+                              {% else %}
+                                  <a class="btn btn-success" href="{% url 'libreria:suscribirseAAutor' autor.id %}">Suscribirse</a>
+                              {% endif %}
+                             
+                            {% endif %}
+                            {% if perms.libreria.administrador %} 
+                              <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}">Editar</a>                        
+                              <form method="post" action="{% url 'libreria:eliminarAutor' autor.id %}">
+                              {% csrf_token %}               
+                                  <input type="submit" class="btn btn-danger" value="Eliminar">
+                              </form>
+                            {% endif %}
                         </td>
                     </tr>				    
                 {% endfor %}           

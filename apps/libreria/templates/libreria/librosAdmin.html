@@ -46,8 +46,10 @@
                 <th>Editorial</th>
                 <th>Cantidad de páginas</th>
                 <th>Fecha de publicación</th>
-                <th>ISBN</th>  
-                <th id="operaciones" colspan="2">Operaciones</th>            
+                <th>ISBN</th>
+                {% if perms.libreria.administrador %}
+                  <th id="operaciones" colspan="2">Operaciones</th> 
+                {% endif %}          
               </tr>
               
               {% for libro in libro_page %}
@@ -58,16 +60,17 @@
                   <td>{{libro.nombre_editorial}}</td>
                   <td>{{libro.cantidad_paginas}}</td>
                   <td>{{libro.fecha_publicacion}}</td>
-                  <td>{{libro.isbn}}</td>              
-                  <td><a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}">Editar</a></td>
+                  <td>{{libro.isbn}}</td>
+                  {% if perms.libreria.administrador %}         
+                    <td><a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}">Editar</a></td>
 
-                  <td>
-                    <form method="post" action="{% url 'libreria:eliminarLibro' libro.id %}">
-                      {% csrf_token %}               
-                          <input type="submit" class="btn btn-danger" value="Eliminar">
-                    </form>
-                   <!--  <a class="btn btn-sm btn-danger" href="{% url 'libreria:eliminarLibro' libro.id %}">Eliminar</a> -->
-                  </td>
+                    <td>
+                      <form method="post" action="{% url 'libreria:eliminarLibro' libro.id %}">
+                        {% csrf_token %}               
+                            <input type="submit" class="btn btn-danger" value="Eliminar">
+                      </form>
+                    </td>
+                  {% endif %}
                 </tr>				    
               {% endfor %}           
 

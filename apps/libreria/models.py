@@ -68,6 +68,11 @@ class Autor(models.Model):
 
     def get_absolute_url(self):
         return reverse("libreria:editarAutor", kwargs={'pk': self.id})
+
+    # Retorna los usuario suscritos al autor
+
+    def get_usuarios_suscritos(self):
+        return self.usuarios_suscritos.all()
         
 
 class Usuario(models.Model):
@@ -87,65 +92,6 @@ class Usuario(models.Model):
 
     def cantidad_autores_suscritos(self):        
         return self.autores_suscritos.count()
-
-# class UsuarioManager(BaseUserManager):
-
-#     def create_user(self, email, username, password=None):
-#         if not email:
-#             raise ValueError('El usuario debe tener un email')
-#         if not username:
-#             raise ValueError('El usuario debe tener un username')
-
-#         user = self.model(
-#             email = self.normalize_email(email),
-#             username = username,
-#         )
-
-#         user.set_password(password)
-#         user.save(using = self._db)
-#         return user
-
-    """ def create_superuser(self, email, username, password):       
-
-        user = self.create_user(
-           email = self.normalize_email(email),
-           password=password,
-           username = username,
-
-        )    
-
-        user.is_admin = True,
-        user.is_staff = True,
-        user.is_superuser = True,
-        user.save(using = self._db)
-        return user     """   
-
-
-# class Usuario(models.Model):
-#     guid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)    
-#     imagen = models.ImageField(upload_to='usuario_imagenes')
-#     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
-#     username = models.CharField(max_length=30, unique=True)
-#     fecha_registro = models.DateField(auto_now_add=True)
-#     is_admin = models.BooleanField(default=False, blank=True, verbose_name='¿Es Administrador?')
-#     first_name = models.CharField(max_length=30)
-
-#     #USERNAME_FIELD = 'email'
-
-#     def __str__(self):
-#         return self.email
-
-#     def has_perm(self, perm, obj=None):
-#         return self.is_admin
-
-#     def has_module_perm(self, app_label):
-#         return True
-
-#     def __str__(self):
-#          return self.get_username()
-
-    # def get_username(self):
-    #     return self.get_username()
 
 # Retorna la cantidad de autores a los que esta suscrito un usuario
 

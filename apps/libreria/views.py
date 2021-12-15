@@ -1,9 +1,11 @@
 import os
 from django.shortcuts import redirect, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission,User
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.views import generic
 from django.db.models import Q
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.views.generic.detail import DetailView
@@ -13,7 +15,8 @@ from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter
 from .models import Libro, Autor, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import permission_required, login_required
+
 
 # La siguiente vista retorna libros segun el filtro que realice el usuario
 
@@ -47,9 +50,11 @@ class LibrosAdminView(generic.ListView):
 
 # La siguiente vista pemite insertar usuarios
 
-class InsertarLibroView(generic.FormView):
+class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
     template_name = 'libreria/insertarLibro.html'
     form_class = LibroForm
+    permission_required = 'libreria.administrador'
+    raise_exception = True
 
     def get_success_url(self):
         return reverse("libreria:insertarLibro")
@@ -61,11 +66,13 @@ class InsertarLibroView(generic.FormView):
 
 # La siguiente clase permite editar Libros
 
-class EditarLibroView(UpdateView):
+class EditarLibroView(PermissionRequiredMixin, UpdateView):
     template_name = 'libreria/editarLibro.html'
     model = Libro
     fields = '__all__'
-
+    permission_required = 'libreria.administrador'
+    raise_exception = True
+    
     def get_object(self):
         return get_object_or_404(Libro, pk=self.kwargs["pk"])
 
@@ -82,16 +89,20 @@ class EditarLibroView(UpdateView):
 
 # La siguiente clase permite eliminar Libros
 
-class EliminarLibroView(DeleteView):    
+class EliminarLibroView(PermissionRequiredMixin, DeleteView):    
     model = Libro
     success_url = reverse_lazy('libreria:librosAdmin')
+    permission_required = 'libreria.administrador'
+    raise_exception = True
 
 # La siguiente vista pemite insertar autores
 
-class InsertarAutorView(CreateView):
+class InsertarAutorView(PermissionRequiredMixin, CreateView):
     template_name = 'libreria/insertarAutor.html'
     form_class = AutorForm
     queryset = Autor.objects.all()
+    permission_required = 'libreria.administrador'
+    raise_exception = True
 
     def get_success_url(self):
         return reverse("libreria:insertarAutor")
@@ -104,27 +115,10 @@ class ListarAutoresView(generic.ListView):
     template_name = 'libreria/listarAutores.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # lista_Inputs = list(self.request.GET.keys())
-               
-        # if 'numeroAutores' in lista_Inputs:
-        #     if self.request.GET['numeroAutores'] != '':                
-        #         autores_por_pagina = int(self.request.GET['numeroAutores'])
-        #     else:
-        #         autores_por_pagina = 2
-        # else:
-        #     autores_por_pagina = 2
+        context = super().get_context_data(**kwargs)        
         autor_filter = Autor_Filter(self.request.GET, queryset=self.get_queryset())
         context['autor_filter'] = autor_filter
-        autores_filtrados_paginados = Paginator(autor_filter.qs, 5)
-        
-        
-        # if 'numeroDePagina' in lista_Inputs:
-        #     if self.request.GET['numeroDePagina'] != '':
-        #         numero_de_pagina = int(self.request.GET['numeroDePagina'])
-        #     else:
-        #         numero_de_pagina = None
-        # else:
+        autores_filtrados_paginados = Paginator(autor_filter.qs, 5)      
         numero_de_pagina = self.request.GET.get('page')
 
         autor_page = autores_filtrados_paginados.get_page(numero_de_pagina)
@@ -136,23 +130,29 @@ class DetallesAutorView(generic.DetailView):
     queryset = Autor.objects.all()
     context_object_name = 'autor'
 
-class EliminarAutorView(DeleteView):    
+class EliminarAutorView(PermissionRequiredMixin, DeleteView):    
     model = Autor
     success_url = reverse_lazy('libreria:listarAutores')
+    permission_required = 'libreria.administrador'
+    raise_exception = True
 
-class EditarAutorView(UpdateView):
+class EditarAutorView(PermissionRequiredMixin, UpdateView):
     template_name = 'libreria/editarAutor.html'
     form_class = AutorForm
-    model = Autor    
+    model = Autor
+    permission_required = 'libreria.administrador'
+    raise_exception = True 
 
     def get_object(self):
         return get_object_or_404(Autor, pk=self.kwargs["pk"])
 
 # La siguiente clase permite listar usuarios, tambien filtrarlos y paginarlos
 
-class ListarUsuariosView(generic.ListView):
+class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
     model = Usuario
     template_name = 'libreria/listarUsuarios.html'
+    permission_required = 'libreria.administrador'
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -168,6 +168,7 @@ class ListarUsuariosView(generic.ListView):
 
 # El siguiente metodo permite insertar un usuario y asignarle permiso de administrador, en caso de que tenga
 
+@permission_required('libreria.administrador', raise_exception=True)
 def insertar_usuario(request):
     if request.method == 'POST':
         form = UsuarioForm(request.POST, request.FILES)
@@ -206,7 +207,8 @@ def insertar_usuario(request):
 
 # El siguiente metodo permite editar un usuario y asignarle permiso de administrador, en caso de que tenga
 
-def editar_usuario(request, guid):
+@permission_required('libreria.administrador', raise_exception=True)
+def editar_usuario(request, guid):   
     usuario = get_object_or_404(Usuario, guid=guid)
     guid_usuario = usuario.guid
     user = usuario.user
@@ -281,4 +283,34 @@ def autenticar(request):
 def salir_sesion(request):
     logout(request)
     return redirect('libreria:librosAdmin')
+
+# La siguiente clase permite eliminar Libros
+
+class EliminarUsuarioView(PermissionRequiredMixin, DeleteView):  
+    model = User
+    success_url = reverse_lazy('libreria:listarUsuarios')
+    permission_required = 'libreria.administrador'
+    raise_exception = True
+
+# El siguiente metodo permite que un usuario se suscriba a un autor
+
+@login_required()
+def suscribirse_a_autor(request, pk):
+    user = User.objects.get(pk=request.user.pk)
+    usuario = user.usuario
+    autor = get_object_or_404(Autor, pk=pk)
+    autor.usuarios_suscritos.add(usuario)
+    return HttpResponseRedirect(reverse('libreria:listarAutores'))
+
+# El siguiente metodo anula la suscripcion de un usuario a un autor
+
+@login_required()
+def eliminar_suscripcion_autor(request, pk):
+    user = User.objects.get(pk=request.user.pk)
+    usuario = user.usuario
+    autor = get_object_or_404(Autor, pk=pk)
+    autor.usuarios_suscritos.remove(usuario)
+    return HttpResponseRedirect(reverse('libreria:listarAutores'))
+
+
 

@@ -14,7 +14,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'libreria:librosAdmin' %}">Mostrar libros</a></li>
-              <li><a class="dropdown-item"  href="{% url 'libreria:insertarLibro' %}">Insertar libro</a></li>
+              {% if perms.libreria.administrador %}
+                <li><a class="dropdown-item"  href="{% url 'libreria:insertarLibro' %}">Insertar libro</a></li>
+              {% endif %}
             </ul>
           </li>
 
@@ -24,19 +26,22 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'libreria:listarAutores' %}">Mostrar autores</a></li>
-              <li><a class="dropdown-item"  href="{% url 'libreria:insertarAutor' %}">Insertar autor</a></li>
+              {% if perms.libreria.administrador %}
+                <li><a class="dropdown-item"  href="{% url 'libreria:insertarAutor' %}">Insertar autor</a></li>
+              {% endif %}
             </ul>
           </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Usuarios
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
-              <li><a class="dropdown-item" href="{% url 'libreria:listarUsuarios' %}">Mostrar usuarios</a></li>
-              <li><a class="dropdown-item"  href="{% url 'libreria:insertarUsuario' %}">Insertar usuario</a></li>
-            </ul>
-          </li>            
+          {% if perms.libreria.administrador %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Usuarios
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownUsuarios">
+                <li><a class="dropdown-item" href="{% url 'libreria:listarUsuarios' %}">Mostrar usuarios</a></li>
+                <li><a class="dropdown-item"  href="{% url 'libreria:insertarUsuario' %}">Insertar usuario</a></li>
+              </ul>
+            </li>
+          {% endif %}       
         </ul>
         <ul id='usuario' class="nav navbar-nav">
           {% if request.user.is_authenticated %}           
