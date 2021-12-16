@@ -1,4 +1,5 @@
 import os
+from django.core.mail import send_mail
 from django.shortcuts import redirect, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Permission,User
@@ -12,6 +13,7 @@ from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
+from django.conf import settings
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter
 from .models import Libro, Autor, Review, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, ReviewForm
@@ -59,8 +61,23 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
     def get_success_url(self):
         return reverse("libreria:insertarLibro")
 
+# El siguiente metodo una vez que el formulario este correcto, envia un email a los usuarios suscritos
+# al autor del libro, informandole del nuevo libro publicado por el autor
+
     def form_valid(self, form):
-        
+        nombre_autor = form.cleaned_data['autor'].nombre
+        titulo_libro = form.cleaned_data['titulo']
+        lista_email_usuarios_suscritos = form.cleaned_data['autor'].get_emails_usuarios_suscritos()
+        if len(lista_email_usuarios_suscritos) > 0:
+            mensaje = f"""
+                Estimado lector, el autor: {nombre_autor}, ha publicado su nuevo libro: {titulo_libro}                
+            """
+            send_mail(
+                subject=str(settings.ASUNTO_EMAIL),
+                message=mensaje,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=lista_email_usuarios_suscritos
+            )
         form.save(commit=True)
         return super(InsertarLibroView, self).form_valid(form)
 

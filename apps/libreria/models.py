@@ -59,6 +59,15 @@ class Autor(models.Model):
     def cantidad_usuarios_suscritos(self):        
         return self.usuarios_suscritos.count()
 
+    # El siguiente metodo retorna una lista de los email de los usuarios suscritos al autor
+
+    def get_emails_usuarios_suscritos(self):
+        lista_emails = []
+        usuarios_suscritos = self.usuarios_suscritos.all()
+        for usuarios_suscrito in usuarios_suscritos:
+            lista_emails.append(usuarios_suscrito.user.email)
+        return lista_emails
+
     # Retorna los libros publicados
 
     def libros_publicados(self):        

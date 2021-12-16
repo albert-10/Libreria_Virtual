@@ -22,6 +22,15 @@ ALLOWED_HOSTS = []
 import sys
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = env('EMAIL_HOST')
+# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = env('EMAIL_PORT')
+# EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+# DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 # Application definition
 
@@ -38,6 +47,9 @@ INSTALLED_APPS = [
 
     'libreria.apps.LibreriaConfig'
 ]
+
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+ASUNTO_EMAIL = env('ASUNTO_EMAIL')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,8 +163,14 @@ if DEBUG == False:
     SECURE_REDIRECT_EXEMPT = []
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-    EMAIL_BACKEND = 'django.core.email.backends.smtp.EmailBackend'
+    
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = env('EMAIL_PORT')
+    EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+    DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
     
     ALLOWED_HOSTS = ['localhost']
     DATABASE = {
