@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import widgets
-from .models import Autor, Libro, Usuario
+from .models import Autor, Libro, Usuario, Review
 
 class LibroForm(forms.ModelForm):
 
@@ -65,3 +65,17 @@ class AutenticarForm(forms.Form):
 #     class Meta:
 #             model = Usuario
 #             fields = ['username', 'password']
+
+class ReviewForm(forms.Form):   
+    opinion = forms.CharField(widget=forms.Textarea(attrs={'class': 'noVisible'}))
+    CALIFICACIONES = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
+    )
+    calificacion = forms.ChoiceField(choices=CALIFICACIONES, label='')
+    # class Meta:
+    #         model = Review
+    #         fields = '__all__'

@@ -31,6 +31,8 @@ urlpatterns = [
 
     path('suscribirseAAutor/<pk>/', views.suscribirse_a_autor, name='suscribirseAAutor'),
     path('eliminarSuscripcionAutor/<pk>/', views.eliminar_suscripcion_autor, name='eliminarSuscripcionAutor'),
+
+    path('insertarReview/<uuid:guid>/<pk>/', views.insertar_review, name='insertarReview'),
 ]
 
 if settings.DEBUG:

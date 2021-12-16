@@ -13,8 +13,8 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter
-from .models import Libro, Autor, Usuario
-from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm
+from .models import Libro, Autor, Review, Usuario
+from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
 
 
@@ -312,5 +312,23 @@ def eliminar_suscripcion_autor(request, pk):
     autor.usuarios_suscritos.remove(usuario)
     return HttpResponseRedirect(reverse('libreria:listarAutores'))
 
+# El siguiente funcion permite crear una review
 
-
+@login_required()
+def insertar_review(request, guid, pk):
+    libro = get_object_or_404(Libro, id=pk) 
+    if request.method == 'POST':
+        usuario = get_object_or_404(Usuario, guid=guid)               
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            opinion = form.cleaned_data.get('opinion') 
+            calificacion = form.cleaned_data.get('calificacion')                     
+            Review.objects.create(usuario=usuario, libro=libro, opinion=opinion, calificacion=calificacion)
+            messages.success(request, "Review creada correctamente")
+            return HttpResponseRedirect(reverse('libreria:insertarReview', args=(guid, pk)))
+        else:
+            messages.error(request, "Campo incorrecto")
+            return render(request, 'libreria/insertarReview.html', {'form':form, 'guid': guid, 'pk': pk, 'libro_titulo': libro.titulo})
+    else:        
+        form = ReviewForm()
+        return render(request = request, template_name = "libreria/insertarReview.html", context={'form':form ,'libro_titulo': libro.titulo})

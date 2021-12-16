@@ -47,7 +47,7 @@
                 <th>Cantidad de páginas</th>
                 <th>Fecha de publicación</th>
                 <th>ISBN</th>
-                {% if perms.libreria.administrador %}
+                {% if request.user.is_authenticated %}
                   <th id="operaciones" colspan="2">Operaciones</th> 
                 {% endif %}          
               </tr>
@@ -61,9 +61,11 @@
                   <td>{{libro.cantidad_paginas}}</td>
                   <td>{{libro.fecha_publicacion}}</td>
                   <td>{{libro.isbn}}</td>
+                  {% if request.user.is_authenticated %}
+                    <td><a class="btn btn-info" href="{% url 'libreria:insertarReview' request.user.usuario.guid libro.id %}">Hacer review</a></td>
+                  {% endif %}
                   {% if perms.libreria.administrador %}         
-                    <td><a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}">Editar</a></td>
-
+                    <td><a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}">Editar</a></td>                    
                     <td>
                       <form method="post" action="{% url 'libreria:eliminarLibro' libro.id %}">
                         {% csrf_token %}               

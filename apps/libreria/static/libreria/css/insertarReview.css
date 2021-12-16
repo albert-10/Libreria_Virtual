@@ -1,21 +1,29 @@
-#contenedorAlertaErrorFormulario{
+.checked{
+    color: orange
+}
+
+#id_calificacion{
+    display: none;
+}
+
+#contenedorAlertaFormulario{
     margin: 0.5%;
     display: grid;
     grid-template-columns: repeat(9, 1fr);  
     align-items: center;
 }
 
-#alertaErrorFormulario{
+#alertaFormulario{
     grid-column-start: 4;
     grid-column-end: 7;
     text-align: center;
 }
 
-.contenedorInsertarEditarUsuario{
+.contenedorInsertarReview{
     margin: 0.5%;
     display: grid;
-    grid-template-columns: repeat(9, 1fr);  
-    align-items: center;
+    grid-template-columns: repeat(9, 1fr); 
+    align-items: start;
 }
 
 #cardFormulario{
@@ -23,16 +31,11 @@
     grid-column-end: 7;  
 }
 
-.card-header{
-    text-align: center;
-}
-
 form {
     width: 100%;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: 1fr;
-    /* grid-template-rows: repeat(5, 1fr); */
 }
 
 #botones{    
@@ -50,4 +53,8 @@ form {
 #reset{
     grid-column-start: 4;
     grid-column-end: 5;
+}
+
+#volver{
+    align-self: start;
 }
