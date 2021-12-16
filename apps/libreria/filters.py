@@ -18,7 +18,6 @@ class Libro_Filter(django_filters.FilterSet):
 		choices=CHOICES,
 		method='filter_by_order',
 		widget=Select(attrs={'class':'form-control', 'placeholder':'Sin orden'}),
-
 	)
 
 	despues_fecha = DateFilter(
@@ -104,4 +103,44 @@ class Usuario_Filter(django_filters.FilterSet):
 
 	class Meta:
 		model = Usuario
-		fields = ['first_name', 'username']	
+		fields = ['first_name', 'username']
+
+class Review_Filter(django_filters.FilterSet):	
+
+	CHOICES_CALIFICACION = (
+		(1, 1),
+		(2, 2),
+		(3, 3),
+		(4, 4),
+		(5, 5)
+	)
+
+	calificacion = django_filters.ChoiceFilter(
+		label='Filtrar por calificacion:',
+		choices=CHOICES_CALIFICACION,
+		widget=Select(attrs={'class':'form-control', 'placeholder':'Sin orden'}),
+	)
+
+	CHOICES = (
+		('ascendente', 'ascendente'),
+		('descendente', 'descendente'),
+	)
+
+	# Permite ordenar los libros de acuerdo a su calificacion promedio: ascendente o descendente
+
+	def filtrar_fecha_creacion(self, queryset, name, value):
+		if value == 'ascendente':
+			queryset = queryset.order_by('fecha_creada')
+		else:
+			queryset = queryset.order_by('-fecha_creada')
+		return queryset
+
+	fecha_creada = django_filters.ChoiceFilter(
+		label='Fecha de creación',
+		choices=CHOICES,
+		method='filtrar_fecha_creacion',
+		widget=Select(attrs={'class':'form-control'}))
+
+	class Meta:
+		model = Review
+		fields = ['calificacion']

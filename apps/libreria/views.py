@@ -12,7 +12,7 @@ from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
-from .filters import Libro_Filter, Autor_Filter, Usuario_Filter
+from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter
 from .models import Libro, Autor, Review, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
@@ -332,3 +332,18 @@ def insertar_review(request, guid, pk):
     else:        
         form = ReviewForm()
         return render(request = request, template_name = "libreria/insertarReview.html", context={'form':form ,'libro_titulo': libro.titulo})
+
+
+class ListarReviewsView(generic.ListView):
+    model = Review
+    template_name = 'libreria/listarReviews.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)        
+        review_filter = Review_Filter(self.request.GET, queryset=self.get_queryset())
+        context['review_filter'] = review_filter
+        reviews_filtradas_paginadas = Paginator(review_filter.qs, 5)           
+        numero_de_pagina = self.request.GET.get('page')
+        review_page = reviews_filtradas_paginadas.get_page(numero_de_pagina)        
+        context['review_page'] = review_page
+        return context

@@ -113,6 +113,9 @@ class Review(models.Model):
     opinion = models.TextField()
     calificacion = models.IntegerField(choices=CALIFICACION)
 
+    class Meta:
+        ordering = ["-calificacion"]
+
     def __str__(self):
         return f"{self.usuario.get_username()} - {self.libro.get_titulo()} - {self.calificacion}"
 
