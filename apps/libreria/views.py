@@ -19,7 +19,6 @@ from .models import Libro, Autor, Review, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
 
-
 # La siguiente vista retorna libros segun el filtro que realice el usuario
 
 class LibrosView(generic.ListView):
@@ -172,15 +171,16 @@ class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
     raise_exception = True
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-       
+        context = super().get_context_data(**kwargs)       
         usuario_filter = Usuario_Filter(self.request.GET, queryset=self.get_queryset())
         context['usuario_filter'] = usuario_filter
         usuarios_filtrados_paginados = Paginator(usuario_filter.qs, 5)
        
         numero_de_pagina = self.request.GET.get('page')
         usuario_page = usuarios_filtrados_paginados.get_page(numero_de_pagina)
+        cantidad_usuarios = Usuario.objects.all().count()
         context['usuario_page'] = usuario_page
+        context['cantidad_usuarios'] = cantidad_usuarios
         return context
 
 # El siguiente metodo permite insertar un usuario y asignarle permiso de administrador, en caso de que tenga
@@ -240,12 +240,13 @@ def editar_usuario(request, guid):
                 email = form.cleaned_data.get('email')
                 first_name = form.cleaned_data.get('first_name')
                 password = form.cleaned_data.get('password')
+                imagen = form.cleaned_data.get('imagen')
 
                 # Eliminando antigua imagen
                 
-                if len(request.FILES) > 0:
-                    os.remove(usuario.imagen.path)                    
-                imagen = form.cleaned_data.get('imagen')
+                if not usuario.imagen == '':
+                    os.remove(usuario.imagen.path)               
+                
                 es_Administrador = form.cleaned_data.get('is_admin')
                 
                 usuario.imagen = imagen

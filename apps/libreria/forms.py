@@ -48,23 +48,6 @@ class AutenticarForm(forms.Form):
 
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
-   
-    # class Meta:            
-    #         fields = ['first_name', 'email', 'username', 'password', 'password_confirm','imagen','is_admin']
-
-# class SignUpForm(UserCreationForm):
-#     class Meta:
-#         model = Usuario
-#         fields = ('email',)
-
-# class AutenticarForm(forms.Form):
-
-#     username = forms.TimeField()
-#     password = forms.CharField(widget=forms.PasswordInput)
-   
-#     class Meta:
-#             model = Usuario
-#             fields = ['username', 'password']
 
 class ReviewForm(forms.Form):   
     opinion = forms.CharField(widget=forms.Textarea(attrs={'class': 'noVisible'}))

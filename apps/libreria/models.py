@@ -68,6 +68,7 @@ class Autor(models.Model):
             lista_emails.append(usuarios_suscrito.user.email)
         return lista_emails
 
+
     # Retorna los libros publicados
 
     def libros_publicados(self):        
@@ -86,7 +87,7 @@ class Autor(models.Model):
 
 class Usuario(models.Model):
     guid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)    
-    imagen = models.ImageField(upload_to='usuario_imagenes')
+    imagen = models.ImageField(upload_to='usuario_imagenes', default='', blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     reviews = models.ManyToManyField(Libro, through='Review')
     fecha_registro = models.DateField(auto_now_add=True)
