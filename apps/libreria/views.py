@@ -14,7 +14,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from django.conf import settings
-from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter
+from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter, Review_Libro_Filter
 from .models import Libro, Autor, Review, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, RegistrarForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
@@ -397,4 +397,21 @@ class ListarReviewsView(generic.ListView):
         numero_de_pagina = self.request.GET.get('page')
         review_page = reviews_filtradas_paginadas.get_page(numero_de_pagina)        
         context['review_page'] = review_page
+        return context
+
+# La siguiente vista permite mostrar las reviews de un libro
+
+class ListarReviewsLibroView(DetailView):
+    
+    model = Libro
+    template_name = 'libreria/listarReviewsLibro.html'
+
+    def get_context_data(self, **kwargs):       
+        context = super().get_context_data(**kwargs)
+        review_libro_filter = Review_Libro_Filter(self.request.GET, queryset=Review.objects.filter(libro=context['libro']))
+        context['review_libro_filter'] = review_libro_filter
+        reviews_filtradas_paginadas = Paginator(review_libro_filter.qs, 5)
+        numero_de_pagina = self.request.GET.get('page')
+        review_page = reviews_filtradas_paginadas.get_page(numero_de_pagina)  
+        context['review_libro_filter_page'] = review_page
         return context

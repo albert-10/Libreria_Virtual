@@ -48,7 +48,9 @@
                 <th>Fecha de publicación</th> -->
                 <th>ISBN</th>
                 {% if request.user.is_authenticated %}
-                  <th id="operaciones" colspan="3">Operaciones</th> 
+                  <th id="operaciones" colspan="4">Operaciones</th>
+                {% else%}
+                  <th id="operaciones">Operaciones</th>
                 {% endif %}          
               </tr>
               
@@ -57,10 +59,9 @@
                 <tr>
                   <td>{{libro.titulo}}</td>
                   <td>{{libro.autor}}</td>
-                  <td>{{libro.nombre_editorial}}</td>
-                  <!-- <td>{{libro.cantidad_paginas}}</td>
-                  <td>{{libro.fecha_publicacion}}</td> -->
+                  <td>{{libro.nombre_editorial}}</td>                  
                   <td>{{libro.isbn}}</td>
+                  <td><a class="btn btn-info" href="{% url 'libreria:listarReviewsLibro' libro.id %}">Reviews</a></td>
                   {% if request.user.is_authenticated %}
                     <td><a class="btn btn-info" href="{% url 'libreria:insertarReview' request.user.usuario.guid libro.id %}">Hacer review</a></td>
                   {% endif %}
