@@ -9,7 +9,8 @@ app_name = 'libreria'
 urlpatterns = [
 
     path('autenticar/', views.autenticar, name='autenticar'),
-    path('salirSesion/', views.salir_sesion, name='salirSesion'),    
+    path('salirSesion/', views.salir_sesion, name='salirSesion'),
+    path('registrarUsuario/', views.registrar_usuario, name='registrarUsuario'),    
 
     # path('', views.LibrosView.as_view(), name='libros'),  
     path('', views.LibrosAdminView.as_view(), name='librosAdmin'), 

@@ -49,6 +49,24 @@ class AutenticarForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+class RegistrarForm(forms.Form):
+    first_name = forms.CharField()
+    username = forms.CharField()
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    password_confirm = forms.CharField(widget=forms.PasswordInput)
+    imagen = forms.ImageField(required = False)
+
+    #La siguiente funcionalidad agrega un error al formulario si los passwords no coinciden
+
+    def clean(self):
+        cleaned_data = super(RegistrarForm, self).clean()
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get("password_confirm")       
+        if password != password_confirm:                     
+            self.add_error('password', "Passwords no coinciden")
+            self.add_error('password_confirm', "Passwords no coinciden")
+
 class ReviewForm(forms.Form):   
     opinion = forms.CharField(widget=forms.Textarea(attrs={'class': 'noVisible'}))
     CALIFICACIONES = (

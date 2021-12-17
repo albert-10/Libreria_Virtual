@@ -16,7 +16,7 @@ from django.views.generic.edit import  UpdateView, DeleteView, CreateView
 from django.conf import settings
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter
 from .models import Libro, Autor, Review, Usuario
-from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, ReviewForm
+from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, RegistrarForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
 
 # La siguiente vista retorna libros segun el filtro que realice el usuario
@@ -275,6 +275,39 @@ def editar_usuario(request, guid):
     form = UsuarioForm(datos)    
     return render(request = request, template_name = "libreria/editarUsuario.html", context={"form":form, 'guid_usuario': guid_usuario})
 
+
+# La siguiente view permite que un usuario se registre
+
+def registrar_usuario(request):
+    if request.method == 'POST':
+        form = RegistrarForm(request.POST, request.FILES)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')            
+            email = form.cleaned_data.get('email')
+            first_name = form.cleaned_data.get('first_name')
+            password = form.cleaned_data.get('password')
+            imagen = form.cleaned_data.get('imagen')
+            User = get_user_model()
+            user, es_usuario_creado = User.objects.get_or_create(
+                username=username,
+                defaults={'username':username, 'email':email, 'first_name':first_name},
+            )
+            if es_usuario_creado:
+                user.set_password(password)
+                user.save() 
+                Usuario.objects.create(imagen=imagen, user=user)
+                login(request, user)             
+                return HttpResponseRedirect(reverse('libreria:librosAdmin',))          
+            
+            else:
+                messages.error(request, "Los campos no son válidos")
+                form.add_error('username', 'El username ya existe')
+                return render(request, 'libreria/registrarUsuario.html', {'form':form})
+        else:
+            messages.error(request, "Los campos no son válidos")
+            return render(request = request, template_name = "libreria/registrarUsuario.html", context={"form":form})  
+    form = RegistrarForm()
+    return render(request = request, template_name = "libreria/registrarUsuario.html", context={"form":form})
 
 # El siguiente metodo permite autenticar un usuario
 
