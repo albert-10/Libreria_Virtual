@@ -8,8 +8,8 @@
 }
 
 .formulario{
-    grid-column-start: 3;
-    grid-column-end: 7;
+    grid-column-start: 2;
+    grid-column-end: 8;
     grid-row-start: 1;    
     grid-row-end: 2;
 
@@ -33,7 +33,7 @@ form{
     grid-gap: 10px;
     justify-items: stretch;
     align-items: center;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .camposFormularioExtras{

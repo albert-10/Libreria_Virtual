@@ -40,7 +40,7 @@ class LibrosAdminView(generic.ListView):
 # de acuerdo al filtro de libros que se haya aplicado
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)        
         libro_filter = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         context['libro_filter'] = libro_filter
         libros_filtrados_paginados = Paginator(libro_filter.qs, 5)
@@ -174,7 +174,7 @@ class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)       
         usuario_filter = Usuario_Filter(self.request.GET, queryset=self.get_queryset())
         context['usuario_filter'] = usuario_filter
-        usuarios_filtrados_paginados = Paginator(usuario_filter.qs, 5)
+        usuarios_filtrados_paginados = Paginator(usuario_filter.qs, 2)
        
         numero_de_pagina = self.request.GET.get('page')
         usuario_page = usuarios_filtrados_paginados.get_page(numero_de_pagina)

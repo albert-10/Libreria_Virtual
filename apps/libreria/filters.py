@@ -1,4 +1,4 @@
-from django.forms.widgets import DateInput, Select, TextInput
+from django.forms.widgets import DateInput, NumberInput, Select, TextInput
 from django.db.models import Avg
 import django_filters
 from .models import *
@@ -40,11 +40,18 @@ class Libro_Filter(django_filters.FilterSet):
 		field_name='autor__nombre',
 		lookup_expr='iexact',
 		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Autor'}))
-	
 
-	class Meta:
-		model = Libro
-		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']		
+	offset = django_filters.NumberFilter(
+		label='',
+		method='a_partir_de_usuario',
+		widget=NumberInput(attrs={'class':'form-control', 'placeholder':'A partir del libro', 'min': '1', 'step': '1'})
+	)
+
+	limit = django_filters.NumberFilter(
+		label='',		
+		method='cantidad_usuarios',
+		widget=NumberInput(attrs={'class':'form-control', 'placeholder':'Cantidad de libros', 'min': '1', 'step': '1'})
+	)
 
 	# Permite ordenar los libros de acuerdo a su calificacion promedio: ascendente o descendente
 
@@ -55,6 +62,23 @@ class Libro_Filter(django_filters.FilterSet):
 			queryset = queryset.annotate(calificacion_promedio=Avg('review__calificacion')).order_by('-calificacion_promedio')
 		
 		return queryset
+
+	# Permite obtener los usuarios a partir el usuario value - 1, 
+	
+	def a_partir_de_usuario(self, queryset, name, value):		
+		return queryset[value - 1:]
+
+	# Permite obtener value cantidad de usuarios
+
+	def cantidad_usuarios(self, queryset, name, value):
+		return queryset[:value]	
+	
+
+	class Meta:
+		model = Libro
+		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']		
+
+	
 
 # La siguiente clase permite filtrar los autores por los campos: 'nombre', 'nacionalidad', 'despues_fecha', 'antes_fecha'
 
@@ -100,6 +124,17 @@ class Usuario_Filter(django_filters.FilterSet):
 		field_name='user__username',
 		lookup_expr='exact',
 		widget=TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
+
+	limit = django_filters.NumberFilter(
+		label='',		
+		method='cantidad_usuarios',
+		widget=NumberInput(attrs={'class':'form-control', 'placeholder':'Cantidad de usuarios', 'min': '1', 'step': '1'})
+	)
+
+	# Permite obtener value cantidad de usuarios
+
+	def cantidad_usuarios(self, queryset, name, value):
+		return queryset[:value]	
 
 	class Meta:
 		model = Usuario
