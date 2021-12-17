@@ -130,7 +130,7 @@ class ListarAutoresView(generic.ListView):
     model = Autor
     template_name = 'libreria/listarAutores.html'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):             
         context = super().get_context_data(**kwargs)        
         autor_filter = Autor_Filter(self.request.GET, queryset=self.get_queryset())
         context['autor_filter'] = autor_filter
@@ -168,7 +168,12 @@ class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
     model = Usuario
     template_name = 'libreria/listarUsuarios.html'
     permission_required = 'libreria.administrador'
-    raise_exception = True
+    permission_denied_message = 'El usuario no tiene los permisos requeridos'
+    raise_exception = True    
+
+    def handle_no_permission(self):
+        messages.error(self.request, 'You dont have permission to do this')
+        return super(ListarUsuariosView, self).handle_no_permission()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)       
@@ -342,6 +347,14 @@ class EliminarUsuarioView(PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('libreria:listarUsuarios')
     permission_required = 'libreria.administrador'
     raise_exception = True
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        usuario = self.object.usuario
+        if not usuario.imagen == '':
+            os.remove(usuario.imagen.path)
+        self.object.delete()
+        return HttpResponseRedirect(self.success_url)
 
 # El siguiente metodo permite que un usuario se suscriba a un autor
 

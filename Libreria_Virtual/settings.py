@@ -17,12 +17,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
+
 ALLOWED_HOSTS = []
 
 import sys
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_URL = '/autenticar/'
 
 # Application definition
 
@@ -51,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'libreria.middlewares.middlewareException.Middleware_Manejador_Errores'
 ]
 
 ROOT_URLCONF = 'Libreria_Virtual.urls'
