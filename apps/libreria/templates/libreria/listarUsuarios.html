@@ -60,12 +60,16 @@
                                     
                                     <td>{{usuario.fecha_registro}}</td>
                                     <td>{{usuario.cantidad_autores_suscritos}}</td>
-                                    <td class='botonesOperaciones'>                                                                                 
-                                        <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}">Editar</a>
+                                    <td>                                                                                 
+                                        <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                            <i class="fas fa-edit" aria-hidden="true"></i>
+                                        </a>
                                         {% if request.user != usuario.user %}                        
-                                            <form method="post" action="{% url 'libreria:eliminarUsuario' usuario.user.id %}">
+                                            <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarUsuario' usuario.user.id %}">
                                             {% csrf_token %}               
-                                                <input type="submit" class="btn btn-danger" value="Eliminar">
+                                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
                                             </form>
                                         {% endif %} 
                                     </td>

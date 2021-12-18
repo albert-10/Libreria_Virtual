@@ -1,4 +1,4 @@
-.fa{
+.fa-star{
     color: orange
 }
 
@@ -67,4 +67,8 @@ ul.pagination{
     grid-row-end: 4;
 
     text-align: center;
+}
+
+#eliminarFormulario{
+    display: inline;
 }

@@ -76,9 +76,11 @@
                           <td>{{review.fecha_creada|timezone:"Canada/Eastern"}}</td>
                           {% if perms.libreria.administrador %}
                             <td>                                                      
-                                <form method="post" action="#">
+                                <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarReview' review.id %}" >
                                 {% csrf_token %}               
-                                    <input type="submit" class="btn btn-danger" value="Eliminar">
+                                  <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                  </button>
                                 </form>
                             </td>
                           {% endif %}

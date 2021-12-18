@@ -34,6 +34,7 @@ urlpatterns = [
     path('insertarReview/<uuid:guid>/<pk>/', views.insertar_review, name='insertarReview'),
     path('listarReviews/', views.ListarReviewsView.as_view(), name='listarReviews'),
     path('listarReviewsLibro/<pk>/', views.ListarReviewsLibroView.as_view(), name='listarReviewsLibro'),
+    path('eliminarReview/<pk>/', views.EliminarReviewView.as_view(), name='eliminarReview'),
 ]
 
 if settings.DEBUG:

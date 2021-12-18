@@ -41,8 +41,8 @@ form{
 }
 
 .contenedorTabla{
-    grid-column-start: 2;
-    grid-column-end: 8;
+    grid-column-start: 3;
+    grid-column-end: 7;
 
     grid-row-start:2;
     grid-row-end:-1;
@@ -88,15 +88,23 @@ ul.pagination{
     justify-content: space-between;    
 } */
 
-.botonesOperacionesNoAdmin{
+/* .botonesOperacionesNoAdmin{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 5px; 
+    column-gap: 5px;
+    align-content: center;
+    justify-content: start;
 }
 
 .botonesOperacionesAdmin{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 5px;
+    column-gap: 10px;
     align-content: center;
+    justify-content: start;
+} */
+
+
+#eliminarFormulario{
+    display: inline;
 }

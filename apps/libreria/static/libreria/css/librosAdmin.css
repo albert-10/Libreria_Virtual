@@ -79,3 +79,7 @@ form{
 ul.pagination{
     justify-content: center; 
 }
+
+#eliminarFormulario{
+    display: inline;
+}

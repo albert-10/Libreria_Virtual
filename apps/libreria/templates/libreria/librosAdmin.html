@@ -47,11 +47,9 @@
                 <!-- <th>Cantidad de páginas</th>
                 <th>Fecha de publicación</th> -->
                 <th>ISBN</th>
-                {% if request.user.is_authenticated %}
-                  <th id="operaciones" colspan="4">Operaciones</th>
-                {% else%}
-                  <th id="operaciones" colspan="2">Operaciones</th>
-                {% endif %}          
+                
+                  <th id="operaciones">Operaciones</th>
+                       
               </tr>
               
               {% for libro in libro_page %}
@@ -61,20 +59,31 @@
                   <td>{{libro.autor}}</td>
                   <td>{{libro.nombre_editorial}}</td>                  
                   <td>{{libro.isbn}}</td>
-                  <td><a class="btn btn-info" href="{% url 'libreria:listarReviewsLibro' libro.id %}">Reviews</a></td>
+                  <td>
+                    <a class="btn btn-info" href="{% url 'libreria:listarReviewsLibro' libro.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Reviews">
+                      <i class="fa fa-comments" aria-hidden="true"></i>
+                    </a>
                   {% if request.user.is_authenticated %}
-                    <td><a class="btn btn-info" href="{% url 'libreria:insertarReview' request.user.usuario.guid libro.id %}">Hacer review</a></td>
+                    <a class="btn btn-info" href="{% url 'libreria:insertarReview' request.user.usuario.guid libro.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Hacer review">
+                      <i class="fas fa-comment" aria-hidden="true"></i>
+                    </a>                      
                   {% else %}
-                    <td><a class="btn btn-info" href="{% url 'libreria:autenticar' %}">Hacer review</a></td>
+                    <a class="btn btn-info" href="{% url 'libreria:autenticar' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Hacer review">
+                      <i class="fas fa-comment" aria-hidden="true"></i>
+                    </a>
                   {% endif %}
                   {% if perms.libreria.administrador %}         
-                    <td><a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}">Editar</a></td>                    
-                    <td>
-                      <form method="post" action="{% url 'libreria:eliminarLibro' libro.id %}">
+                    <a class="btn btn-primary" href="{% url 'libreria:editarLibro' libro.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                      <i class="fas fa-edit" aria-hidden="true"></i>
+                    </a>               
+                    
+                      <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarLibro' libro.id %}">
                         {% csrf_token %}               
-                            <input type="submit" class="btn btn-danger" value="Eliminar">
+                          <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                          </button> 
                       </form>
-                    </td>
+                    
                   {% endif %}
                 </tr>				    
               {% endfor %}           

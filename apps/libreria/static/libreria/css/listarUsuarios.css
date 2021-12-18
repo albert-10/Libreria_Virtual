@@ -94,3 +94,7 @@ ul.pagination{
     height: 100px;
     align-items: center;
 }
+
+#eliminarFormulario{
+    display: inline;
+}

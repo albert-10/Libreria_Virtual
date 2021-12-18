@@ -453,3 +453,12 @@ class ListarReviewsLibroView(DetailView):
         review_page = reviews_filtradas_paginadas.get_page(numero_de_pagina)  
         context['review_libro_filter_page'] = review_page
         return context
+
+
+# La siguiente clase permite eliminar una review
+
+class EliminarReviewView(PermissionRequiredMixin, DeleteView):    
+    model = Review
+    success_url = reverse_lazy('libreria:listarReviews')
+    permission_required = 'libreria.administrador'
+    raise_exception = True
