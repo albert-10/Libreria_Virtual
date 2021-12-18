@@ -9,8 +9,8 @@ class LibroForm(forms.ModelForm):
             model = Libro
             fields = '__all__'
             widgets = {
-                'fecha_publicacion': forms.DateInput(attrs={'type':'date'}),
-                'cantidad_paginas': forms.NumberInput(attrs={'min': '1'})
+                'fecha_publicacion': forms.DateInput(attrs={'type':'date'}),                
+                'cantidad_paginas': forms.TextInput(attrs={'min':1,'step': '1','type': 'number'})
             }
 
 class AutorForm(forms.ModelForm):
@@ -77,6 +77,4 @@ class ReviewForm(forms.Form):
         (5, 5)
     )
     calificacion = forms.ChoiceField(choices=CALIFICACIONES, label='')
-    # class Meta:
-    #         model = Review
-    #         fields = '__all__'
+   

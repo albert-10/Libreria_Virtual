@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load libreria_extras %}
+{% load tz %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'libreria/css/listarReviewsLibro.css' %}"> 
@@ -66,7 +67,7 @@
                                 {% endif %}
                                 </td>
                                 <td>{{ review.opinion|truncatechars:30 }}</td>
-                                <td>{{review.fecha_creada}}</td>
+                                <td>{{review.fecha_creada|timezone:"Canada/Eastern" }}</td>
                             </tr>				    
                         {% endfor %}           
 

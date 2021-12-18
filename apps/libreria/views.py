@@ -13,6 +13,7 @@ from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter, Review_Libro_Filter
 from .models import Libro, Autor, Review, Usuario
@@ -39,7 +40,7 @@ class LibrosAdminView(generic.ListView):
 # El siguiente metodo permite obtener un page de libro,
 # de acuerdo al filtro de libros que se haya aplicado
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):              
         context = super().get_context_data(**kwargs)        
         libro_filter = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         context['libro_filter'] = libro_filter
@@ -77,8 +78,13 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=lista_email_usuarios_suscritos
             )
+        messages.success(self.request, "Libro insertado correctamente")
         form.save(commit=True)
         return super(InsertarLibroView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Campos no válidos")
+        return render(self.request, 'libreria/insertarLibro.html', {'form':form})        
 
 # La siguiente clase permite editar Libros
 
@@ -99,9 +105,13 @@ class EditarLibroView(PermissionRequiredMixin, UpdateView):
         if len(self.request.FILES) > 0:
             libro = self.get_object()
             os.remove(libro.archivo_libro.path)
-        
+        messages.success(self.request, "Libro editado correctamente")
         form.save(commit=True)
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Campos no válidos")
+        return render(self.request, 'libreria/editarLibro.html', {'form':form}) 
 
 # La siguiente clase permite eliminar Libros
 
@@ -123,8 +133,13 @@ class InsertarAutorView(PermissionRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("libreria:insertarAutor")
 
-    def form_valid(self, form):       
+    def form_valid(self, form):
+        messages.success(self.request, "Autor insertado correctamente")    
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Campos no válidos")
+        return render(self.request, 'libreria/insertarAutor.html', {'form':form})
 
 class ListarAutoresView(generic.ListView):
     model = Autor
@@ -157,10 +172,20 @@ class EditarAutorView(PermissionRequiredMixin, UpdateView):
     form_class = AutorForm
     model = Autor
     permission_required = 'libreria.administrador'
-    raise_exception = True 
-
+    raise_exception = True
+    
     def get_object(self):
         return get_object_or_404(Autor, pk=self.kwargs["pk"])
+
+    def form_valid(self, form):
+        print('ldfjsf')     
+        messages.success(self.request, "Autor editado correctamente")
+        form.save(commit=True)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Campos no válidos")
+        return render(self.request, 'libreria/editarAutor.html', {'form':form})
 
 # La siguiente clase permite listar usuarios, tambien filtrarlos y paginarlos
 
@@ -213,7 +238,7 @@ def insertar_usuario(request):
                 user.set_password(password)
                 user.save() 
                 Usuario.objects.create(imagen=imagen, user=user)
-                messages.success(request, "Usuario Editado correctamente")
+                messages.success(request, "Usuario insertado correctamente")
                 return HttpResponseRedirect(reverse('libreria:insertarUsuario',))          
             
             else:

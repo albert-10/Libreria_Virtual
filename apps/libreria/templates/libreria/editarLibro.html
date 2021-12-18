@@ -8,9 +8,21 @@
 
 {% block content %}
 
+<!-- Aqui se muestran los mensajes cuando se realiza una accion con el formulario -->
+
+{% for message in messages %}
+    <div id='contenedorAlertaFormulario'>
+        <div id='alertaFormulario' class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>     
+{% endfor %}
+
 <!-- A continuacion se muestra un formulario para editar libros -->
 
 <div class="contenedorInsertarLibro">
+    <a id='volver' class="btn btn-primary" href="{% url 'libreria:librosAdmin' %}">&laquo; Volver</a>
     <div id='cardFormulario' class="card text-dark bg-light mb-3">
         <div class="card-header"><h6 id='titulo'>Editar Libro</h6></div>
         <div class="card-body">

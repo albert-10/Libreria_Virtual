@@ -3,11 +3,24 @@
 {% load crispy_forms_tags %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'libreria/css/insertarEditarAutor.css' %}"> 
+  <link rel="stylesheet" href="{% static 'libreria/css/editarAutor.css' %}"> 
 {% endblock extra_head %}
 
 {% block content %}
+
+    <!-- Aqui se muestran los mensajes cuando se realiza una accion con el formulario -->
+
+    {% for message in messages %}    
+        <div id='contenedorAlertaFormulario'>
+            <div id='alertaFormulario' class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    {% endfor %}
+
     <div class="contenedorInsertarEditarAutor">
+        <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarAutores' %}">&laquo; Volver</a>
         <div id='cardFormulario' class="card text-dark bg-light mb-3">
             <div class="card-header"><h6 id="titulo">Editar Autor</h6></div>
             <div class="card-body">

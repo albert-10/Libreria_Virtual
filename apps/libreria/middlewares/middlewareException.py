@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 
 # El siguiente middleware redirigira al usuario, cuando haya un error, hacia una pagina, donde
 # se muestra un mensaje relacionado al error
@@ -15,7 +16,9 @@ class Middleware_Manejador_Errores:
         return response
 
     def process_exception(self, request, exception):
-        if isinstance(exception, PermissionDenied):
-            return render(request,'permisosDenegados.html')
-        return render(request,'errorInesperado.html')
+        
+        if not settings.DEBUG:
+            if isinstance(exception, PermissionDenied):
+                return render(request,'permisosDenegados.html')
+            return render(request,'errorInesperado.html')
         

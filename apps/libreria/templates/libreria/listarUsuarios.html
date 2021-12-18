@@ -60,8 +60,7 @@
                                     
                                     <td>{{usuario.fecha_registro}}</td>
                                     <td>{{usuario.cantidad_autores_suscritos}}</td>
-                                    <td class='botonesOperaciones'>
-                                        <a class="btn btn-info" href="#">Detalles</a>                                          
+                                    <td class='botonesOperaciones'>                                                                                 
                                         <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}">Editar</a>
                                         {% if request.user != usuario.user %}                        
                                             <form method="post" action="{% url 'libreria:eliminarUsuario' usuario.user.id %}">

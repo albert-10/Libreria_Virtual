@@ -1,3 +1,15 @@
+#contenedorAlertaFormulario{
+    margin: 0.5%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);  
+    align-items: center;
+}
+
+#alertaFormulario{
+    grid-column-start: 2;
+    grid-column-end: 5;
+    text-align: center;
+}
 .contenedorInsertarLibro{
     margin: 0.5%;
     display: grid;
