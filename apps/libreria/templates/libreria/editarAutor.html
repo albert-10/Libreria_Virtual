@@ -20,7 +20,9 @@
     {% endfor %}
 
     <div class="contenedorInsertarEditarAutor">
-        <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarAutores' %}">&laquo; Volver</a>
+        <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarAutores' %}">
+            <i class="fa fa-arrow-left" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Volver a Mostrar Autores"></i> Volver</a>
+        </a>
         <div id='cardFormulario' class="card text-dark bg-light mb-3">
             <div class="card-header"><h6 id="titulo">Editar Autor</h6></div>
             <div class="card-body">

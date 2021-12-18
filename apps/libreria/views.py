@@ -204,7 +204,7 @@ class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)       
         usuario_filter = Usuario_Filter(self.request.GET, queryset=self.get_queryset())
         context['usuario_filter'] = usuario_filter
-        usuarios_filtrados_paginados = Paginator(usuario_filter.qs, 2)
+        usuarios_filtrados_paginados = Paginator(usuario_filter.qs, 5)
        
         numero_de_pagina = self.request.GET.get('page')
         usuario_page = usuarios_filtrados_paginados.get_page(numero_de_pagina)
@@ -262,7 +262,7 @@ def editar_usuario(request, guid):
     if request.method == 'POST':
         form = UsuarioForm(request.POST, request.FILES)
         if form.is_valid():            
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username')            
             User = get_user_model()
             username_usado = User.objects.filter(~Q(id=user.pk) & Q(username=username)).exists()
             if not username_usado:
@@ -289,7 +289,19 @@ def editar_usuario(request, guid):
                 if es_Administrador:
                     permission = Permission.objects.get(codename='administrador')
                     user.user_permissions.add(permission)
+                else:
+                    user.user_permissions.clear()
                 user.save()
+
+                # Cuando el usuario se esta editando a si mismo, se autenticara otra vez. En caso que no se edite como
+                # Administrador se redirigira a la pagina librosAdmin
+
+                if user.id == request.user.id:
+                    userAutenticar = authenticate(username=username, password=password)
+                    login(request, userAutenticar)
+                    if not es_Administrador:
+                        return HttpResponseRedirect(reverse('libreria:librosAdmin'))         
+               
                 messages.success(request, "Usuario Editado correctamente")
                 return HttpResponseRedirect(reverse('libreria:editarUsuario', args=(guid_usuario,)) )
             else:
@@ -304,7 +316,6 @@ def editar_usuario(request, guid):
     datos = {'first_name': user.first_name, 'username': user.username, 'email': user.email, 'is_admin': usuario_es_administrador}
     form = UsuarioForm(datos)    
     return render(request = request, template_name = "libreria/editarUsuario.html", context={"form":form, 'guid_usuario': guid_usuario})
-
 
 # La siguiente view permite que un usuario se registre
 
@@ -373,11 +384,17 @@ class EliminarUsuarioView(PermissionRequiredMixin, DeleteView):
     permission_required = 'libreria.administrador'
     raise_exception = True
 
+# El siguiente metodo permite eliminar la imagen del usuario, si este tiene. En caso
+# de que el usuario se elimine a si mismo, se mostrara la pagina donde se muestran los libros
+
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         usuario = self.object.usuario
         if not usuario.imagen == '':
             os.remove(usuario.imagen.path)
+        if usuario.user == request.user:
+            self.object.delete()
+            return HttpResponseRedirect(reverse('libreria:librosAdmin',))        
         self.object.delete()
         return HttpResponseRedirect(self.success_url)
 

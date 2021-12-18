@@ -22,7 +22,9 @@
 <!-- Formulario -->
 
 <div class="contenedorInsertarEditarUsuario">
-    <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarUsuarios' %}">&laquo; Volver</a>
+    <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarUsuarios' %}">
+        <i class="fa fa-arrow-left" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Volver a Mostrar Usuarios"></i> Volver</a>
+    </a>
     <div id='cardFormulario' class="card text-dark bg-light mb-3">
         <div class="card-header"><h6 id="titulo">Editar Usuario</h6></div>
         <div class="card-body">

@@ -20,7 +20,9 @@
 {% endfor %}
 
 <div class="contenedorInsertarReview">
-  <a id='volver' class="btn btn-primary" href="{% url 'libreria:librosAdmin' %}">&laquo; Volver</a>
+  <a id='volver' class="btn btn-primary" href="{% url 'libreria:librosAdmin' %}">
+    <i class="fa fa-arrow-left" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Volver a Mostrar Libros"></i> Volver
+  </a>
   <div id='cardFormulario' class="card text-dark bg-light mb-3">
     <div class="card-header"><h6 id="titulo">Insertar Review del libro {{libro_titulo}}</h6></div>
     <div class="card-body">

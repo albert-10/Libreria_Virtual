@@ -23,7 +23,9 @@
                         {% endif %}
                       </div>           
                 {% endfor %}      
-                <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">Filtrar</button>
+                <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">
+                    Filtrar <i class="fas fa-filter" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Filtrar por campos"></i>
+                </button>
               </div>
             </form>
         </div>
@@ -47,31 +49,31 @@
                             {% for usuario in usuario_page %}
             
                                 <tr>
-                                    <td class='contenedorImagen'>
+                                    <td  class='contenedorImagen'>
                                         {% if usuario.imagen.url != None %}                                   
                                             <img style="display:block;" width="100%" height="100%" src="{{ usuario.imagen.url }}">
                                         {% else %}                                           
                                             <img style="display:block;" width="100%" height="100%" src="{% static '/images/usuario_sin_imagen.png'%}">
                                         {% endif %}
                                     </td>                                     
-                                    <td>{{usuario.user.first_name}}</td>
-                                    <td>{{usuario.user.username}}</td>                             
-                                    <td>{{usuario.user.email}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.user.first_name}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.user.username}}</td>                             
+                                    <td VALIGN=MIDDLE>{{usuario.user.email}}</td>
                                     
-                                    <td>{{usuario.fecha_registro}}</td>
-                                    <td>{{usuario.cantidad_autores_suscritos}}</td>
-                                    <td>                                                                                 
-                                        <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                    <td VALIGN=MIDDLE>{{usuario.fecha_registro}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.cantidad_autores_suscritos}}</td>
+                                    <td VALIGN=MIDDLE>                                                                                 
+                                        <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar usuario">
                                             <i class="fas fa-edit" aria-hidden="true"></i>
                                         </a>
-                                        {% if request.user != usuario.user %}                        
+                                                               
                                             <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarUsuario' usuario.user.id %}">
                                             {% csrf_token %}               
-                                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar usuario">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </form>
-                                        {% endif %} 
+                                        
                                     </td>
                                 </tr>				    
                             {% endfor %}           

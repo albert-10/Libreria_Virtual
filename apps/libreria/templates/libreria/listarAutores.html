@@ -29,7 +29,9 @@
 
           <!-- <input type="number" class="camposFormularioExtras form-control" min="1" step="1" name="numeroAutores" placeholder="Autores por pagina">
           <input type="number" class="camposFormularioExtras form-control" min="1" step="1" name="numeroDePagina" placeholder="Número de página"> -->
-          <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">Filtrar</button>
+          <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">
+            Filtrar <i class="fas fa-filter" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Filtrar por campos"></i>
+          </button>
         </div>
       </form>
     </div>
@@ -69,12 +71,12 @@
 
                         <!-- <td class='botonesOperacionesNoAdmin'> -->
                           
-                            <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles">
+                            <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles del autor">
                               <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </a>                          
                             
                               {% if user.usuario in autor.get_usuarios_suscritos %}
-                              <a class="btn btn-dark" href="{% url 'libreria:eliminarSuscripcionAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Desinscribirse">
+                              <a class="btn btn-dark" href="{% url 'libreria:eliminarSuscripcionAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Anular suscripcion al autor">
                                 <i class="far fa-window-close" aria-hidden="true"></i></a>
                               {% else %}
                               
@@ -84,13 +86,13 @@
                               {% endif %}                             
                            
                             {% if perms.libreria.administrador %} 
-                              <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                              <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar autor">
                                 <i class="fas fa-edit" aria-hidden="true"></i>
                               </a>
                                                      
                               <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarAutor' autor.id %}">
                                 {% csrf_token %}               
-                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar autor">
                                   <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button> 
                               </form>

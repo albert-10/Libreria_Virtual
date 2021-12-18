@@ -22,7 +22,9 @@
         {% endif %}
       </div>   
       {% endfor %}
-      <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">Filtrar</button>
+      <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">
+        Filtrar <i class="fas fa-filter" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Filtrar por campos"></i>
+      </button>
     </form>
   </div>
   
@@ -78,7 +80,7 @@
                             <td>                                                      
                                 <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarReview' review.id %}" >
                                 {% csrf_token %}               
-                                  <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                  <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar review">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                   </button>
                                 </form>
