@@ -15,7 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Obteniendo SECRET_KEY y DEBUG de la variable de entorno
 
 SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+#DEBUG = env('DEBUG')
+EBUG = False
 
 #SECRET_KEY = os.getenv.get('SECRET_KEY')
 #DEBUG = False
