@@ -40,6 +40,7 @@
                                     <th>Imagen</th>
                                     <th>Nombre</th>
                                     <th>Username</th>
+                                    <th>Id</th>
                                     <th>Email</th>
                                     <th>Fecha de registro</th>
                                     <th>autores suscritos</th>
@@ -57,7 +58,8 @@
                                         {% endif %}
                                     </td>                                     
                                     <td VALIGN=MIDDLE>{{usuario.user.first_name}}</td>
-                                    <td VALIGN=MIDDLE>{{usuario.user.username}}</td>                             
+                                    <td VALIGN=MIDDLE>{{usuario.user.username}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.guid}}</td>                          
                                     <td VALIGN=MIDDLE>{{usuario.user.email}}</td>
                                     
                                     <td VALIGN=MIDDLE>{{usuario.fecha_registro}}</td>

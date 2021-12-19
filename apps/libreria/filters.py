@@ -213,7 +213,7 @@ class Review_Libro_Filter(django_filters.FilterSet):
 		return queryset
 
 	fecha_creada = django_filters.ChoiceFilter(
-		label='ordenar por Fecha',
+		label='Ordenar por fecha',
 		choices=CHOICES,
 		method='filtrar_fecha_creacion',
 		widget=Select(attrs={'class':'form-control'}))

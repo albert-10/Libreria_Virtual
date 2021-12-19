@@ -40,7 +40,7 @@ class LibrosAdminView(generic.ListView):
 # El siguiente metodo permite obtener un page de libro,
 # de acuerdo al filtro de libros que se haya aplicado
 
-    def get_context_data(self, **kwargs):              
+    def get_context_data(self, **kwargs):           
         context = super().get_context_data(**kwargs)        
         libro_filter = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         context['libro_filter'] = libro_filter
@@ -68,14 +68,14 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
         nombre_autor = form.cleaned_data['autor'].nombre
         titulo_libro = form.cleaned_data['titulo']
         lista_email_usuarios_suscritos = form.cleaned_data['autor'].get_emails_usuarios_suscritos()
-        if len(lista_email_usuarios_suscritos) > 0:
+        if len(lista_email_usuarios_suscritos) > 0:            
             mensaje = f"""
                 Estimado lector, el autor: {nombre_autor}, ha publicado su nuevo libro: {titulo_libro}                
             """
             send_mail(
                 subject=str(settings.ASUNTO_EMAIL),
                 message=mensaje,
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email=str(settings.DEFAULT_FROM_EMAIL),
                 recipient_list=lista_email_usuarios_suscritos
             )
         messages.success(self.request, "Libro insertado correctamente")
@@ -91,7 +91,8 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
 class EditarLibroView(PermissionRequiredMixin, UpdateView):
     template_name = 'libreria/editarLibro.html'
     model = Libro
-    fields = '__all__'
+    form_class = LibroForm
+    # fields = '__all__'
     permission_required = 'libreria.administrador'
     raise_exception = True
     
