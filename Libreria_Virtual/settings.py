@@ -15,10 +15,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Obteniendo SECRET_KEY y DEBUG de la variable de entorno
 
 SECRET_KEY = env('SECRET_KEY')
-#DEBUG = env('DEBUG')
+DEBUG = env('DEBUG')
 
 #SECRET_KEY = os.getenv.get('SECRET_KEY')
-DEBUG = False
+#DEBUG = False
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']
@@ -154,35 +154,35 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Produccion
 
-# if DEBUG == False:
-#     SESSION_COOKIE_SECURE = True
-#     SECURE_BROWSER_XSS_FILTER = True
-#     SECURE_CONTENT_TYPE_NOSNIFF = True
-#     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#     SECURE_HSTS_SECONDS = 31536000
-#     SECURE_REDIRECT_EXEMPT = []
-#     SECURE_SSL_REDIRECT = True
-#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+if DEBUG == False:
+    SESSION_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_REDIRECT_EXEMPT = []
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
-#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#     EMAIL_HOST = env('EMAIL_HOST')
-#     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-#     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-#     EMAIL_PORT = env('EMAIL_PORT')
-#     EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-#     DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = env('EMAIL_PORT')
+    EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+    DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
     
-#     ALLOWED_HOSTS = ['localhost']
-#     DATABASE = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': '',
-#             'USER': '',
-#             'PASSWORD': '',
-#             'HOST': '',
-#             'PORT': '',
-#         }
-#     }
+    ALLOWED_HOSTS = ['localhost']
+    DATABASE = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': '',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
+    }
 
 import django_on_heroku
 django_on_heroku.settings(locals())
