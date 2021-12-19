@@ -20,7 +20,7 @@ DEBUG = env('DEBUG')
 #SECRET_KEY = os.getenv.get('SECRET_KEY')
 #DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 import sys
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
