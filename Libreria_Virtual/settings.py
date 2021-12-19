@@ -14,11 +14,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Obteniendo SECRET_KEY y DEBUG de la variable de entorno
 
-#SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 #DEBUG = env('DEBUG')
 
-SECRET_KEY = os.getenv.get('SECRET_KEY')
-DEBUG = os.getenv.get('DEBUG')
+#SECRET_KEY = os.getenv.get('SECRET_KEY')
+DEBUG = False
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']
