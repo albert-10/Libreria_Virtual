@@ -14,11 +14,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Obteniendo SECRET_KEY y DEBUG de la variable de entorno
 
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+#SECRET_KEY = env('SECRET_KEY')
+#DEBUG = env('DEBUG')
 
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 import sys
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
