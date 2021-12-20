@@ -92,6 +92,9 @@ class Usuario(models.Model):
     reviews = models.ManyToManyField(Libro, through='Review')
     fecha_registro = models.DateField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["guid"]
+
     def __str__(self):
         return self.get_username()
 
@@ -120,7 +123,7 @@ class Review(models.Model):
     usuario = ForeignKey(Usuario, on_delete=models.CASCADE)
     libro = ForeignKey(Libro, on_delete=models.CASCADE)
     fecha_creada = models.DateTimeField(auto_now_add=True)
-    opinion = models.TextField()
+    opinion = models.TextField(blank=True, default='')
     calificacion = models.IntegerField(choices=CALIFICACION)
 
     class Meta:

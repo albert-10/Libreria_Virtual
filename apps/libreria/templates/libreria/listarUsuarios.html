@@ -54,7 +54,7 @@
                                         {% if usuario.imagen.url != None %}                                   
                                             <img style="display:block;" width="100%" height="100%" src="{{ usuario.imagen.url }}">
                                         {% else %}                                           
-                                            <img style="display:block;" width="100%" height="100%" src="{% static '/images/usuario_sin_imagen.png'%}">
+                                            <img style="display:block;" width="100%" height="100%" src="{% static 'images/usuario_sin_imagen.png'%}">
                                         {% endif %}
                                     </td>                                     
                                     <td VALIGN=MIDDLE>{{usuario.user.first_name}}</td>
@@ -62,7 +62,7 @@
                                     <td VALIGN=MIDDLE>{{usuario.guid}}</td>                          
                                     <td VALIGN=MIDDLE>{{usuario.user.email}}</td>
                                     
-                                    <td VALIGN=MIDDLE>{{usuario.fecha_registro}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.fecha_registro|date:"d-m-y"}}</td>
                                     <td VALIGN=MIDDLE>{{usuario.cantidad_autores_suscritos}}</td>
                                     <td VALIGN=MIDDLE>                                                                                 
                                         <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar usuario">

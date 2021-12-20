@@ -68,7 +68,7 @@ class RegistrarForm(forms.Form):
             self.add_error('password_confirm', "Passwords no coinciden")
 
 class ReviewForm(forms.Form):   
-    opinion = forms.CharField(widget=forms.Textarea(attrs={'class': 'noVisible'}))
+    opinion = forms.CharField(label='Opinión',widget=forms.Textarea(attrs={'class': 'noVisible'}), required=False)
     CALIFICACIONES = (
         (1, 1),
         (2, 2),

@@ -22,11 +22,6 @@ if env('DEBUG') == 'True':
 else:
     DEBUG = False
 
-
-#ALLOWED_HOSTS = ['*']
-
-
-
 import sys
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 
@@ -55,7 +50,7 @@ ASUNTO_EMAIL = env('ASUNTO_EMAIL')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -159,7 +154,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Produccion
 
-if DEBUG == False:
+if DEBUG == False:    
+
     SESSION_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -178,18 +174,17 @@ if DEBUG == False:
     DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
     
     ALLOWED_HOSTS = [env('ALLOWED_HOSTS')]
-    # DATABASE = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #         'NAME': '',
-    #         'USER': '',
-    #         'PASSWORD': '',
-    #         'HOST': '',
-    #         'PORT': '',
-    #     }
-    # }
-
+    DATABASE = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': '',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
+    }
 
 import django_on_heroku
 django_on_heroku.settings(locals())
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

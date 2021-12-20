@@ -17,7 +17,8 @@ class Middleware_Manejador_Errores:
 
     def process_exception(self, request, exception):
         
-        if not settings.DEBUG:            
+        if not settings.DEBUG:
+            print(exception)           
             if isinstance(exception, PermissionDenied):
                 return render(request,'permisosDenegados.html')
             return render(request,'errorInesperado.html', {'exception': exception})

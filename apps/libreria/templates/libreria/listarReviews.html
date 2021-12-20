@@ -75,7 +75,7 @@
                             {% endif %}
                           </td>
                           <td>{{ review.opinion|truncatechars:30 }}</td>
-                          <td>{{review.fecha_creada|timezone:"Canada/Eastern"}}</td>
+                          <td>{{review.fecha_creada|timezone:"Canada/Eastern"|date:"d-m-y  h:i a"}}</td>
                           {% if perms.libreria.administrador %}
                             <td>                                                      
                                 <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarReview' review.id %}" >
