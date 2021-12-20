@@ -1,0 +1,32 @@
+.contenedorAutorYLibros{
+    margin: 0.5%;
+    display: grid;
+    row-gap: 5px;
+    column-gap: 5px;
+    grid-template-columns:repeat(14, 1fr);
+    align-items: start;
+    justify-items: start;  
+}
+
+#contenedorAutores{
+    grid-column-start: 4;
+    grid-column-end: 7;
+    width: 100%;
+}
+
+#contenedorLibros{
+    grid-column-start: 7;
+    grid-column-end: 12;
+    width: 100%;
+}
+
+.encabezados{
+    text-align: center;
+}
+
+#volver{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 100%;
+}
+

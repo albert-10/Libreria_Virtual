@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e3e7ee;
+    min-height: 100vh !important;
+    margin: 0; 
+  
+    display: grid;
+    /* grid-template-rows: auto 1fr auto;*/
+    grid-template-rows: 0.5fr  auto 0.5fr; 
+} 
+
+.contenedor{
+    min-height: 40vh;
+    display: grid;    
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.contenedor .header{
+    background: url("../images/chica.b051daff32d5.jpg") no-repeat;
+    background-size: cover;
+    grid-row-start: 1;
+    grid-row-end: 6;
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.contenedor .navbar{
+   grid-column-start: 1;
+   grid-column-end: 4;
+   grid-row-start: 6;
+   grid-row-end: 7;
+}

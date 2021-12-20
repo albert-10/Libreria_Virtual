@@ -1,0 +1,44 @@
+#contenedorAlertaErrorFormulario{
+    margin-top: 0.5%;
+    display: grid;    
+    grid-template-columns: repeat(5, 1fr); 
+    align-items: center;
+    height: 15%;
+}
+
+#alertaErrorFormulario{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    text-align: center;
+}
+
+#contenedorAutenticar{    
+    margin: 0.5%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);   
+    align-items: center;
+}
+
+#cardFormulario{
+    grid-column-start: 3;
+    grid-column-end: 4;    
+}
+
+form {
+    width: 100%;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr)
+}
+
+#botones{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    justify-self: end;
+    align-self: end;
+}
+
+#titulo{
+    text-align: center;
+}

@@ -1,0 +1,53 @@
+#contenedorAlertaFormulario{
+    margin: 0.5%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);  
+    align-items: center;
+}
+
+#alertaFormulario{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    text-align: center;
+}
+
+.contenedorInsertarEditarAutor{
+    /* height: 60vh; */
+    margin: 0.5%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* grid-template-rows: repeat(3, 1fr);   */
+    align-items: center;
+}
+
+#cardFormulario{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    
+    /* grid-row-start: 1;
+    grid-row-end: -1;  */
+}
+
+form {
+    width: 100%;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr;
+    /* grid-template-rows: repeat(4, 1fr); */
+    grid-template-rows: 1fr 1fr 1fr 2fr 1fr;
+}
+
+#botones{
+    grid-row-start: 5;
+    grid-row-end: 6;
+
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+    justify-self: end;
+    align-self: end;
+}
+
+#titulo{
+    text-align: center;
+}

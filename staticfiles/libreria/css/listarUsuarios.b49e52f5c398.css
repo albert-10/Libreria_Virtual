@@ -1,0 +1,100 @@
+.contenedorUsuarios{
+    margin: 0.5%;
+    display: grid;
+    row-gap: 5px;
+    grid-template-columns:repeat(8, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    align-items: center;   
+}
+
+.formulario{
+    grid-column-start: 2;
+    grid-column-end: 8;
+    grid-row-start: 1;    
+    grid-row-end: 2;
+
+    width: 100%;
+    display: grid;
+    grid-gap: 10px;
+    justify-items: stretch;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+form{
+    grid-column-start: 1;
+    grid-column-end: -1;
+}
+
+.contenedorCamposFormulario{
+    grid-column-start: 1;
+    grid-column-end: -1;
+    display: grid;
+    grid-gap: 10px;
+    justify-items: stretch;
+    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.camposFormularioExtras{
+    align-self: end;
+}
+
+.contenedorTabla{
+    grid-column-start: 2;
+    grid-column-end: 8;
+
+    grid-row-start:2;
+    grid-row-end:-1;
+
+    display: grid;
+    align-self: start;
+    grid-template-columns: repeat(8, 1fr);   
+}
+
+#cardTabla{
+    grid-column-start: 1;
+    grid-column-end: -1; 
+    
+    grid-row-start: 2;
+    grid-row-end: -1;
+}
+
+.card-header{
+    text-align: center;
+}
+
+#noHayUsuarios{
+    grid-column-start: 2;
+    grid-column-end: 8;
+
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    text-align: center;
+}
+
+.contenedorImagen{
+    height: 100px;
+    width: 100px;
+}
+
+img{
+    width: 100%;
+    height: 100%
+}
+
+ul.pagination{
+    justify-content: center; 
+}
+
+.botonesOperaciones{
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
+}
+
+#eliminarFormulario{
+    display: inline;
+}

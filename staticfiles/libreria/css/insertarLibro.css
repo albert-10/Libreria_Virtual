@@ -1,0 +1,65 @@
+#contenedorAlertaFormulario{
+    margin: 0.5%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);  
+    align-items: center;
+}
+
+#alertaFormulario{
+    grid-column-start: 2;
+    grid-column-end: 5;
+    text-align: center;
+}
+.contenedorInsertarLibro{
+    margin: 0.5%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);  
+    align-items: center;
+}
+
+#cardFormulario{
+    grid-column-start: 2;
+    grid-column-end: 5;  
+}
+
+.card-header{
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+#botones{
+    grid-row-start: 5;
+    grid-row-end: 6;
+
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center;
+}
+
+#submit{
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+#reset{
+    grid-column-start: 4;
+    grid-column-end: 5;
+
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
