@@ -1,10 +1,10 @@
 .contenedorLibros{
-    /* height: 50vh; */
     margin: 0.5%;
     display: grid;
     row-gap: 5px;
     grid-template-columns:repeat(12, 1fr);
     grid-template-rows: repeat(7, 1fr);
+    /* grid-template-rows: repeat(2, 1fr); */
     align-items: center;   
 }
 
@@ -26,7 +26,7 @@ form{
     grid-column-end: -1;
 }
 
- .contenedorCamposFormulario{
+.contenedorCamposFormulario{
     grid-column-start: 1;
     grid-column-end: -1;
     display: grid;
@@ -82,4 +82,20 @@ ul.pagination{
 
 #eliminarFormulario{
     display: inline;
+}
+
+/* Al tener la ventana una tamano menor o igual a 1030px se pone el filtro vertical */
+
+@media (max-width: 1030px) {
+    .contenedorCamposFormulario{        
+        align-items: center;
+        grid-gap: 5px;
+        grid-template-columns:1fr;
+        grid-template-rows:repeat(8, 1fr);
+    }
+
+    .contenedorLibros{       
+        align-items: start;
+        grid-template-rows: repeat(2, 1fr);          
+    }
 }

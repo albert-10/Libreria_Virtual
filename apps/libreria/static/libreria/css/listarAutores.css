@@ -1,5 +1,4 @@
-.contenedorAutores{
-    /* height: 50vh; */
+.contenedorAutores{   
     margin: 0.5%;
     display: grid;
     row-gap: 5px;
@@ -83,28 +82,22 @@ ul.pagination{
     justify-content: center; 
 }
 
-/* .botonesOperaciones{
-    display: flex;
-    justify-content: space-between;    
-} */
-
-/* .botonesOperacionesNoAdmin{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 5px;
-    align-content: center;
-    justify-content: start;
-}
-
-.botonesOperacionesAdmin{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 10px;
-    align-content: center;
-    justify-content: start;
-} */
-
-
 #eliminarFormulario{
     display: inline;
+}
+
+/* Al tener la ventana una tamano menor o igual a 818px se pone el filtro vertical */
+
+@media (max-width: 818px) {
+    .contenedorCamposFormulario{        
+        align-items: center;
+        grid-gap: 5px;
+        grid-template-columns:1fr;
+        grid-template-rows:repeat(5, 1fr);
+    }
+
+    .contenedorAutores{       
+        align-items: start;
+        grid-template-rows: repeat(2, 1fr);          
+    }
 }

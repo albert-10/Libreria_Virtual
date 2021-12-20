@@ -12,8 +12,8 @@
 }
 
 .formulario{
-    grid-column-start: 4;
-    grid-column-end: 8;
+    grid-column-start: 3;
+    grid-column-end: 9;
     grid-row-start: 1;
     grid-row-end: 2; 
 }
@@ -71,4 +71,30 @@ ul.pagination{
 
 #eliminarFormulario{
     display: inline;
+}
+
+/* Al tener la ventana una tamano menor o igual a 878px se pone el filtro vertical */
+
+@media (max-width: 878px) {
+    .contenedorReview{ 
+        column-gap: 5px;      
+        align-items: start;
+        grid-template-rows: repeat(2, 1fr);          
+    }
+
+    .formulario{
+        grid-column-start: 3;
+        grid-column-end: 9;
+        grid-row-start: 1;
+        grid-row-end: 2; 
+    }
+
+    .contenedorCamposFormulario{        
+        align-items: center;
+        grid-gap: 5px;
+        grid-template-columns:1fr;
+        grid-template-rows:repeat(5, 1fr);
+    }
+
+   
 }

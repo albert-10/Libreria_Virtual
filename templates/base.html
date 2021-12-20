@@ -14,8 +14,8 @@
         <link rel="stylesheet" href="{% static 'css/base.css' %}">   
     </head>
     <body>   
-        <div class="contenedor">
-            <div class="header">
+        <div id='contenedorSitio' class="contenedor">
+            <div id='headerSitio' class="header">
                         
             </div>
             {% include 'navbar.html' %}              
@@ -26,6 +26,7 @@
             
         {% include 'footer.html' %}
         <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/base.js' %}"></script>
         {% block scripts %}
         {% endblock scripts %}
     </body>    

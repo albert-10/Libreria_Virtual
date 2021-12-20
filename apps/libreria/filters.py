@@ -14,7 +14,7 @@ class Libro_Filter(django_filters.FilterSet):
 	)
 
 	orden_por_calificacion = django_filters.ChoiceFilter(
-		label='Ordenar por calificacion:',
+		label='Calificación',
 		choices=CHOICES,
 		method='filter_by_order',
 		widget=Select(attrs={'class':'form-control', 'placeholder':'Sin orden'}),

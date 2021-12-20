@@ -74,3 +74,34 @@ ul.pagination{
     align-self: end;
     justify-self: start;
 }
+
+/* Al tener la ventana una tamano menor o igual a 1005px se pone el filtro vertical */
+
+@media (max-width: 1221px) {
+
+    .contenedorReview{       
+        column-gap: 5px;       
+        align-items: start;
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .formulario{
+        align-self: start;
+        grid-column-start: 2;
+        grid-column-end: -1;
+    }
+
+    #formularioFiltro{        
+        align-items: center;
+        grid-gap: 5px;
+        grid-template-columns:1fr;
+        grid-template-rows:repeat(5, 1fr);
+    }
+
+    #volver{
+        align-self: start;
+        justify-self: start;       
+    }
+   
+}
+
