@@ -15,8 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Obteniendo SECRET_KEY y DEBUG de la variable de entorno
 
 SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
-#DEBUG = False
+#DEBUG = env('DEBUG')
+DEBUG = False
 
 #SECRET_KEY = os.getenv.get('SECRET_KEY')
 #DEBUG = False
@@ -186,3 +186,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import django_on_heroku
 django_on_heroku.settings(locals())
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
