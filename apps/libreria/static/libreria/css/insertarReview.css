@@ -62,3 +62,31 @@ form {
 #volver{
     align-self: start;
 }
+
+/* Adaptando el formulario a varios tamanos de pantalla */
+
+@media (max-width: 950px) {
+
+    #volver{
+        grid-column-start: 3;
+        grid-column-end: 8;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        width: 100%;
+        align-self: start;  
+    }
+    #cardFormulario{
+        grid-column-start: 3;
+        grid-column-end: 8;
+        grid-row-start: 2;
+        grid-row-end: 3; 
+    }
+}
+
+@media (max-width: 560px) {
+    
+    #cardFormulario{
+        grid-column-start: 1;
+        grid-column-end: -1;        
+    }
+}

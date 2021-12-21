@@ -31,8 +31,7 @@ form {
     width: 100%;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 1fr;
-    /* grid-template-rows: repeat(5, 1fr); */
+    grid-template-columns: 1fr;    
 }
 
 #botones{    
@@ -50,4 +49,23 @@ form {
 #reset{
     grid-column-start: 4;
     grid-column-end: 5;
+}
+
+/* Adaptando el formulario a varios tamanos de pantalla */
+
+@media (max-width: 1070px) {  
+
+    #cardFormulario{
+        grid-column-start: 3;
+        grid-column-end: 8;   
+    }
+}
+
+
+@media (max-width: 650px) {  
+
+    #cardFormulario{
+        grid-column-start: 1;
+        grid-column-end: -1;   
+    }
 }

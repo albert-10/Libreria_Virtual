@@ -30,3 +30,62 @@
     width: 100%;
 }
 
+@media (max-width: 1350px) {
+    
+    #volver{
+        grid-column-start: 7;
+        grid-column-end: 10;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        width: 100%;
+        align-self: start;  
+    }
+
+    #contenedorAutores{
+        grid-column-start: 1;
+        grid-column-end: 8;
+        width: 100%;
+    }
+    
+    #contenedorLibros{
+        grid-column-start: 8;
+        grid-column-end: -1;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1030px) {   
+
+    #contenedorAutores{
+        grid-column-start: 3;
+        grid-column-end: 13;       
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    
+    #contenedorLibros{
+        grid-column-start: 3;
+        grid-column-end: 13;       
+        grid-row-start: 3;
+        grid-row-end: 4;
+    }
+}
+
+@media (max-width: 850px) {
+    
+    #volver{
+        grid-column-start: 6;
+        grid-column-end: 11;      
+    }
+
+    #contenedorAutores{
+        grid-column-start: 1;
+        grid-column-end: -1;    
+    }
+    
+    #contenedorLibros{
+        grid-column-start: 1;
+        grid-column-end: -1;  
+    }
+}
+

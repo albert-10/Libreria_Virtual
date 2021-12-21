@@ -11,29 +11,23 @@
     text-align: center;
 }
 
-.contenedorInsertarEditarAutor{
-    /* height: 60vh; */
+.contenedorInsertarEditarAutor{   
     margin: 0.5%;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    /* grid-template-rows: repeat(3, 1fr);   */
+    grid-template-columns: repeat(11, 1fr);   
     align-items: center;
 }
 
 #cardFormulario{
-    grid-column-start: 3;
-    grid-column-end: 4;
-    
-    /* grid-row-start: 1;
-    grid-row-end: -1;  */
+    grid-column-start: 5;
+    grid-column-end: 8;   
 }
 
 form {
     width: 100%;
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: 1fr;
-    /* grid-template-rows: repeat(4, 1fr); */
+    grid-template-columns: 1fr;   
     grid-template-rows: 1fr 1fr 1fr 2fr 1fr;
 }
 
@@ -50,4 +44,23 @@ form {
 
 #titulo{
     text-align: center;
+}
+
+/* Adaptando el formulario a varios tamanos de pantalla */
+
+@media (max-width: 1190px) {  
+
+    #cardFormulario{
+        grid-column-start: 4;
+        grid-column-end: 9;   
+    }
+
+}
+
+@media (max-width: 540px) {  
+
+    #cardFormulario{
+        grid-column-start: 1;
+        grid-column-end: -1;   
+    }
 }

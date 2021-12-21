@@ -63,3 +63,47 @@ form {
     grid-row-start: 2;
     grid-row-end: 3;
 }
+
+/* Adaptando el formulario a varios tamanos de pantalla */
+
+@media (max-width: 1070px) {
+    .contenedorInsertarLibro{
+        margin: 0.5%;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);  
+        align-items: center;
+    }
+
+    #cardFormulario{
+        grid-column-start: 2;
+        grid-column-end: 7;  
+    }   
+
+    form {  
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(8, 1fr);
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+
+    #botones{
+        grid-row-start: 8;
+        grid-row-end: -1;
+    
+        grid-column-start: 1;
+        grid-column-end: -1;
+    
+        display: grid;
+        column-gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        align-items: center;
+    }    
+}
+
+@media (max-width: 500px) {
+    #cardFormulario{
+        grid-column-start: 1;
+        grid-column-end: -1;  
+    }
+}

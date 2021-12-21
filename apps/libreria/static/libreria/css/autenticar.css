@@ -42,3 +42,28 @@ form {
 #titulo{
     text-align: center;
 }
+
+/* Adaptando el formulario a varios tamanos de pantalla */
+
+@media (max-width: 1185px) {
+
+    #contenedorAutenticar{    
+        margin: 0.5%;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);   
+        align-items: center;
+    }
+
+    #cardFormulario{
+        grid-column-start: 3;
+        grid-column-end: 6;   
+    }
+}
+
+@media (max-width: 560px) {   
+
+    #cardFormulario{
+        grid-column-start: 1;
+        grid-column-end: -1;   
+    }
+}
