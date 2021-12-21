@@ -32,8 +32,8 @@
 }
 
 .contenedorTabla{
-    grid-column-start: 3;
-    grid-column-end: 9;
+    grid-column-start: 2;
+    grid-column-end: 10;
 
     grid-row-start:2;
     grid-row-end:-1;
@@ -60,8 +60,8 @@ ul.pagination{
 }
 
 #noHayReviews{
-    grid-column-start: 3;
-    grid-column-end: 9;
+    grid-column-start: 2;
+    grid-column-end: 10;
 
     grid-row-start: 3;
     grid-row-end: 4;
@@ -82,19 +82,37 @@ ul.pagination{
         grid-template-rows: repeat(2, 1fr);          
     }
 
+    #formularioFiltro{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        align-items: center;
+    }
+
     .formulario{
-        grid-column-start: 3;
-        grid-column-end: 9;
+        grid-column-start: 1;
+        grid-column-end: -1;
         grid-row-start: 1;
         grid-row-end: 2; 
+    }   
+}
+
+/* Al tener la ventana una tamano menor o igual a 1038px se cambia el tamano de la tabla y se pone tipo regilla */
+
+@media (max-width: 1038px) {   
+
+    .contenedorTabla{
+        grid-column-start: 1;
+        grid-column-end: -1;
     }
 
-    .contenedorCamposFormulario{        
-        align-items: center;
-        grid-gap: 5px;
-        grid-template-columns:1fr;
-        grid-template-rows:repeat(5, 1fr);
+    table{
+        display: grid;
+        justify-content: center;
     }
+}
 
-   
+@media (max-width: 780px) {   
+    table{        
+        justify-content: start;
+    }
 }

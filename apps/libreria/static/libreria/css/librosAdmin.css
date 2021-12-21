@@ -98,4 +98,26 @@ ul.pagination{
         align-items: start;
         grid-template-rows: repeat(2, 1fr);          
     }
+  
+}
+
+/* Al tener la ventana una tamano menor o igual a 1030px se cambia el tamano de la tabla y se pone tipo regilla */
+
+@media (max-width: 1030px) {   
+
+    .contenedorTabla{
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+
+    table{
+        display: grid;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 775px) {   
+    table{        
+        justify-content: start;
+    }
 }

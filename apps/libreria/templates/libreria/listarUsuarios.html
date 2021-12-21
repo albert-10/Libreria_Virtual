@@ -35,7 +35,7 @@
                 <div id='cardTabla' class="card text-dark bg-light mb-3">
                     <div class="card-header">Usuarios</div>
                         <div class="card-body">
-                            <table class="table table-sm">
+                            <table class="table table-responsive table-hover">
                                 <tr>                      
                                     <th>Imagen</th>
                                     <th>Nombre</th>
@@ -64,17 +64,19 @@
                                     
                                     <td VALIGN=MIDDLE>{{usuario.fecha_registro|date:"d-m-y"}}</td>
                                     <td VALIGN=MIDDLE>{{usuario.cantidad_autores_suscritos}}</td>
-                                    <td VALIGN=MIDDLE>                                                                                 
-                                        <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar usuario">
-                                            <i class="fas fa-edit" aria-hidden="true"></i>
-                                        </a>
-                                                               
+                                    <td VALIGN=MIDDLE> 
+                                        <div class="btn-group" role="group" aria-label="Basic example">                                                                                
+                                            <a class="btn btn-primary" href="{% url 'libreria:editarUsuario' usuario.guid %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar usuario">
+                                                <i class="fas fa-edit" aria-hidden="true"></i>
+                                            </a>
+                                                                
                                             <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarUsuario' usuario.user.id %}">
                                             {% csrf_token %}               
                                                 <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar usuario">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </form>
+                                        </div>
                                         
                                     </td>
                                 </tr>				    

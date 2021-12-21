@@ -98,3 +98,46 @@ ul.pagination{
 #eliminarFormulario{
     display: inline;
 }
+
+/* Al tener la ventana una tamano menor o igual a 890px se pone el filtro vertical */
+
+@media (max-width: 890px) {
+    .contenedorUsuarios{ 
+        column-gap: 5px;      
+        align-items: start;
+        grid-template-rows: repeat(2, 1fr);          
+    }   
+
+    .formulario{
+        grid-column-start: 1;
+        grid-column-end: -1;
+        grid-row-start: 1;
+        grid-row-end: 2; 
+    }
+    
+    .contenedorCamposFormulario{
+        grid-template-columns:  1fr;    
+        grid-template-rows: repeat(4, 1fr);
+    }
+}
+
+/* Al tener la ventana una tamano menor o igual a 1230px se cambia el tamano de la tabla y se pone tipo regilla */
+
+@media (max-width: 1230px) {   
+
+    .contenedorTabla{
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+
+    table{
+        display: grid;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 900px) {   
+    table{        
+        justify-content: start;
+    }
+}

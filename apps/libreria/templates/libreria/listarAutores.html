@@ -44,14 +44,11 @@
       <div id='cardTabla' class="card text-dark bg-light mb-3">
         <div class="card-header">Autores</div>
             <div class="card-body">
-                <table class="table table-sm">
+                <table class="table table-responsive table-hover">
                     <tr>
                         <th>Nombre</th>
                         <th>Nacionalidad</th>
-                        <th>Fecha de nacimiento</th>
-                        <!-- <th>Cantidad de usuarios suscritos</th>
-                        <th>Fecha de publicación</th>
-                        <th>ISBN</th> --> 
+                        <th>Fecha de nacimiento</th>                     
                           
                           <th id="operaciones">Operaciones</th>
                        
@@ -69,36 +66,36 @@
                         <td class='botonesOperacionesNoAdmin'>
                         {% endif %}
 
-                        <!-- <td class='botonesOperacionesNoAdmin'> -->
-                          
-                            <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles del autor">
-                              <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            </a>                          
+                          <div class="btn-group" role="group" aria-label="Basic example">                          
+                              <a class="btn btn-info" href="{% url 'libreria:detallesAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalles del autor">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                              </a>                          
+                              
+                                {% if user.usuario in autor.get_usuarios_suscritos %}
+                                <a class="btn btn-dark" href="{% url 'libreria:eliminarSuscripcionAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Anular suscripcion al autor">
+                                  <i class="far fa-window-close" aria-hidden="true"></i></a>
+                                {% else %}
+                                
+                                  <a class="btn btn-success" href="{% url 'libreria:suscribirseAAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Suscribirse">
+                                    <i class="fa fa-rocket" aria-hidden="true"></i>
+                                  </a>                              
+                                {% endif %}                             
                             
-                              {% if user.usuario in autor.get_usuarios_suscritos %}
-                              <a class="btn btn-dark" href="{% url 'libreria:eliminarSuscripcionAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Anular suscripcion al autor">
-                                <i class="far fa-window-close" aria-hidden="true"></i></a>
-                              {% else %}
-                              
-                                <a class="btn btn-success" href="{% url 'libreria:suscribirseAAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Suscribirse">
-                                  <i class="fa fa-rocket" aria-hidden="true"></i>
-                                </a>                              
-                              {% endif %}                             
-                           
-                            {% if perms.libreria.administrador %} 
-                              <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar autor">
-                                <i class="fas fa-edit" aria-hidden="true"></i>
-                              </a>
-                                                     
-                              <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarAutor' autor.id %}">
-                                {% csrf_token %}               
-                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar autor">
-                                  <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button> 
-                              </form>
-                              
-                            {% endif %}
-                          </td>                        
+                              {% if perms.libreria.administrador %} 
+                                <a class="btn btn-primary" href="{% url 'libreria:editarAutor' autor.id %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar autor">
+                                  <i class="fas fa-edit" aria-hidden="true"></i>
+                                </a>
+                                                      
+                                <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarAutor' autor.id %}">
+                                  {% csrf_token %}               
+                                  <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar autor">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                  </button> 
+                                </form>
+                                
+                              {% endif %}
+                          </div>
+                        </td>                        
                     </tr>				    
                 {% endfor %}           
 

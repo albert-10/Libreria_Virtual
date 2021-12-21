@@ -33,8 +33,8 @@
 }
 
 .contenedorTabla{
-    grid-column-start: 3;
-    grid-column-end: 9;
+    grid-column-start: 2;
+    grid-column-end: 10;
 
     grid-row-start:2;
     grid-row-end:-1;
@@ -75,10 +75,9 @@ ul.pagination{
     justify-self: start;
 }
 
-/* Al tener la ventana una tamano menor o igual a 1005px se pone el filtro vertical */
+/* Al tener la ventana una tamano menor o igual a 1221px se pone el filtro vertical */
 
 @media (max-width: 1221px) {
-
     .contenedorReview{       
         column-gap: 5px;       
         align-items: start;
@@ -101,7 +100,27 @@ ul.pagination{
     #volver{
         align-self: start;
         justify-self: start;       
+    }   
+}
+
+/* Al tener la ventana una tamano menor o igual a 1157px se cambia el tamano de la tabla y se pone tipo regilla */
+
+@media (max-width: 1221px) {   
+
+    .contenedorTabla{
+        grid-column-start: 2;
+        grid-column-end: -1;
     }
-   
+
+    table{
+        display: grid;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 780px) {   
+    table{        
+        justify-content: start;
+    }
 }
 
