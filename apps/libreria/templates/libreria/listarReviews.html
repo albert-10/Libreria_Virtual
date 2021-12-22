@@ -7,117 +7,115 @@
   <link rel="stylesheet" href="{% static 'libreria/css/listarReviews.css' %}"> 
 {% endblock extra_head %}
 
-<!-- A continuacion se muestran las review, los cuales pueden se filtrados y paginados -->
+<!-- A continuacion se muestran las reviews, los cuales pueden se filtrados y paginados -->
 
 {% block content %}
-<div class="contenedorReview">
-  <div class="formulario">
-    <form id='formularioFiltro'method="get">
-      {% for field in review_filter.form %}
-              <div>
-        {{ field.errors }}
-        <h6 class="card-subtitle mb-2 text-muted">{{ field.label_tag }} </h6>{{ field }}
-        {% if field.help_text %}
-        <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
-      </div>   
-      {% endfor %}
-      <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">
-        Filtrar <i class="fas fa-filter" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Filtrar por campos"></i>
-      </button>
-    </form>
-  </div>
-  
-  {% if review_page %}
-  
-  <div class="contenedorTabla">    
-      <div id='cardTabla' class="card text-dark bg-light mb-3">
-          <div class="card-header">Reviews</div>
-              <div class="card-body">
-                  <table class="table table-responsive table-hover">
-                      <tr>                      
-                          <th>Usuario</th>
-                          <th>Libro</th>
-                          <th>Calificacion</th>                        
-                          <th>Opinión</th>                        
-                          <th>Fecha de Creación</th>
-                          {% if perms.libreria.administrador %}
-                            <th>Operaciones</th> 
-                          {% endif %}           
-                      </tr>
-                  
-                  {% for review in review_page %}
+  <div class="contenedorReview">
+    <div class="formulario">
+      <form id='formularioFiltro'method="get">
+        {% for field in review_filter.form %}
+                <div>
+          {{ field.errors }}
+          <h6 class="card-subtitle mb-2 text-muted">{{ field.label_tag }} </h6>{{ field }}
+          {% if field.help_text %}
+          <p class="help">{{ field.help_text|safe }}</p>
+          {% endif %}
+        </div>   
+        {% endfor %}
+        <button id='filtrar' class="camposFormularioExtras btn btn-primary" type="submit">
+          Filtrar <i class="fas fa-filter" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Filtrar por campos"></i>
+        </button>
+      </form>
+    </div>
+    
+    {% if review_page %}    
+      <div class="contenedorTabla">    
+          <div id='cardTabla' class="card text-dark bg-light mb-3">
+              <div class="card-header">Reviews</div>
+                  <div class="card-body">
+                      <table class="table table-responsive table-hover">
+                          <tr>                      
+                              <th>Usuario</th>
+                              <th>Libro</th>
+                              <th>Calificacion</th>                        
+                              <th>Opinión</th>                        
+                              <th>Fecha de Creación</th>
+                              {% if perms.libreria.administrador %}
+                                <th>Operaciones</th> 
+                              {% endif %}           
+                          </tr>
+                      
+                      {% for review in review_page %}
 
-                      <tr>
-                          <td>{{review.usuario}}</td>
-                          <td>{{review.libro|truncatechars:30}}</td>                                                
-                          <td>
-                            {% if review.calificacion == 1 %}                          
-                              <span class="fa fa-star"></span>
-                            {% elif  review.calificacion == 2%}
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                            {% elif  review.calificacion == 3%}
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                            {% elif  review.calificacion == 4%}
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                            {% elif  review.calificacion == 5%}
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                              <span class="fa fa-star"></span>
-                            {% endif %}
-                          </td>
-                          <td>{{ review.opinion|truncatechars:30 }}</td>
-                          <td>{{review.fecha_creada|timezone:"Canada/Eastern"|date:"d-m-y  h:i a"}}</td>
-                          {% if perms.libreria.administrador %}
-                            <td>  
-                              <div class="btn-group" role="group" aria-label="Basic example">                                                     
-                                <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarReview' review.id %}" >
-                                {% csrf_token %}               
-                                  <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar review">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                  </button>
-                                </form>
-                              </div>
-                            </td>
-                          {% endif %}
-                      </tr>				    
-                  {% endfor %}           
+                          <tr>
+                              <td>{{review.usuario}}</td>
+                              <td>{{review.libro|truncatechars:30}}</td>                                                
+                              <td>
+                                {% if review.calificacion == 1 %}                          
+                                  <span class="fa fa-star"></span>
+                                {% elif  review.calificacion == 2%}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif  review.calificacion == 3%}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif  review.calificacion == 4%}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% elif  review.calificacion == 5%}
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                {% endif %}
+                              </td>
+                              <td>{{ review.opinion|truncatechars:30 }}</td>
+                              <td>{{review.fecha_creada|timezone:"Canada/Eastern"|date:"d-m-y  h:i a"}}</td>
+                              {% if perms.libreria.administrador %}
+                                <td>  
+                                  <div class="btn-group" role="group" aria-label="Basic example">                                                     
+                                    <form id='eliminarFormulario' method="post" action="{% url 'libreria:eliminarReview' review.id %}" >
+                                      {% csrf_token %}               
+                                      <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar review">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                      </button>
+                                    </form>
+                                  </div>
+                                </td>
+                              {% endif %}
+                          </tr>				    
+                      {% endfor %}           
 
-                  </table>
-                  
-                <!-- Paginador -->
-                  
-                <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                        {% if review_page.has_previous %}
-                            <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode  %}">&laquo; Primera</a></li>
-                            <li class="page-item"><a class="page-link" href="{% my_url review_page.previous_page_number 'page' request.GET.urlencode  %}">Anterior</a></li>
-                        {% endif %}
-                        
-                        <li class="page-item disabled"><a class="page-link" href="#">Página {{review_page.number}} de {{review_page.paginator.num_pages}}</a></li>
-                        
-                        {% if review_page.has_next %}
-                            <li class="page-item"><a class="page-link" href="{% my_url review_page.next_page_number 'page' request.GET.urlencode  %}">Siguiente</a></li>
-                            <li class="page-item"><a class="page-link" href="{% my_url review_page.paginator.num_pages 'page' request.GET.urlencode  %}">Última &raquo;</a></li>
-                        {% endif %}             
-                        </ul>
-                </nav>
-              </div>
+                      </table>
+                      
+                    <!-- Paginador -->
+                      
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                      {% if review_page.has_previous %}
+                          <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode  %}">&laquo; Primera</a></li>
+                          <li class="page-item"><a class="page-link" href="{% my_url review_page.previous_page_number 'page' request.GET.urlencode  %}">Anterior</a></li>
+                      {% endif %}
+                      
+                      <li class="page-item disabled"><a class="page-link" href="#">Página {{review_page.number}} de {{review_page.paginator.num_pages}}</a></li>
+                      
+                      {% if review_page.has_next %}
+                          <li class="page-item"><a class="page-link" href="{% my_url review_page.next_page_number 'page' request.GET.urlencode  %}">Siguiente</a></li>
+                          <li class="page-item"><a class="page-link" href="{% my_url review_page.paginator.num_pages 'page' request.GET.urlencode  %}">Última &raquo;</a></li>
+                      {% endif %}             
+                      </ul>
+                    </nav>
+                  </div>
           </div> 
+      </div>
+    {% else %}
+      <div id='noHayReviews' class="alert alert-warning" role="alert">
+          <h3>No hay reviews que mostrar</h3>
+      </div>  
+    {% endif %}    
   </div>
-  {% else %}
-  <div id='noHayReviews' class="alert alert-warning" role="alert">
-      <h3>No hay reviews que mostrar</h3>
-  </div>  
-  {% endif %}
-  
-</div>
 {% endblock content %}

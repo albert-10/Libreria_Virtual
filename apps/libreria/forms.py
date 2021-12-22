@@ -1,26 +1,26 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.forms import widgets
-from .models import Autor, Libro, Usuario, Review
+from .models import Autor, Libro, Usuario
+
+# En el siguiente archivo se encuentran los formularios de la aplicacion
 
 class LibroForm(forms.ModelForm):
 
     class Meta:
-            model = Libro
-            fields = '__all__'
-            widgets = {
-                'fecha_publicacion': forms.DateInput(format=('%Y-%m-%d'), attrs={'type':'date'}),                
-                'cantidad_paginas': forms.TextInput(attrs={'min':1, 'max':100000,'step': '1','type': 'number'})
-            }
+        model = Libro
+        fields = '__all__'
+        widgets = {
+            'fecha_publicacion': forms.DateInput(format=('%Y-%m-%d'), attrs={'type':'date'}),                
+            'cantidad_paginas': forms.TextInput(attrs={'min':1, 'max':100000,'step': '1','type': 'number'})
+        }
 
 class AutorForm(forms.ModelForm):
 
     class Meta:
-            model = Autor
-            fields = '__all__'
-            widgets = {
-                'fecha_nacimiento': forms.DateInput(format=('%Y-%m-%d'), attrs={'type':'date'})
-            }
+        model = Autor
+        fields = '__all__'
+        widgets = {
+            'fecha_nacimiento': forms.DateInput(format=('%Y-%m-%d'), attrs={'type':'date'})
+        }
 
 class UsuarioForm(forms.ModelForm):
     first_name = forms.CharField()
@@ -31,10 +31,10 @@ class UsuarioForm(forms.ModelForm):
     is_admin = forms.BooleanField(required=False, label='¿Es administrador?')
    
     class Meta:
-            model = Usuario
-            fields = ['first_name', 'username', 'email', 'password', 'password_confirm','imagen','is_admin']
+        model = Usuario
+        fields = ['first_name', 'username', 'email', 'password', 'password_confirm','imagen','is_admin']
                 
-#La siguiente funcionalidad agrega un error al formulario si los passwords no coinciden
+    #La siguiente funcionalidad agrega un error al formulario si los passwords no coinciden
 
     def clean(self):
         cleaned_data = super(UsuarioForm, self).clean()

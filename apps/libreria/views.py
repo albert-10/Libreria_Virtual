@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.shortcuts import redirect, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Permission,User
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views import generic
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -13,21 +13,20 @@ from django.views.generic.detail import DetailView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import  UpdateView, DeleteView, CreateView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
 from .filters import Libro_Filter, Autor_Filter, Usuario_Filter, Review_Filter, Review_Libro_Filter
 from .models import Libro, Autor, Review, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, RegistrarForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
 
-# La siguiente vista retorna libros segun el filtro que realice el admin
+# La siguiente vista retorna libros segun el filtro que realice el usuario
 
 class ListarLibrosView(generic.ListView):
     model = Libro
     template_name = 'libreria/listarLibros.html'
 
-# El siguiente metodo permite obtener un page de libro,
-# de acuerdo al filtro de libros que se haya aplicado
+    # El siguiente metodo permite obtener una page de libro, de acuerdo al filtro
+    # de libros que se haya aplicado.
 
     def get_context_data(self, **kwargs):       
         context = super().get_context_data(**kwargs)        
@@ -50,8 +49,8 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
     def get_success_url(self):
         return reverse("libreria:insertarLibro")
 
-# El siguiente metodo una vez que el formulario este correcto, envia un email a los usuarios suscritos
-# al autor del libro, informandole del nuevo libro publicado por el autor
+    # El siguiente metodo una vez que el formulario este correcto, envia un email a los usuarios suscritos
+    # al autor del libro, informandole del nuevo libro publicado por el autor
 
     def form_valid(self, form):
         nombre_autor = form.cleaned_data['autor'].nombre
@@ -71,6 +70,8 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
         form.save(commit=True)
         return super(InsertarLibroView, self).form_valid(form)
 
+    # Permitira mostrar un mensaje de error cuando los campos del formulario sean invalidos
+
     def form_invalid(self, form):
         messages.error(self.request, "Campos no válidos")
         return render(self.request, 'libreria/insertarLibro.html', {'form':form})        
@@ -80,16 +81,15 @@ class InsertarLibroView(PermissionRequiredMixin, generic.FormView):
 class EditarLibroView(PermissionRequiredMixin, UpdateView):
     template_name = 'libreria/editarLibro.html'
     model = Libro
-    form_class = LibroForm
-    # fields = '__all__'
+    form_class = LibroForm    
     permission_required = 'libreria.administrador'
     raise_exception = True
     
     def get_object(self):
         return get_object_or_404(Libro, pk=self.kwargs["pk"])
 
-# Antes de editar el libro se comprueba que en el formulario haya un nuevo archivo. Si es asi se elimina
-# el antiguo archivo antes de guardar la edicion del libro
+    # Antes de editar el libro se comprueba que en el formulario haya un nuevo archivo. Si es asi se elimina
+    # el antiguo archivo antes de guardar la edicion del libro
 
     def form_valid(self, form):
         if len(self.request.FILES) > 0:
@@ -98,6 +98,8 @@ class EditarLibroView(PermissionRequiredMixin, UpdateView):
         messages.success(self.request, "Libro editado correctamente")
         form.save(commit=True)
         return super().form_valid(form)
+
+    # Permitira mostrar un mensaje de error cuando los campos del formulario sean invalidos
 
     def form_invalid(self, form):
         messages.error(self.request, "Campos no válidos")
@@ -123,17 +125,26 @@ class InsertarAutorView(PermissionRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("libreria:insertarAutor")
 
+    # Permitira mostrar un mensaje de exito cuando se inserte correctamente un Autor
+
     def form_valid(self, form):
         messages.success(self.request, "Autor insertado correctamente")    
         return super().form_valid(form)
+
+    # Permitira mostrar un mensaje de error cuando los campos del formulario sean invalidos
 
     def form_invalid(self, form):
         messages.error(self.request, "Campos no válidos")
         return render(self.request, 'libreria/insertarAutor.html', {'form':form})
 
+# la siguiente clase permite listar autores
+
 class ListarAutoresView(generic.ListView):
     model = Autor
     template_name = 'libreria/listarAutores.html'
+
+    # El siguiente metodo permite obtener una pagina con Autores, de acuerdo al filtro
+    # de autores que se haya aplicado.
 
     def get_context_data(self, **kwargs):             
         context = super().get_context_data(**kwargs)        
@@ -146,16 +157,22 @@ class ListarAutoresView(generic.ListView):
         context['autor_page'] = autor_page
         return context
 
+# La siguiente clase permitira mostrar los detalles de un autor
+
 class DetallesAutorView(generic.DetailView):
     template_name = 'libreria/detallesAutor.html'
     queryset = Autor.objects.all()
     context_object_name = 'autor'
+
+# La siguiente clase permite eliminar autores
 
 class EliminarAutorView(PermissionRequiredMixin, DeleteView):    
     model = Autor
     success_url = reverse_lazy('libreria:listarAutores')
     permission_required = 'libreria.administrador'
     raise_exception = True
+
+# La siguiente clase permite editar autores
 
 class EditarAutorView(PermissionRequiredMixin, UpdateView):
     template_name = 'libreria/editarAutor.html'
@@ -166,12 +183,15 @@ class EditarAutorView(PermissionRequiredMixin, UpdateView):
     
     def get_object(self):
         return get_object_or_404(Autor, pk=self.kwargs["pk"])
+    
+    # Permitira mostrar un mensaje de exito cuando se edite correctamente un Autor
 
     def form_valid(self, form):
-        print('ldfjsf')     
         messages.success(self.request, "Autor editado correctamente")
         form.save(commit=True)
         return super().form_valid(form)
+
+    # Permitira mostrar un mensaje de error cuando los campos del formulario sean invalidos
 
     def form_invalid(self, form):
         messages.error(self.request, "Campos no válidos")
@@ -183,12 +203,7 @@ class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
     model = Usuario
     template_name = 'libreria/listarUsuarios.html'
     permission_required = 'libreria.administrador'
-    permission_denied_message = 'El usuario no tiene los permisos requeridos'
-    raise_exception = True    
-
-    def handle_no_permission(self):
-        messages.error(self.request, 'You dont have permission to do this')
-        return super(ListarUsuariosView, self).handle_no_permission()
+    raise_exception = True   
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)       
@@ -203,7 +218,8 @@ class ListarUsuariosView(PermissionRequiredMixin, generic.ListView):
         context['cantidad_usuarios'] = cantidad_usuarios
         return context
 
-# El siguiente metodo permite insertar un usuario y asignarle permiso de administrador, en caso de que tenga
+# El siguiente metodo permite insertar un usuario y asignarle permiso de administrador,
+# en caso de que tenga ese valor en el formulario
 
 @permission_required('libreria.administrador', raise_exception=True)
 def insertar_usuario(request):
@@ -229,20 +245,19 @@ def insertar_usuario(request):
                 user.save() 
                 Usuario.objects.create(imagen=imagen, user=user)
                 messages.success(request, "Usuario insertado correctamente")
-                return HttpResponseRedirect(reverse('libreria:insertarUsuario',))          
-            
+                return HttpResponseRedirect(reverse('libreria:insertarUsuario',))            
             else:
                 messages.error(request, "Los campos no son válidos")
                 form.add_error('username', 'El username ya existe')
                 return render(request, 'libreria/insertarUsuario.html', {'form':form})
         else:
             messages.error(request, "Los campos no son válidos")
-            return render(request = request, template_name = "libreria/insertarUsuario.html", context={"form":form})    
-       
+            return render(request = request, template_name = "libreria/insertarUsuario.html", context={"form":form})       
     form = UsuarioForm()
     return render(request = request, template_name = "libreria/insertarUsuario.html", context={"form":form})
 
-# El siguiente metodo permite editar un usuario y asignarle permiso de administrador, en caso de que tenga
+# El siguiente metodo permite editar un usuario y asignarle permiso de administrador,
+# en caso de que tenga ese valor en el formulario
 
 @permission_required('libreria.administrador', raise_exception=True)
 def editar_usuario(request, guid):   
@@ -266,16 +281,13 @@ def editar_usuario(request, guid):
                 
                 if not usuario.imagen == '':
                     os.remove(usuario.imagen.path)               
-                
-                es_Administrador = form.cleaned_data.get('is_admin')
-                
+                es_Administrador = form.cleaned_data.get('is_admin')                
                 usuario.imagen = imagen
                 usuario.save()
                 user.username = username
                 user.email = email
                 user.first_name = first_name
-                user.set_password(password)
-                  
+                user.set_password(password)                  
                 if es_Administrador:
                     permission = Permission.objects.get(codename='administrador')
                     user.user_permissions.add(permission)
@@ -290,8 +302,7 @@ def editar_usuario(request, guid):
                     userAutenticar = authenticate(username=username, password=password)
                     login(request, userAutenticar)
                     if not es_Administrador:
-                        return HttpResponseRedirect(reverse('libreria:listarLibros'))         
-               
+                        return HttpResponseRedirect(reverse('libreria:listarLibros'))               
                 messages.success(request, "Usuario Editado correctamente")
                 return HttpResponseRedirect(reverse('libreria:editarUsuario', args=(guid_usuario,)) )
             else:
@@ -328,8 +339,7 @@ def registrar_usuario(request):
                 user.save() 
                 Usuario.objects.create(imagen=imagen, user=user)
                 login(request, user)             
-                return HttpResponseRedirect(reverse('libreria:listarLibros',))          
-            
+                return HttpResponseRedirect(reverse('libreria:listarLibros',))            
             else:
                 messages.error(request, "Los campos no son válidos")
                 form.add_error('username', 'El username ya existe')
@@ -374,8 +384,8 @@ class EliminarUsuarioView(PermissionRequiredMixin, DeleteView):
     permission_required = 'libreria.administrador'
     raise_exception = True
 
-# El siguiente metodo permite eliminar la imagen del usuario, si este tiene. En caso
-# de que el usuario se elimine a si mismo, se mostrara la pagina donde se muestran los libros
+    # El siguiente metodo permite eliminar la imagen del usuario, si este tiene. En caso
+    # de que el usuario se elimine a si mismo, se mostrara la pagina donde se muestran los libros
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -429,6 +439,7 @@ def insertar_review(request, guid, pk):
         form = ReviewForm()
         return render(request = request, template_name = "libreria/insertarReview.html", context={'form':form ,'libro_titulo': libro.titulo})
 
+# La siguiente clase permite listar las reviews
 
 class ListarReviewsView(generic.ListView):
     model = Review
@@ -446,8 +457,7 @@ class ListarReviewsView(generic.ListView):
 
 # La siguiente vista permite mostrar las reviews de un libro
 
-class ListarReviewsLibroView(DetailView):
-    
+class ListarReviewsLibroView(DetailView):    
     model = Libro
     template_name = 'libreria/listarReviewsLibro.html'
 
@@ -460,7 +470,6 @@ class ListarReviewsLibroView(DetailView):
         review_page = reviews_filtradas_paginadas.get_page(numero_de_pagina)  
         context['review_libro_filter_page'] = review_page
         return context
-
 
 # La siguiente clase permite eliminar una review
 

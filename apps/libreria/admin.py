@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.admin import UserAdmin
-
 from .models import Libro, Autor, Usuario, Review
+
+# Registrando los modelos para acceder a ellos en el admin
 
 admin.site.register(Libro)
 admin.site.register(Autor)

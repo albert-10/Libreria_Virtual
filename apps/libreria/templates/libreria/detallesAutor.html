@@ -14,22 +14,22 @@
         <a id='volver' class="btn btn-primary" href="{% url 'libreria:listarAutores' %}">
             <i class="fa fa-arrow-left" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Volver a Mostrar Autores"></i> Volver</a>
         </a>        
-    <div id='contenedorAutores'class="card text-dark bg-light mb-3">
-            <div class="card-header"><h4 class="encabezados">Autor: {{autor.nombre|truncatechars:20}}</h4></div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h6 class="card-subtitle mb-2">Nacionalidad: {{autor.nacionalidad|truncatechars:20}}</h6>
-                    </li>
-                    <li class="list-group-item">
-                        <h6 class="card-subtitle mb-2">Fecha de nacimiento: {{autor.fecha_nacimiento}}</h6>
-                    </li>
-                    <li class="list-group-item">
-                        <h6 class="card-subtitle mb-2 ">Usuarios suscritos: {{autor.cantidad_usuarios_suscritos}}</h6>
-                    </li>
-                  </ul>        
-                <p class="card-text"></p>
-            </div>
+        <div id='contenedorAutores'class="card text-dark bg-light mb-3">
+                <div class="card-header"><h4 class="encabezados">Autor: {{autor.nombre|truncatechars:20}}</h4></div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle mb-2">Nacionalidad: {{autor.nacionalidad|truncatechars:20}}</h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle mb-2">Fecha de nacimiento: {{autor.fecha_nacimiento}}</h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle mb-2 ">Usuarios suscritos: {{autor.cantidad_usuarios_suscritos}}</h6>
+                        </li>
+                    </ul>        
+                    <p class="card-text"></p>
+                </div>
         </div>
 
         {% if autor.libros_publicados|length > 0 %}

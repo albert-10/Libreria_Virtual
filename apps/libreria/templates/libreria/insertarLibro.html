@@ -10,14 +10,14 @@
 
 <!-- Aqui se muestran los mensajes cuando se realiza una accion con el formulario -->
 
-{% for message in messages %}
-    <div id='contenedorAlertaFormulario'>
-        <div id='alertaFormulario' class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>     
-{% endfor %}
+    {% for message in messages %}
+        <div id='contenedorAlertaFormulario'>
+            <div id='alertaFormulario' class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>     
+    {% endfor %}
 
 <!-- A continuacion se muestra un formulario para insertar libros -->
 
@@ -35,6 +35,5 @@
                 </form> 
             </div>
         </div>       
-    </div>    
-   
+    </div>   
 {% endblock content %}

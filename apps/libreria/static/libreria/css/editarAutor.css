@@ -58,7 +58,6 @@ form {
         grid-column-start: 4;
         grid-column-end: 9;   
     }
-
 }
 
 @media (max-width: 1110px) {  

@@ -10,28 +10,30 @@
 
 <!-- Aqui se muestran los mensajes cuando se realiza una accion con el formulario -->
 
-{% for message in messages %}
-  <div id='contenedorAlertaErrorFormulario'>
-      <div id='alertaErrorFormulario' class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-      <strong>{{ message }}</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-  </div>     
-{% endfor %}
+  {% for message in messages %}
+    <div id='contenedorAlertaErrorFormulario'>
+        <div id='alertaErrorFormulario' class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>     
+  {% endfor %}
 
-<div class="contenedorInsertarEditarUsuario">
-  <div id='cardFormulario' class="card text-dark bg-light mb-3">
-    <div class="card-header"><h6 id="titulo">Registrar</h6></div>
-    <div class="card-body">
-      <form method="POST" action="{% url 'libreria:registrarUsuario'%}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div id="botones">
-            <button id='submit' type='submit' class="btn btn-primary">Registrar</button>
-            <button id='reset' type='reset' class="btn btn-secondary">Cancelar</button>    
-        </div>                    
-      </form>
+<!-- Formulario para registrarse -->
+
+  <div class="contenedorInsertarEditarUsuario">
+    <div id='cardFormulario' class="card text-dark bg-light mb-3">
+      <div class="card-header"><h6 id="titulo">Registrar</h6></div>
+      <div class="card-body">
+        <form method="POST" action="{% url 'libreria:registrarUsuario'%}" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <div id="botones">
+              <button id='submit' type='submit' class="btn btn-primary">Registrar</button>
+              <button id='reset' type='reset' class="btn btn-secondary">Cancelar</button>    
+          </div>                    
+        </form>
+      </div>
     </div>
   </div>
-</div>
 {% endblock content %}

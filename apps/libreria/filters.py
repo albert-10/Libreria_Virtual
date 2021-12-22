@@ -72,13 +72,10 @@ class Libro_Filter(django_filters.FilterSet):
 
 	def cantidad_usuarios(self, queryset, name, value):
 		return queryset[:value]	
-	
 
 	class Meta:
 		model = Libro
-		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']		
-
-	
+		fields = ['autor', 'nombre_editorial', 'despues_fecha', 'antes_fecha']	
 
 # La siguiente clase permite filtrar los autores por los campos: 'nombre', 'nacionalidad', 'despues_fecha', 'antes_fecha'
 
@@ -139,6 +136,8 @@ class Usuario_Filter(django_filters.FilterSet):
 	class Meta:
 		model = Usuario
 		fields = ['first_name', 'username']
+
+# La siguiente clase permite filtrar reviews calificacion y ordenarlas por fecha
 
 class Review_Filter(django_filters.FilterSet):	
 

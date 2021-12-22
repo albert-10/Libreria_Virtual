@@ -6,10 +6,8 @@
 body {
     background-color: #e3e7ee;
     min-height: 100vh !important;
-    margin: 0; 
-  
-    display: grid;
-    /* grid-template-rows: auto 1fr auto;*/
+    margin: 0;  
+    display: grid;    
     grid-template-rows: 0.5fr  auto 0.5fr; 
 } 
 
@@ -25,7 +23,6 @@ body {
     background-size: cover;
     grid-row-start: 1;
     grid-row-end: 6;
-
     grid-column-start: 1;
     grid-column-end: 4;
 }

@@ -30,6 +30,8 @@
     width: 100%;
 }
 
+/* Adaptando el formulario a varios tamanos de pantalla */
+
 @media (max-width: 1350px) {
     
     #volver{
@@ -88,4 +90,3 @@
         grid-column-end: -1;  
     }
 }
-

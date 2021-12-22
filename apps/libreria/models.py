@@ -2,11 +2,13 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager
 from django.db.models.fields import TextField
 from django.db.models.fields.related import ForeignKey
 from django.shortcuts import reverse
 
+# En el siguiente archivo se encuentran los modelos de la aplicacion libreria
+
+# Obteniendo el modelo User
 User = get_user_model()
 
 class Libro(models.Model):
@@ -83,7 +85,6 @@ class Autor(models.Model):
 
     def get_usuarios_suscritos(self):
         return self.usuarios_suscritos.all()
-        
 
 class Usuario(models.Model):
     guid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)    
@@ -104,12 +105,7 @@ class Usuario(models.Model):
     # Retorna la cantidad de autores a los que esta suscrito un usuario
 
     def cantidad_autores_suscritos(self):        
-        return self.autores_suscritos.count()
-
-# Retorna la cantidad de autores a los que esta suscrito un usuario
-
-    def cantidad_autores_suscritos(self):        
-         return self.autores_suscritos.count()
+        return self.autores_suscritos.count()   
 
 class Review(models.Model):
     CALIFICACION = (

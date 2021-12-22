@@ -3,7 +3,6 @@ import os
 import environ
 from django.contrib import messages
 
-
 env = environ.Env()
 
 # Leer el archivo .env
@@ -15,15 +14,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Obteniendo SECRET_KEY y DEBUG de la variable de entorno
 
 SECRET_KEY = env('SECRET_KEY')
-#DEBUG = env('DEBUG')
 
 if env('DEBUG') == 'True':
     DEBUG = True
 else:
     DEBUG = False
 
+# Obteniendo la carpeta de aplicaciones: apps
+
 import sys
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
+
+# Correo en desarrollo
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -49,8 +51,7 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 ASUNTO_EMAIL = env('ASUNTO_EMAIL')
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,7 +78,6 @@ TEMPLATES = [
         },
     },
 ]
-#AUTH_USER_MODEL = 'libreria.Usuario'
 
 WSGI_APPLICATION = 'Libreria_Virtual.wsgi.application'
 
@@ -184,7 +184,3 @@ if DEBUG == False:
             'PORT': '',
         }
     }
-
-import django_on_heroku
-django_on_heroku.settings(locals())
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
