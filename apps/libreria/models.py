@@ -9,6 +9,7 @@ from django.shortcuts import reverse
 # En el siguiente archivo se encuentran los modelos de la aplicacion libreria
 
 # Obteniendo el modelo User
+
 User = get_user_model()
 
 class Libro(models.Model):

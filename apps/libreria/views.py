@@ -28,7 +28,7 @@ class ListarLibrosView(generic.ListView):
     # El siguiente metodo permite obtener una page de libro, de acuerdo al filtro
     # de libros que se haya aplicado.
 
-    def get_context_data(self, **kwargs):       
+    def get_context_data(self, **kwargs):              
         context = super().get_context_data(**kwargs)        
         libro_filter = Libro_Filter(self.request.GET, queryset=self.get_queryset())
         context['libro_filter'] = libro_filter
