@@ -50,7 +50,7 @@
 
                       <tr>
                           <td>{{review.usuario}}</td>
-                          <td>{{review.libro}}</td>                                                
+                          <td>{{review.libro|truncatechars:30}}</td>                                                
                           <td>
                             {% if review.calificacion == 1 %}                          
                               <span class="fa fa-star"></span>

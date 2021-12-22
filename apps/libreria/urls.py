@@ -12,7 +12,7 @@ urlpatterns = [
     path('salirSesion/', views.salir_sesion, name='salirSesion'),
     path('registrarUsuario/', views.registrar_usuario, name='registrarUsuario'),    
 
-    path('', views.LibrosAdminView.as_view(), name='librosAdmin'), 
+    path('', views.ListarLibrosView.as_view(), name='listarLibros'), 
     path('insertarLibro/', views.InsertarLibroView.as_view(), name='insertarLibro'),
     path('editarLibro/<pk>/', views.EditarLibroView.as_view(), name='editarLibro'),
     path('eliminarLibro/<pk>/', views.EliminarLibroView.as_view(), name='eliminarLibro'),

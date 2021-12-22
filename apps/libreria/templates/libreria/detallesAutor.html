@@ -15,11 +15,11 @@
             <i class="fa fa-arrow-left" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Volver a Mostrar Autores"></i> Volver</a>
         </a>        
     <div id='contenedorAutores'class="card text-dark bg-light mb-3">
-            <div class="card-header"><h4 class="encabezados">Autor: {{autor.nombre}}</h4></div>
+            <div class="card-header"><h4 class="encabezados">Autor: {{autor.nombre|truncatechars:20}}</h4></div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <h6 class="card-subtitle mb-2">Nacionalidad: {{autor.nacionalidad}}</h6>
+                        <h6 class="card-subtitle mb-2">Nacionalidad: {{autor.nacionalidad|truncatechars:20}}</h6>
                     </li>
                     <li class="list-group-item">
                         <h6 class="card-subtitle mb-2">Fecha de nacimiento: {{autor.fecha_nacimiento}}</h6>
@@ -46,8 +46,8 @@
                             {% for libro in autor.libros_publicados %}
                 
                                 <tr>
-                                    <td>{{libro.titulo}}</td>
-                                    <td>{{libro.isbn}}</td> 
+                                    <td>{{libro.titulo|truncatechars:20}}</td>
+                                    <td>{{libro.isbn|truncatechars:20}}</td> 
                                     <td>{{libro.fecha_publicacion}}</td>               
                                 </tr>				    
                             {% endfor %}           

@@ -57,10 +57,10 @@
                                             <img style="display:block;" width="100%" height="100%" src="{% static 'images/usuario_sin_imagen.png'%}">
                                         {% endif %}
                                     </td>                                     
-                                    <td VALIGN=MIDDLE>{{usuario.user.first_name}}</td>
-                                    <td VALIGN=MIDDLE>{{usuario.user.username}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.user.first_name|truncatechars:30}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.user.username|truncatechars:30}}</td>
                                     <td VALIGN=MIDDLE>{{usuario.guid}}</td>                          
-                                    <td VALIGN=MIDDLE>{{usuario.user.email}}</td>
+                                    <td VALIGN=MIDDLE>{{usuario.user.email|truncatechars:30}}</td>
                                     
                                     <td VALIGN=MIDDLE>{{usuario.fecha_registro|date:"d-m-y"}}</td>
                                     <td VALIGN=MIDDLE>{{usuario.cantidad_autores_suscritos}}</td>

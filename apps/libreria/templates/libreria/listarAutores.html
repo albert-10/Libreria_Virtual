@@ -57,10 +57,10 @@
                 {% for autor in autor_page %}
 
                     <tr>
-                        <td>{{autor.nombre}}</td>
-                        <td>{{autor.nacionalidad}}</td>
-                        <td>{{autor.fecha_nacimiento}}</td>                        
-                        {% if perms.libreria.administrador %}
+                        <td>{{autor.nombre|truncatechars:30}}</td>
+                        <td>{{autor.nacionalidad|truncatechars:30}}</td>
+                        <td>{{autor.fecha_nacimiento|truncatechars:30}}</td>                        
+                        {% if perms.libreria.administrador|truncatechars:30 %}
                         <td class='botonesOperacionesAdmin'>
                         {% else %}
                         <td class='botonesOperacionesNoAdmin'>

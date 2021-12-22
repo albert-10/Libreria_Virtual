@@ -15,7 +15,7 @@ class Libro(models.Model):
     nombre_editorial = models.CharField(max_length=50)
     cantidad_paginas = models.PositiveIntegerField()
     fecha_publicacion = models.DateField()
-    isbn = models.CharField(max_length=17)
+    isbn = models.CharField(max_length=17, unique=True)
     archivo_libro = models.FileField(upload_to='libros')
 
     class Meta:

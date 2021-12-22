@@ -9,8 +9,8 @@ class LibroForm(forms.ModelForm):
             model = Libro
             fields = '__all__'
             widgets = {
-                'fecha_publicacion': forms.DateInput(attrs={'type':'date'}),                
-                'cantidad_paginas': forms.TextInput(attrs={'min':1,'step': '1','type': 'number'})
+                'fecha_publicacion': forms.DateInput(format=('%Y-%m-%d'), attrs={'type':'date'}),                
+                'cantidad_paginas': forms.TextInput(attrs={'min':1, 'max':100000,'step': '1','type': 'number'})
             }
 
 class AutorForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class AutorForm(forms.ModelForm):
             model = Autor
             fields = '__all__'
             widgets = {
-                'fecha_nacimiento': forms.DateInput(attrs={'type':'date'})
+                'fecha_nacimiento': forms.DateInput(format=('%Y-%m-%d'), attrs={'type':'date'})
             }
 
 class UsuarioForm(forms.ModelForm):

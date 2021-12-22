@@ -20,22 +20,11 @@ from .models import Libro, Autor, Review, Usuario
 from .forms import LibroForm, AutorForm, AutenticarForm, UsuarioForm, RegistrarForm, ReviewForm
 from django.contrib.auth.decorators import permission_required, login_required
 
-# La siguiente vista retorna libros segun el filtro que realice el usuario
-
-class LibrosView(generic.ListView):
-    model = Libro
-    template_name = 'libreria/home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['libro_filter'] = Libro_Filter(self.request.GET, queryset=self.get_queryset())
-        return context
-
 # La siguiente vista retorna libros segun el filtro que realice el admin
 
-class LibrosAdminView(generic.ListView):
+class ListarLibrosView(generic.ListView):
     model = Libro
-    template_name = 'libreria/librosAdmin.html'
+    template_name = 'libreria/listarLibros.html'
 
 # El siguiente metodo permite obtener un page de libro,
 # de acuerdo al filtro de libros que se haya aplicado
@@ -118,7 +107,7 @@ class EditarLibroView(PermissionRequiredMixin, UpdateView):
 
 class EliminarLibroView(PermissionRequiredMixin, DeleteView):    
     model = Libro
-    success_url = reverse_lazy('libreria:librosAdmin')
+    success_url = reverse_lazy('libreria:listarLibros')
     permission_required = 'libreria.administrador'
     raise_exception = True
 
@@ -295,13 +284,13 @@ def editar_usuario(request, guid):
                 user.save()
 
                 # Cuando el usuario se esta editando a si mismo, se autenticara otra vez. En caso que no se edite como
-                # Administrador se redirigira a la pagina librosAdmin
+                # Administrador se redirigira a la pagina listarLibros
 
                 if user.id == request.user.id:
                     userAutenticar = authenticate(username=username, password=password)
                     login(request, userAutenticar)
                     if not es_Administrador:
-                        return HttpResponseRedirect(reverse('libreria:librosAdmin'))         
+                        return HttpResponseRedirect(reverse('libreria:listarLibros'))         
                
                 messages.success(request, "Usuario Editado correctamente")
                 return HttpResponseRedirect(reverse('libreria:editarUsuario', args=(guid_usuario,)) )
@@ -339,7 +328,7 @@ def registrar_usuario(request):
                 user.save() 
                 Usuario.objects.create(imagen=imagen, user=user)
                 login(request, user)             
-                return HttpResponseRedirect(reverse('libreria:librosAdmin',))          
+                return HttpResponseRedirect(reverse('libreria:listarLibros',))          
             
             else:
                 messages.error(request, "Los campos no son válidos")
@@ -362,7 +351,7 @@ def autenticar(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('libreria:librosAdmin',))                
+                return HttpResponseRedirect(reverse('libreria:listarLibros',))                
             else:
                 form.add_error('username', 'incorrecto')
                 form.add_error('password', 'incorrecto')
@@ -375,7 +364,7 @@ def autenticar(request):
 
 def salir_sesion(request):
     logout(request)
-    return redirect('libreria:librosAdmin')
+    return redirect('libreria:listarLibros')
 
 # La siguiente clase permite eliminar Libros
 
@@ -395,7 +384,7 @@ class EliminarUsuarioView(PermissionRequiredMixin, DeleteView):
             os.remove(usuario.imagen.path)
         if usuario.user == request.user:
             self.object.delete()
-            return HttpResponseRedirect(reverse('libreria:librosAdmin',))        
+            return HttpResponseRedirect(reverse('libreria:listarLibros',))        
         self.object.delete()
         return HttpResponseRedirect(self.success_url)
 
